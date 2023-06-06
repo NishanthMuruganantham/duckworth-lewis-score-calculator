@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cricket Match Details</title>
+    <!-- Include Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+         /* Replace 'background-image.jpg' with your image path */
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .form-container {
+        max-width: 400px;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+      .form-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h2>Cricket Match Details</h2>
+      <form id="cricket-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="overs_available_to_team_one"
+            >Overs available to Team One:</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="overs_available_to_team_one"
+            step="0.1" min="0" max="20"
+            name="overs_available_to_team_one"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="runs_scored_by_team_one">Runs scored by Team One:</label>
+          <input
+            type="number"
+            class="form-control"
+            id="runs_scored_by_team_one"
+            name="runs_scored_by_team_one"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="overs_available_to_team_two_at_start"
+            >Overs available to Team Two at start:</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="overs_available_to_team_two_at_start"
+            name="overs_available_to_team_two_at_start"
+            step="0.1" min="0" max="20"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="overs_remaining_to_team_two_during_interruption"
+            >Overs remaining to Team Two during interruption:</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="overs_remaining_to_team_two_during_interruption"
+            name="overs_remaining_to_team_two_during_interruption"
+            step="0.1" min="0" max="20"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="wickets_lost_by_team_two"
+            >Wickets lost by Team Two:</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="wickets_lost_by_team_two"
+            name="wickets_lost_by_team_two"
+            min="0" max="9"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="overs_remaining_to_team_two_during_resumption"
+            >Overs remaining to Team Two during resumption:</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="overs_remaining_to_team_two_during_resumption"
+            name="overs_remaining_to_team_two_during_resumption"
+            step="0.1" min="0" max="20"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <div id="result-container"></div>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    
+    <script>
+      $(document).ready(function() {
+        $('#cricket-form').submit(function(e) {
+          e.preventDefault(); // Prevent the form from submitting normally
+  
+          // Serialize the form data
+          var formData = $(this).serialize();
+  
+          // Send the AJAX request
+          $.ajax({
+            type: 'POST',
+            url: '/cricket-match-details/',  // URL pattern defined in urls.py
+            data: formData,
+            success: function(response) {
+                // Display the result in the result-container div
+                $('#result-container').html('<p>Result: ' + response.result + '</p>');
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+        });
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
