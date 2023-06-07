@@ -41,51 +41,59 @@
             text-align: center;
         }
     </style>
+    <style>
+        #cricket-container {
+            position: relative;
+        }
+    
+        #error-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+    
+        .alert {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #d3eaf4;
+            color: #31708f;
+        }
+    
+        .alert button.close {
+            float: right;
+        }
+    
+        .alert strong {
+            font-weight: bold;
+        }
+    </style>
+    
 </head>
 <body>
-    <div class="form-container">
-        <h2>Cricket Match Details</h2>
-        <form id="cricket-form">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="overs_available_to_team_one">Overs available to Team One:</label>
-                <input type="number" class="form-control" id="overs_available_to_team_one" step="0.1" min="0" max="20" name="overs_available_to_team_one" required>
-            </div>
-            <div class="form-group">
-                <label for="runs_scored_by_team_one">Runs scored by Team One:</label>
-                <input type="number" class="form-control" id="runs_scored_by_team_one" min="0" name="runs_scored_by_team_one" required>
-            </div>
-            <div class="form-group">
-                <label for="overs_available_to_team_two_at_start">Overs available to Team Two at start:</label>
-                <input type="number" class="form-control" id="overs_available_to_team_two_at_start" name="overs_available_to_team_two_at_start" step="0.1" min="0" max="20" required>
-            </div>
-            <div class="form-group">
-                <label for="overs_used_by_team_two_until_interruption">Overs used by Team Two until interruption:</label>
-                <input type="number" class="form-control" id="overs_used_by_team_two_until_interruption" name="overs_used_by_team_two_until_interruption" step="0.1" min="0" max="20" required>
-            </div>
-            <div class="form-group">
-                <label for="wickets_lost_by_team_two">Wickets lost by Team Two:</label>
-                <input type="number" class="form-control" id="wickets_lost_by_team_two" name="wickets_lost_by_team_two" min="0" max="9" required>
-            </div>
-            <div class="form-group">
-                <label for="maximum_overs_allotted_to_team_two_after_resumption">Maximum Overs allotted to Team Two after resumption:</label>
-                <input type="number" class="form-control" id="maximum_overs_allotted_to_team_two_after_resumption" name="maximum_overs_allotted_to_team_two_after_resumption" step="0.1" min="0" max="20" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-        <div id="result-container"></div>
+    <div id="cricket-container">
+    <div id="error-container"></div>
+        <div class="form-container">
+            <h2>Cricket Match Details</h2>
+            <form id="cricket-form" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <div id="result-container"></div>
+            <div id="error-messages"></div>
+        </div>
     </div>
-
     <!-- Include Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function () {
             $("#cricket-form").submit(function (e) {
                 e.preventDefault(); // Prevent the form from submitting normally
-
+    
                 // Serialize the form data
                 var formData = $(this).serialize();
-
+    
                 // Send the AJAX request
                 $.ajax({
                     type: "POST",
@@ -94,14 +102,45 @@
                     success: function (response) {
                         // Display the result in the result-container div
                         $("#result-container").html("<p>Par Score: " + response.result + "</p>");
+                        $("#error-container").empty(); // Clear any previous error messages
                     },
                     error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
+                        if (xhr.status === 400) {
+                            var errorData = JSON.parse(xhr.responseJSON.errors);
+    
+                            // Loop through the errors and create disposable alerts
+                            for (var key in errorData) {
+                                if (errorData.hasOwnProperty(key)) {
+                                    var fieldName = key.replace(/_/g, " "); // Convert underscores to spaces
+                                    var errorMessage = errorData[key][0].message;
+    
+                                    // Create the alert element with close button
+                                    var alertElement = $("<div>").addClass("alert alert-dismissible alert-danger");
+                                    var closeButton = $("<button>").addClass("close").attr("type", "button").html("&times;");
+                                    var fieldNameElement = $("<strong>").text(fieldName);
+                                    var errorMessageElement = $("<span>").text(errorMessage);
+    
+                                    // Append the elements to the alert
+                                    alertElement.append(closeButton, "<br>", fieldNameElement, "<br>", errorMessageElement);
+    
+                                    // Append the alert to the error container
+                                    $("#error-container").append(alertElement);
+    
+                                    // Attach event handler to the close button to remove the alert when clicked
+                                    closeButton.click(function () {
+                                        $(this).parent().remove();
+                                    });
+                                }
+                            }
+                        } else {
+                            console.error(xhr.responseText);
+                        }
                     },
                 });
             });
         });
     </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
