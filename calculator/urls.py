@@ -4,5 +4,5 @@ from . import views
 app_name = 'calculator'
 
 urlpatterns = [
-    path('cricket-match-details/', views.cricket_match_details, name='cricket_match_details'),
+    path('', views.cricket_match_details, name='cricket_match_details'),
 ]
