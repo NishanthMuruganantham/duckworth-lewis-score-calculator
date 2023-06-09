@@ -1,0 +1,61 @@
+body {
+    background-image: url('https://img.freepik.com/free-photo/wall-wallpaper-concrete-colored-painted-textured-concept_53876-31799.jpg?w=996&t=st=1686117285~exp=1686117885~hmac=d06d7febcd38039bae20a4bb6971830c0db6b50bdb111f3d8df64129f5df7573');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container {
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.btn-primary {
+    width: 100%;
+}
+
+#result-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#cricket-container {
+    position: relative;
+}
+
+#error-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #d3eaf4;
+    color: #31708f;
+}
+
+.alert button.close {
+    float: right;
+}
+
+.alert strong {
+    font-weight: bold;
+}
