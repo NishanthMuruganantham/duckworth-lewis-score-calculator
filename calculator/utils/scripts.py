@@ -58,3 +58,37 @@ def get_par_score_when_first_innings_is_completed_and_second_innings_is_interrup
     par_score = runs_scored_by_team_one * (total_resource_remaining_to_team_two/total_resource_available_to_team_one_at_start)
     
     return par_score
+
+
+def get_par_score_when_first_innings_is_completed_and_second_innings_is_cut_short(
+    overs_available_to_team_one,
+    runs_scored_by_team_one,
+    overs_available_to_team_two_at_start,
+    overs_used_by_team_two_until_cutoff,
+    wickets_lost_by_team_two
+):
+    resource_for_0_wickets_lost = resource_table_df["0"][::-1]
+    
+    balls_available_to_team_one_at_start = convert_overs_to_balls(overs_available_to_team_one)
+    balls_available_to_team_two_at_start = convert_overs_to_balls(overs_available_to_team_two_at_start)
+    balls_used_by_team_two_until_cutoff = convert_overs_to_balls(overs_used_by_team_two_until_cutoff)
+    balls_remaining_to_team_two = balls_available_to_team_two_at_start - balls_used_by_team_two_until_cutoff
+    
+    total_resource_available_to_team_one_at_start = np.interp(
+        balls_available_to_team_one_at_start, resource_table_df["balls"][::-1], resource_for_0_wickets_lost
+    )
+    total_resource_available_to_team_two_at_start = np.interp(
+        balls_available_to_team_two_at_start, resource_table_df["balls"][::-1], resource_for_0_wickets_lost
+    )
+    
+    team_two_remaining_resource = np.interp(
+        balls_remaining_to_team_two,
+        resource_table_df["balls"][::-1],
+        resource_table_df[f"{wickets_lost_by_team_two}"][::-1]
+    )
+    
+    team_two_available_resource = total_resource_available_to_team_two_at_start - team_two_remaining_resource
+    
+    par_score = runs_scored_by_team_one * (team_two_available_resource/total_resource_available_to_team_one_at_start)
+    
+    return par_score
