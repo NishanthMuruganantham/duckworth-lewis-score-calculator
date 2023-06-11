@@ -77,26 +77,33 @@ class DLSInputForm(forms.Form):
 class DLSInputFormWhenFirstInningsIsCompletedAndSecondInningsIsCutshort(forms.Form):
     
     # Forms Fields
-    overs_available_to_team_one = forms.FloatField(
+    overs_available_to_team_one_when_second_innings_cut_short = forms.FloatField(
+        label="Overs available to team one",
         min_value=0,
         max_value=20,
         widget=forms.NumberInput(attrs={'step': '0.1'}),
     )
-    runs_scored_by_team_one = forms.IntegerField()
+    runs_scored_by_team_one_when_second_innings_cut_short = forms.IntegerField(
+        label="Runs scored by team one"
+    )
     
-    overs_available_to_team_two_at_start = forms.FloatField(
+    overs_available_to_team_two_at_start_when_second_innings_cut_short = forms.FloatField(
+        label="Overs available to team two at start",
         min_value=0,
         max_value=20,
         widget=forms.NumberInput(attrs={'step': '0.1'}),
     )
     
-    overs_used_by_team_two_until_cutoff = forms.FloatField(
+    overs_used_by_team_two_until_cutoff_when_second_innings_cut_short = forms.FloatField(
+        label="Overs used by team two during cut short",
         min_value=0,
         max_value=20,
         widget=forms.NumberInput(attrs={'step': '0.1'})
     )
     
-    wickets_lost_by_team_two = forms.IntegerField()
+    wickets_lost_by_team_two_when_second_innings_cut_short = forms.IntegerField(
+        label="Wickets lost by team two"
+    )
     
     # Additional Validations
     def clean(self):
@@ -104,36 +111,36 @@ class DLSInputFormWhenFirstInningsIsCompletedAndSecondInningsIsCutshort(forms.Fo
         decimal_validation_message = "Invalid input for overs. Number after decimal should be between 1 and 5"
         
         cleaned_data = super().clean()
-        overs_available_to_team_one = cleaned_data.get('overs_available_to_team_one')
-        overs_available_to_team_two_at_start = cleaned_data.get('overs_available_to_team_two_at_start')
-        overs_used_by_team_two_until_cutoff = cleaned_data.get('overs_used_by_team_two_until_cutoff')
+        overs_available_to_team_one_when_second_innings_cut_short = cleaned_data.get('overs_available_to_team_one_when_second_innings_cut_short')
+        overs_available_to_team_two_at_start_when_second_innings_cut_short = cleaned_data.get('overs_available_to_team_two_at_start_when_second_innings_cut_short')
+        overs_used_by_team_two_until_cutoff_when_second_innings_cut_short = cleaned_data.get('overs_used_by_team_two_until_cutoff_when_second_innings_cut_short')
         
-        if not decimal_validator(overs_available_to_team_one):
+        if not decimal_validator(overs_available_to_team_one_when_second_innings_cut_short):
             self.add_error(
-                "overs_available_to_team_two_at_start",
+                "overs_available_to_team_one_when_second_innings_cut_short",
                 decimal_validation_message
             )
-        if not decimal_validator(overs_available_to_team_two_at_start):
+        if not decimal_validator(overs_available_to_team_two_at_start_when_second_innings_cut_short):
             self.add_error(
-                "overs_available_to_team_two_at_start",
+                "overs_available_to_team_two_at_start_when_second_innings_cut_short",
                 decimal_validation_message
             )
-        if not decimal_validator(overs_used_by_team_two_until_cutoff):
+        if not decimal_validator(overs_used_by_team_two_until_cutoff_when_second_innings_cut_short):
             self.add_error(
-                "overs_used_by_team_two_until_cutoff",
+                "overs_used_by_team_two_until_cutoff_when_second_innings_cut_short",
                 decimal_validation_message
             )
         
-        if overs_available_to_team_one and overs_available_to_team_two_at_start:
-            if overs_available_to_team_two_at_start > overs_available_to_team_one:
+        if overs_available_to_team_one_when_second_innings_cut_short and overs_available_to_team_two_at_start_when_second_innings_cut_short:
+            if overs_available_to_team_two_at_start_when_second_innings_cut_short > overs_available_to_team_one_when_second_innings_cut_short:
                 self.add_error(
-                    'overs_available_to_team_two_at_start',
+                    'overs_available_to_team_two_at_start_when_second_innings_cut_short',
                     'Overs available to Team Two at start should be less than or equal to Overs available to Team One'
                 )
 
-        if overs_used_by_team_two_until_cutoff and overs_available_to_team_two_at_start:
-            if overs_used_by_team_two_until_cutoff >= overs_available_to_team_two_at_start:
+        if overs_used_by_team_two_until_cutoff_when_second_innings_cut_short and overs_available_to_team_two_at_start_when_second_innings_cut_short:
+            if overs_used_by_team_two_until_cutoff_when_second_innings_cut_short >= overs_available_to_team_two_at_start_when_second_innings_cut_short:
                 self.add_error(
-                    'overs_used_by_team_two_until_cutoff',
+                    'overs_used_by_team_two_until_cutoff_when_second_innings_cut_short',
                     'Overs used by Team Two until interruption should be less than the overs available to Team Two at start'
                 )
