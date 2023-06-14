@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .forms import DLSInputForm, DLSInputFormWhenFirstInningsIsCompletedAndSecondInningsIsCutshort
+from .forms import (
+    DLSInputFormSecondInningsIsCutshort,
+    DLSInputFormWhenSecondInningsIsInterrupted
+)
 from .utils.scripts import (
     get_par_score_when_first_innings_is_completed_and_second_innings_is_interrupted,
     get_par_score_when_first_innings_is_completed_and_second_innings_is_cut_short
@@ -15,8 +18,8 @@ def index(request):
             return view_for_dls_input_when_first_innings_is_completed_and_second_innings_is_interrupted(request)
     
     else:
-        dls_second_innings_interrupted_form = DLSInputForm()
-        dls_second_innings_cutshort_form = DLSInputFormWhenFirstInningsIsCompletedAndSecondInningsIsCutshort()
+        dls_second_innings_interrupted_form = DLSInputFormWhenSecondInningsIsInterrupted()
+        dls_second_innings_cutshort_form = DLSInputFormSecondInningsIsCutshort()
         return render(
             request, 'cricket_form.html', {
                 "dls_second_innings_interrupted_form": dls_second_innings_interrupted_form,
@@ -26,14 +29,14 @@ def index(request):
 
 
 def view_for_dls_input_when_first_innings_is_completed_and_second_innings_is_interrupted(request):
-    form = DLSInputForm(request.POST)
+    form = DLSInputFormWhenSecondInningsIsInterrupted(request.POST)
     if form.is_valid():
-        overs_available_to_team_one = form.cleaned_data['overs_available_to_team_one']
-        runs_scored_by_team_one = form.cleaned_data['runs_scored_by_team_one']
-        overs_available_to_team_two_at_start = form.cleaned_data['overs_available_to_team_two_at_start']
-        overs_used_by_team_two_until_interruption = form.cleaned_data['overs_used_by_team_two_until_interruption']
-        wickets_lost_by_team_two = form.cleaned_data['wickets_lost_by_team_two']
-        maximum_overs_allotted_to_team_two_after_resumption = form.cleaned_data['maximum_overs_allotted_to_team_two_after_resumption']
+        overs_available_to_team_one = form.cleaned_data['overs_available_to_team_one_when_second_innings_interrupted']
+        runs_scored_by_team_one = form.cleaned_data['runs_scored_by_team_one_when_second_innings_interrupted']
+        overs_available_to_team_two_at_start = form.cleaned_data['overs_available_to_team_two_at_start_when_second_innings_interrupted']
+        overs_used_by_team_two_until_interruption = form.cleaned_data['overs_used_by_team_two_until_interruption_when_second_innings_interrupted']
+        wickets_lost_by_team_two = form.cleaned_data['wickets_lost_by_team_two_when_second_innings_interrupted']
+        maximum_overs_allotted_to_team_two_after_resumption = form.cleaned_data['maximum_overs_allotted_to_team_two_after_resumption_when_second_innings_interrupted']
         
         result = get_par_score_when_first_innings_is_completed_and_second_innings_is_interrupted(
             runs_scored_by_team_one=runs_scored_by_team_one,
@@ -51,7 +54,7 @@ def view_for_dls_input_when_first_innings_is_completed_and_second_innings_is_int
 
 
 def view_for_dls_input_when_first_innings_is_completed_and_second_innings_is_cut_short(request):
-    dls_input_form = DLSInputFormWhenFirstInningsIsCompletedAndSecondInningsIsCutshort(request.POST)
+    dls_input_form = DLSInputFormSecondInningsIsCutshort(request.POST)
     if dls_input_form.is_valid():
         overs_available_to_team_one = dls_input_form.cleaned_data['overs_available_to_team_one_when_second_innings_cut_short']
         runs_scored_by_team_one = dls_input_form.cleaned_data['runs_scored_by_team_one_when_second_innings_cut_short']
