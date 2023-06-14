@@ -1,9 +1,15 @@
 $(document).ready(function () {
-    $("#cricket-form").submit(function (e) {
+    $("#dls-input-form, #dls-interrupted-form, #dls-cut-short-form").submit(function (e) {
         e.preventDefault(); // Prevent the form from submitting normally
+        
+        // Get the form type
+        var formType = $(this).find('input[name=form_type]').val();
         
         // Serialize the form data
         var formData = $(this).serialize();
+        
+        // Append the form type to the serialized form data
+        formData += '&form_type=' + formType;
         
         // Send the AJAX request
         $.ajax({
