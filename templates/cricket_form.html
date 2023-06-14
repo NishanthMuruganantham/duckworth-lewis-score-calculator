@@ -13,20 +13,13 @@
             <div class="form-container">
                 <h2>DLS Par Score Finder</h2>
                 
-                <!-- Default form -->
-                <form id="dls-input-form" method="POST">
+                <!-- Interrupted innings form -->
+                <form id="dls-interrupted-form" method="POST">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    <input type="hidden" name="second_innings_interrupted" value="interrupted">
+                    {{ dls_second_innings_interrupted_form.as_p }}
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
-                
-                <!-- Interrupted innings form -->
-                {% comment %} <form id="dls-interrupted-form" method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="form_type" value="interrupted">
-                    {{ dls_interrupted_form.as_p }}
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form> {% endcomment %}
                 
                 <!-- Cut short innings form -->
                 <form id="dls-cut-short-form" method="POST">
