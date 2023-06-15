@@ -31,6 +31,16 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
+                <h3 class="form-heading" onclick="toggleForm('dls-second-innings-delayed-form')">Calculate DLS Par Score When Second innings is delayed</h3>
+                <!-- Second innings Delayed form -->
+                <div id="dls-second-innings-delayed-form" class="form-content">
+                    <form id="dls-second-innings-delayed-form" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="second_innings_delayed" value="delayed">
+                        {{ dls_second_innings_delayed_form.as_p }}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
                 <div id="result-container"></div>
                 <div id="error-messages"></div>
             </div>
