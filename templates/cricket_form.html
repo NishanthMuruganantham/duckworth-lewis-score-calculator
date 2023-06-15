@@ -13,8 +13,8 @@
             <div class="form-container">
                 <h3 class="form-heading" onclick="toggleForm('dls-interrupted-form')">Calculate DLS Par Score When Second innings is interrupted</h3>
                 <!-- Interrupted innings form -->
-                <div id="dls-interrupted-form" class="form-content">
-                    <form id="dls-interrupted-form" method="POST">
+                <div>
+                    <form id="dls-interrupted-form" class="form-content" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="second_innings_interrupted" value="interrupted">
                         {{ dls_second_innings_interrupted_form.as_p }}
@@ -23,8 +23,8 @@
                 </div>
                 <h3 class="form-heading" onclick="toggleForm('dls-cut-short-form')">Calculate DLS Par Score When Second innings is cut short</h3>
                 <!-- Cut short innings form -->
-                <div id="dls-cut-short-form" class="form-content">
-                    <form id="dls-cut-short-form" method="POST">
+                <div>
+                    <form id="dls-cut-short-form" class="form-content" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="second_innings_cut_short" value="cut_short">
                         {{ dls_second_innings_cutshort_form.as_p }}
@@ -33,8 +33,8 @@
                 </div>
                 <h3 class="form-heading" onclick="toggleForm('dls-second-innings-delayed-form')">Calculate DLS Par Score When Second innings is delayed</h3>
                 <!-- Second innings Delayed form -->
-                <div id="dls-second-innings-delayed-form" class="form-content">
-                    <form id="dls-second-innings-delayed-form" method="POST">
+                <div>
+                    <form id="dls-second-innings-delayed-form" class="form-content" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="second_innings_delayed" value="delayed">
                         {{ dls_second_innings_delayed_form.as_p }}

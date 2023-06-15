@@ -13,9 +13,7 @@ from .utils.scripts import (
 
 
 def index(request):
-    print(f"request = {request}")
     if request.method == 'POST':
-        print(f"request.POST = {request.POST}")
         if "second_innings_cut_short" in request.POST:
             return view_for_dls_input_when_first_innings_is_completed_and_second_innings_is_cut_short(request)
         if "second_innings_interrupted" in request.POST:
