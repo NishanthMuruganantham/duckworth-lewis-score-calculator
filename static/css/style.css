@@ -59,3 +59,17 @@ body {
 .alert strong {
     font-weight: bold;
 }
+
+/* Form Toggling */
+.form-heading {
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.form-content {
+    display: none;
+    margin-bottom: 20px;
+}
+.form-content.open {
+    display: block;
+}

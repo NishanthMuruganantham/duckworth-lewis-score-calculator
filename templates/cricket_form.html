@@ -2,7 +2,7 @@
 {% load static %}
 <html>
     <head>
-        <title>Cricket Match Details</title>
+        <title>Duckworth Lewis Stern Score Calculator</title>
         <!-- Include Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -11,33 +11,40 @@
         <div id="cricket-container">
             <div id="error-container"></div>
             <div class="form-container">
-                <h2>DLS Par Score Finder</h2>
-                
+                <h3 class="form-heading" onclick="toggleForm('dls-interrupted-form')">Calculate DLS Par Score When Second innings is interrupted</h3>
                 <!-- Interrupted innings form -->
-                <form id="dls-interrupted-form" method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="second_innings_interrupted" value="interrupted">
-                    {{ dls_second_innings_interrupted_form.as_p }}
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-                
+                <div id="dls-interrupted-form" class="form-content">
+                    <form id="dls-interrupted-form" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="second_innings_interrupted" value="interrupted">
+                        {{ dls_second_innings_interrupted_form.as_p }}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <h3 class="form-heading" onclick="toggleForm('dls-cut-short-form')">Calculate DLS Par Score When Second innings is cut short</h3>
                 <!-- Cut short innings form -->
-                <form id="dls-cut-short-form" method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="second_innings_cut_short" value="cut_short">
-                    {{ dls_second_innings_cutshort_form.as_p }}
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-                
+                <div id="dls-cut-short-form" class="form-content">
+                    <form id="dls-cut-short-form" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="second_innings_cut_short" value="cut_short">
+                        {{ dls_second_innings_cutshort_form.as_p }}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
                 <div id="result-container"></div>
                 <div id="error-messages"></div>
             </div>
         </div>
-        
         <!-- Include Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="{% static 'js/ajax.js' %}"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            function toggleForm(formId) {
+                const formContent = document.getElementById(formId);
+                formContent.classList.toggle('open');
+            }
+        </script>
     </body>
 </html>
