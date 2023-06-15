@@ -175,3 +175,55 @@ class DLSInputFormSecondInningsIsCutshort(forms.Form):
                     'overs_used_by_team_two_until_cutoff_when_second_innings_cut_short',
                     'Overs used by Team Two until interruption should be less than the overs available to Team Two at start'
                 )
+
+
+
+class DLSInputFormWhenSecondInningsIsDelayed(forms.Form):
+    
+    # Forms Fields
+    overs_available_to_team_one_when_second_innings_delayed = forms.FloatField(
+        label="Overs available to Team One",
+        min_value=0,
+        max_value=20,
+        widget=forms.NumberInput(attrs={'step': '0.1'}),
+    )
+    runs_scored_by_team_one_when_second_innings_delayed = forms.IntegerField(
+        label="Runs scored by Team One"
+    )
+    overs_available_to_team_two_at_start_when_second_innings_delayed = forms.FloatField(
+        label="Overs available to Team Two at start",
+        min_value=0,
+        max_value=20,
+        widget=forms.NumberInput(attrs={'step': '0.1'}),
+    )
+    
+    # Additional Validations
+    def clean(self):
+        
+        decimal_validation_message = "Invalid input for overs. Number after decimal should be between 1 and 5"
+        
+        cleaned_data = super().clean()
+        overs_available_to_team_one_when_second_innings_delayed = cleaned_data.get(
+            'overs_available_to_team_one_when_second_innings_delayed'
+        )
+        overs_available_to_team_two_at_start_when_second_innings_delayed = cleaned_data.get(
+            'overs_available_to_team_two_at_start_when_second_innings_delayed'
+        )
+        
+        if not decimal_validator(overs_available_to_team_one_when_second_innings_delayed):
+            self.add_error(
+                "overs_available_to_team_one_when_second_innings_delayed",
+                decimal_validation_message
+            )
+        if not decimal_validator(overs_available_to_team_two_at_start_when_second_innings_delayed):
+            self.add_error(
+                "overs_available_to_team_two_at_start_when_second_innings_delayed",
+                decimal_validation_message
+            )
+        
+        if overs_available_to_team_one_when_second_innings_delayed and overs_available_to_team_two_at_start_when_second_innings_delayed:
+            if overs_available_to_team_two_at_start_when_second_innings_delayed > overs_available_to_team_one_when_second_innings_delayed:
+                self.add_error(
+                    'overs_available_to_team_two_at_start_when_second_innings_delayed',
+                    'Overs available to Team Two at start should be less than or equal to Overs available to Team One'
+                )
