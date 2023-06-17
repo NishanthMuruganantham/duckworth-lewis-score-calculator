@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#dls-input-form, #dls-interrupted-form, #dls-cut-short-form, #dls-second-innings-delayed-form").submit(function (e) {
+    $("#dls-input-form, #dls-interrupted-form, #dls-cut-short-form, #dls-second-innings-delayed-form, dls-first-innings-cut-short-form").submit(function (e) {
         e.preventDefault(); // Prevent the form from submitting normally
         
         // Get the form type

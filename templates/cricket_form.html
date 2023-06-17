@@ -41,6 +41,15 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
+                <!-- First innings Cut short form -->
+                <div>
+                    <form id="dls-first-innings-cut-short-form" class="form-content" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="first_innings_cut_short" value="first_innings_cut_short">
+                        {{ dls_first_innings_cutshort_form.as_p }}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
                 <div id="result-container"></div>
                 <div id="error-messages"></div>
             </div>
