@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>Duckworth Lewis Stern Score Calculator</title>
+        <!-- Include Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <header class="header">
+                <h1 id="title" class="text-center">Calculate DLS Scores: The Cricket's Hidden Equation!</h1>
+                <hr>
+                <p id="description" class="text-center">
+                    Discover cricket's secret weapon. Our DLS Score Calculator simplifies complex equations, enabling accurate scoring in rain-affected matches.
+                </p>
+            </header>
+            <div class="form-wrap">	
+                <form id="survey-form">
+                    {{ dls_second_innings_interrupted_form.as_p }}
+                    {% comment %} <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ dls_second_innings_interrupted_form.overs_available_to_team_one_when_second_innings_interrupted }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label id="email-label" for="email">Email</label>
+                                <input type="email" name="email" id="email" placeholder="Enter your email" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label id="number-label" for="number">Age <small>(optional)</small></label>
+                                <input type="number" name="age" id="number" min="10" max="99" class="form-control" placeholder="Age" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>current role</label>
+                                <select id="dropdown" name="role" class="form-control" required>
+                                    <option disabled selected value>Select</option>
+                                    <option value="student">Student</option>
+                                    <option value="job">Full Time Job</option>
+                                    <option value="learner">Full Time Learner</option>
+                                    <option value="preferNo">Prefer not to say</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Would you recommend survey to a friend?</label>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="customRadioInline1" value="Definitely" name="customRadioInline1" class="custom-control-input" checked="">
+                                    <label class="custom-control-label" for="customRadioInline1">Definitely</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="customRadioInline2" value="Maybe" name="customRadioInline1" class="custom-control-input">
+                                    <label class="custom-control-label" for="customRadioInline2">Maybe</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="customRadioInline3" value="Not sure" name="customRadioInline1" class="custom-control-input">
+                                    <label class="custom-control-label" for="customRadioInline3">Not sure</label>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>This survey useful yes or no?</label>
+                                <div class="custom-control custom-checkbox custom-control-inline">
+                                    <input type="checkbox" class="custom-control-input" name="yes" value="yes" id="yes" checked="">
+                                    <label class="custom-control-label" for="yes">Yes</label>
+                                </div>
+                                <div class="custom-control custom-checkbox custom-control-inline">
+                                    <input type="checkbox" class="custom-control-input" name="no" value="no" id="no">
+                                    <label class="custom-control-label" for="no">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+        
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Leave Message</label>
+                                <textarea  id="comments" class="form-control" name="comment" placeholder="Enter your comment here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="submit" id="submit" class="btn btn-primary btn-block">Submit Survey</button>
+                        </div>
+                    </div> {% endcomment %}
+        
+                </form>
+            </div>	
+        </div>
+        <script>
+            function toggleForm(formId) {
+                const formContent = document.getElementById(formId);
+                formContent.classList.toggle('open');
+            }
+        </script>
+    </body>
+</html>
