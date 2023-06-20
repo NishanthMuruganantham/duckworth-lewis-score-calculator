@@ -38,7 +38,7 @@ $(document).ready(function () {
                             var errorMessageElement = $("<span>").text(errorMessage);
 
                             // Append the elements to the alert
-                            alertElement.append(closeButton,  "<br>", errorMessageElement);
+                            alertElement.append(closeButton, errorMessageElement);
 
                             // Append the alert to the error container
                             $("#error-container").append(alertElement);

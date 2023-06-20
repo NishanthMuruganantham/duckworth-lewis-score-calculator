@@ -22,6 +22,12 @@ h1 {
     font-family: 'Roboto', sans-serif;
 }
 
+h2 {
+    font-weight: 500;
+    font-size: 35px;
+    font-family: 'Roboto', sans-serif;
+}
+
 .header {
     margin-bottom: 80px;
 }
@@ -54,6 +60,7 @@ h1 {
     margin: 0 auto;
     position: absolute;
     top: -30px;
+    bottom: -30px;
     background: #00bcd9;
     z-index: -1;
     opacity: 0.8;
