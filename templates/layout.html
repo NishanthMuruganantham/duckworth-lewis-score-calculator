@@ -38,7 +38,7 @@
                         <div id="error-container"></div>
                         <form id="dls-input-form" method="POST">
                             {% csrf_token %}
-                            <input type="hidden" name="second_innings_interrupted" value="interrupted">
+                            <input type="hidden" name="form_type" value="second_innings_interrupted">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -89,7 +89,7 @@
                                     <button type="submit" class="btn btn-primary btn-block">Get Par Score</button>
                                 </div>
                                 <div class="col-md-4 d-flex align-items-center justify-content-center">
-                                    <div id="result-container"></div>
+                                    <div id="result-container-1"></div>
                                     <div id="error-messages"></div>
                                 </div>
                             </div>
@@ -97,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container1">
+            <div class="container">
                 <header class="header">
                     <h2>Calculate DLS Score when First Innings is Completed and Second Innings got Interrupted</h2>
                     <p id="lorem-text" class="hidden">
@@ -109,58 +109,49 @@
                         <div id="error-container"></div>
                         <form id="dls-input-form" method="POST">
                             {% csrf_token %}
-                            <input type="hidden" name="second_innings_interrupted" value="interrupted">
+                            <input type="hidden" name="form_type" value="second_innings_cut_short">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        {{ dls_second_innings_interrupted_form.overs_available_to_team_one_when_second_innings_interrupted.label_tag }}
-                                        {{ dls_second_innings_interrupted_form.overs_available_to_team_one_when_second_innings_interrupted }}
+                                        {{ dls_second_innings_cutshort_form.overs_available_to_team_one_when_second_innings_cut_short.label_tag }}
+                                        {{ dls_second_innings_cutshort_form.overs_available_to_team_one_when_second_innings_cut_short }}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        {{ dls_second_innings_interrupted_form.runs_scored_by_team_one_when_second_innings_interrupted.label_tag }}
-                                        {{ dls_second_innings_interrupted_form.runs_scored_by_team_one_when_second_innings_interrupted }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="form-group">
-                                        {{ dls_second_innings_interrupted_form.overs_available_to_team_two_at_start_when_second_innings_interrupted.label_tag }}
-                                        {{ dls_second_innings_interrupted_form.overs_available_to_team_two_at_start_when_second_innings_interrupted }}
+                                        {{ dls_second_innings_cutshort_form.runs_scored_by_team_one_when_second_innings_cut_short.label_tag }}
+                                        {{ dls_second_innings_cutshort_form.runs_scored_by_team_one_when_second_innings_cut_short }}
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        {{ dls_second_innings_interrupted_form.overs_used_by_team_two_until_interruption_when_second_innings_interrupted.label_tag }}
-                                        {{ dls_second_innings_interrupted_form.overs_used_by_team_two_until_interruption_when_second_innings_interrupted }}
+                                        {{ dls_second_innings_cutshort_form.overs_available_to_team_two_at_start_when_second_innings_cut_short.label_tag }}
+                                        {{ dls_second_innings_cutshort_form.overs_available_to_team_two_at_start_when_second_innings_cut_short }}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        {{ dls_second_innings_interrupted_form.wickets_lost_by_team_two_when_second_innings_interrupted.label_tag }}
-                                        {{ dls_second_innings_interrupted_form.wickets_lost_by_team_two_when_second_innings_interrupted }}
+                                        {{ dls_second_innings_cutshort_form.overs_used_by_team_two_until_cutoff_when_second_innings_cut_short.label_tag }}
+                                        {{ dls_second_innings_cutshort_form.overs_used_by_team_two_until_cutoff_when_second_innings_cut_short }}
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        {{ dls_second_innings_interrupted_form.maximum_overs_allotted_to_team_two_after_resumption_when_second_innings_interrupted.label_tag }}
-                                        {{ dls_second_innings_interrupted_form.maximum_overs_allotted_to_team_two_after_resumption_when_second_innings_interrupted }}
+                                        {{ dls_second_innings_cutshort_form.wickets_lost_by_team_two_when_second_innings_cut_short.label_tag }}
+                                        {{ dls_second_innings_cutshort_form.wickets_lost_by_team_two_when_second_innings_cut_short }}
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="row">
                                 <div class="col-md-4 d-flex align-items-center">
                                     <button type="submit" class="btn btn-primary btn-block">Get Par Score</button>
                                 </div>
                                 <div class="col-md-4 d-flex align-items-center justify-content-center">
-                                    <div id="result-container"></div>
+                                    <div id="result-container-2"></div>
                                     <div id="error-messages"></div>
                                 </div>
                             </div>

@@ -2,24 +2,32 @@ $(document).ready(function () {
     $("#dls-input-form, #dls-interrupted-form, #dls-cut-short-form, #dls-second-innings-delayed-form, #dls-first-innings-cut-short-form").submit(function (e) {
         e.preventDefault(); // Prevent the form from submitting normally
         
+        var $form = $(this); // Store the form element
+
         // Get the form type
-        var formType = $(this).find('input[name=form_type]').val();
+        var formType = $form.find('input[name=form_type]').val();
         
         // Serialize the form data
-        var formData = $(this).serialize();
+        var formData = $form.serialize();
         
         // Append the form type to the serialized form data
         formData += '&form_type=' + formType;
-        
+
         // Send the AJAX request
         $.ajax({
             type: "POST",
             url: "/", // URL pattern defined in urls.py
             data: formData,
-            success: function (response) {
-                // Display the result in the result-container div
-                $("#result-container").html("<p>Par Score: " + response.result + "</p>");
-                $("#error-container").empty(); // Clear any previous error messages
+            success: function (response) {  
+                // Display the result in the corresponding container based on the form type
+                console.log(formType)
+                if (formType === "second_innings_interrupted") {
+                    $("#result-container-1").html("<p>Par Score: " + response.result + "</p>");
+                    $("#error-container").empty(); // Clear any previous error messages
+                } else if (formType === "second_innings_cut_short") {
+                    $("#result-container-2").html("<p>Par Score: " + response.result + "</p>");
+                    $("#error-container").empty(); // Clear any previous error messages
+                }
             },
             error: function (xhr, status, error) {
                 if (xhr.status === 400) {

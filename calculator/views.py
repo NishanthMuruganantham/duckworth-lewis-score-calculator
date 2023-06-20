@@ -16,13 +16,13 @@ from .utils.scripts import (
 
 def index(request):
     if request.method == 'POST':
-        if "second_innings_cut_short" in request.POST:
+        if request.POST['form_type'] == "second_innings_cut_short":
             return view_for_dls_input_when_first_innings_is_completed_and_second_innings_is_cut_short(request)
-        if "second_innings_interrupted" in request.POST:
+        if request.POST['form_type'] == "second_innings_interrupted":
             return view_for_dls_input_when_first_innings_is_completed_and_second_innings_is_interrupted(request)
-        if "second_innings_delayed" in request.POST:
+        if request.POST['form_type'] == "second_innings_delayed":
             return view_for_dls_input_when_first_innings_is_completed_and_second_innings_is_delayed(request)
-        if "first_innings_cut_short" in request.POST:
+        if request.POST['form_type'] == "first_innings_cut_short":
             return view_for_dls_input_when_first_innings_is_cut_short(request)
     
     else:
