@@ -131,7 +131,7 @@ class DLSInputFormSecondInningsIsCutshort(forms.Form):
         label="Wickets lost by Team Two",
         min_value=0,
         max_value=9,
-        widget=forms.NumberInput(attrs={'step': '0.1', "class": "form-control"}),
+        widget=forms.NumberInput(attrs={"class": "form-control"}),
     )
     
     # Additional Validations
@@ -189,16 +189,17 @@ class DLSInputFormWhenSecondInningsIsDelayed(forms.Form):
         label="Overs available to Team One",
         min_value=0,
         max_value=20,
-        widget=forms.NumberInput(attrs={'step': '0.1'}),
+        widget=forms.NumberInput(attrs={'step': '0.1', "class": "form-control"}),
     )
     runs_scored_by_team_one_when_second_innings_delayed = forms.IntegerField(
-        label="Runs scored by Team One"
+        label="Runs scored by Team One",
+        widget=forms.NumberInput(attrs={"class": "form-control"}),
     )
     overs_available_to_team_two_at_start_when_second_innings_delayed = forms.FloatField(
         label="Overs available to Team Two at start",
         min_value=0,
         max_value=20,
-        widget=forms.NumberInput(attrs={'step': '0.1'}),
+        widget=forms.NumberInput(attrs={'step': '0.1', "class": "form-control"}),
     )
     
     # Additional Validations

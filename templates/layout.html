@@ -26,6 +26,7 @@
                     Discover cricket's secret weapon. Our DLS Score Calculator simplifies complex equations, enabling accurate scoring in rain-affected matches.
                 </p>
             </header>
+            <!-- SECOND INNINGS INTERRUPTED -->
             <div class="container1">
                 <header class="header">
                     <h2>Calculate DLS Score when First Innings is Completed and Second Innings got Interrupted</h2>
@@ -35,7 +36,7 @@
                 </header>
                 <div class="form-wrap">	
                     <div id="form1-container" class="form-content">
-                        <div id="error-container"></div>
+                        <div id="error-container-1"></div>
                         <form id="dls-input-form" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="form_type" value="second_innings_interrupted">
@@ -97,7 +98,8 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
+            <!-- SECOND INNINGS CUT SHORT FORM -->
+            <div class="container1">
                 <header class="header">
                     <h2>Calculate DLS Score when First Innings is Completed and Second Innings got Interrupted</h2>
                     <p id="lorem-text" class="hidden">
@@ -106,7 +108,7 @@
                 </header>
                 <div class="form-wrap">	
                     <div id="form2-container" class="form-content">
-                        <div id="error-container"></div>
+                        <div id="error-container-2"></div>
                         <form id="dls-input-form" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="form_type" value="second_innings_cut_short">
@@ -152,6 +154,55 @@
                                 </div>
                                 <div class="col-md-4 d-flex align-items-center justify-content-center">
                                     <div id="result-container-2"></div>
+                                    <div id="error-messages"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- SECOND INNINGS DELAYED FORM -->
+            <div class="container1">
+                <header class="header">
+                    <h2>Calculate DLS Score when First Innings is Completed and Second Innings is Delayed</h2>
+                    <p id="lorem-text" class="hidden">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque in voluptas obcaecati, laboriosam quae qui hic, nemo repellendus esse, corporis cupiditate expedita necessitatibus architecto aliquid. Reprehenderit cupiditate quae optio saepe!
+                    </p>
+                </header>
+                <div class="form-wrap">
+                    <div id="form2-container" class="form-content">
+                        <div id="error-container-3"></div>
+                        <form id="dls-input-form" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="form_type" value="second_innings_delayed">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ dls_second_innings_delayed_form.overs_available_to_team_one_when_second_innings_delayed.label_tag }}
+                                        {{ dls_second_innings_delayed_form.overs_available_to_team_one_when_second_innings_delayed }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ dls_second_innings_delayed_form.runs_scored_by_team_one_when_second_innings_delayed.label_tag }}
+                                        {{ dls_second_innings_delayed_form.runs_scored_by_team_one_when_second_innings_delayed }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ dls_second_innings_delayed_form.overs_available_to_team_two_at_start_when_second_innings_delayed.label_tag }}
+                                        {{ dls_second_innings_delayed_form.overs_available_to_team_two_at_start_when_second_innings_delayed }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 d-flex align-items-center">
+                                    <button type="submit" class="btn btn-primary btn-block">Get Par Score</button>
+                                </div>
+                                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                    <div id="result-container-3"></div>
                                     <div id="error-messages"></div>
                                 </div>
                             </div>
