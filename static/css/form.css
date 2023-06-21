@@ -76,6 +76,16 @@ h2 {
     margin-bottom: 25px;
 }
 
+#lorem-text {
+    background-color: #f7f7f7;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.container1 {
+    margin-bottom: 10%;
+}
+
 .form-group>label {
     display: block;
     font-size: 18px;
