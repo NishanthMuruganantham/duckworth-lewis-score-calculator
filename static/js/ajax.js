@@ -20,13 +20,15 @@ $(document).ready(function () {
             data: formData,
             success: function (response) {  
                 // Display the result in the corresponding container based on the form type
-                console.log(formType)
                 if (formType === "second_innings_interrupted") {
                     $("#result-container-1").html("<p>Par Score: " + response.result + "</p>");
-                    $("#error-container").empty(); // Clear any previous error messages
+                    $("#error-container-1").empty(); // Clear any previous error messages
                 } else if (formType === "second_innings_cut_short") {
                     $("#result-container-2").html("<p>Par Score: " + response.result + "</p>");
-                    $("#error-container").empty(); // Clear any previous error messages
+                    $("#error-container-2").empty(); // Clear any previous error messages
+                } else if (formType === "second_innings_delayed") {
+                    $("#result-container-3").html("<p>Par Score: " + response.result + "</p>");
+                    $("#error-container-3").empty(); // Clear any previous error messages
                 }
             },
             error: function (xhr, status, error) {
@@ -49,7 +51,16 @@ $(document).ready(function () {
                             alertElement.append(closeButton, errorMessageElement);
 
                             // Append the alert to the error container
-                            $("#error-container").append(alertElement);
+                            if (formType === "second_innings_interrupted") {
+                                $("#error-container-1").empty();
+                                $("#error-container-1").append(alertElement);
+                            } else if (formType === "second_innings_cut_short") {
+                                $("#error-container-2").empty();
+                                $("#error-container-2").append(alertElement);
+                            } else if (formType === "second_innings_delayed") {
+                                $("#error-container-3").empty();
+                                $("#error-container-3").append(alertElement);
+                            }
 
                             // Attach event handler to the close button to remove the alert when clicked
                             closeButton.click(function () {
