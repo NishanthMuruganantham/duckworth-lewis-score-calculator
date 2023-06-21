@@ -210,6 +210,69 @@
                     </div>
                 </div>
             </div>
+            <!-- FIRST INNINGS CUTSHORT FORM -->
+            <div class="container1">
+                <header class="header">
+                    <h2>Calculate DLS Score when First Innings is Cut-short</h2>
+                    <p id="lorem-text" class="hidden">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque in voluptas obcaecati, laboriosam quae qui hic, nemo repellendus esse, corporis cupiditate expedita necessitatibus architecto aliquid. Reprehenderit cupiditate quae optio saepe!
+                    </p>
+                </header>
+                <div class="form-wrap">
+                    <div id="form2-container" class="form-content">
+                        <div id="error-container-4"></div>
+                        <form id="dls-input-form" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="form_type" value="first_innings_cut_short">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ dls_first_innings_cutshort_form.overs_available_to_team_one_when_first_innings_cut_short.label_tag }}
+                                        {{ dls_first_innings_cutshort_form.overs_available_to_team_one_when_first_innings_cut_short }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ dls_first_innings_cutshort_form.runs_scored_by_team_one_when_first_innings_cut_short.label_tag }}
+                                        {{ dls_first_innings_cutshort_form.runs_scored_by_team_one_when_first_innings_cut_short }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ dls_first_innings_cutshort_form.wickets_lost_by_team_one_when_first_innings_cut_short.label_tag }}
+                                        {{ dls_first_innings_cutshort_form.wickets_lost_by_team_one_when_first_innings_cut_short }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ dls_first_innings_cutshort_form.overs_used_by_team_one_until_cutoff_when_first_innings_cut_short.label_tag }}
+                                        {{ dls_first_innings_cutshort_form.overs_used_by_team_one_until_cutoff_when_first_innings_cut_short }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ dls_first_innings_cutshort_form.overs_available_to_team_two_at_start_when_first_innings_cut_short.label_tag }}
+                                        {{ dls_first_innings_cutshort_form.overs_available_to_team_two_at_start_when_first_innings_cut_short }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 d-flex align-items-center">
+                                    <button type="submit" class="btn btn-primary btn-block">Get Par Score</button>
+                                </div>
+                                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                    <div id="result-container-4"></div>
+                                    <div id="error-messages"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="{% static 'js/ajax.js' %}"></script>
