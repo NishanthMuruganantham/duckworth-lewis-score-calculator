@@ -6,7 +6,7 @@ from .forms import (
     DLSInputFormWhenSecondInningsIsDelayed,
     DLSInputFormWhenFirstInningsIsCutshort
 )
-from .utils.scripts import (
+from .scripts import (
     get_par_score_when_first_innings_is_completed_and_second_innings_is_interrupted,
     get_par_score_when_first_innings_is_completed_and_second_innings_is_cut_short,
     get_par_score_when_first_innings_is_completed_and_second_innings_is_delayed,
@@ -31,7 +31,7 @@ def index(request):
         dls_second_innings_delayed_form = DLSInputFormWhenSecondInningsIsDelayed()
         dls_first_innings_cutshort_form = DLSInputFormWhenFirstInningsIsCutshort()
         return render(
-            request, 'layout.html', {
+            request, 'home.html', {
                 "dls_second_innings_interrupted_form": dls_second_innings_interrupted_form,
                 "dls_second_innings_cutshort_form": dls_second_innings_cutshort_form,
                 "dls_second_innings_delayed_form": dls_second_innings_delayed_form,
