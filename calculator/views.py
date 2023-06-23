@@ -31,7 +31,7 @@ def index(request):
         dls_second_innings_delayed_form = DLSInputFormWhenSecondInningsIsDelayed()
         dls_first_innings_cutshort_form = DLSInputFormWhenFirstInningsIsCutshort()
         return render(
-            request, 'home.html', {
+            request, 'new_template.html', {
                 "dls_second_innings_interrupted_form": dls_second_innings_interrupted_form,
                 "dls_second_innings_cutshort_form": dls_second_innings_cutshort_form,
                 "dls_second_innings_delayed_form": dls_second_innings_delayed_form,
