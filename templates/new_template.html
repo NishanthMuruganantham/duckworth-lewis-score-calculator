@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="shortcut icon" href="{% static 'bootstrap/images/calculator.png' %}" type="image/x-icon">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -45,7 +45,7 @@ https://templatemo.com/tm-584-pod-talk
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <a class="navbar-brand me-lg-5 me-0" href="index.html">
-                    <img src="images/pod-talk-logo.png" class="logo-image img-fluid" alt="templatemo pod talk">
+                    <img src="{% static 'bootstrap/images/calculator.png' %}" class="logo-image img-fluid" alt="templatemo pod talk">
                 </a>
 
                 <form action="#" method="get" class="custom-form search-form flex-fill me-3" role="search">
@@ -106,13 +106,15 @@ https://templatemo.com/tm-584-pod-talk
 
                         <h2 class="mb-0">Calculate DLS Scores: The Cricket's Hidden Equation!</h2>
                     </div>
-                    
 
                 </div>
             </div>
+           
         </header>
 
-
+        <p id="description" class="text-center">
+            Discover cricket's secret weapon. Our DLS Score Calculator simplifies complex equations, enabling accurate scoring in rain-affected matches.
+        </p>
 
 
         <section class="contact-section section-padding pt-0">
