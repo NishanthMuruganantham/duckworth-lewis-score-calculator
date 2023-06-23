@@ -330,7 +330,7 @@ main {
   border: 0;
   display: inherit;
   opacity: 0;
-  min-width: 9rem;
+  min-width: 285px;
   margin-top: 20px;
   padding: 13px 0 10px 0;
   transition: all 0.3s;
