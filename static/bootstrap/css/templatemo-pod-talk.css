@@ -935,6 +935,12 @@ main {
   margin-bottom: 0;
 }
 
+.subscribe-form #contact-name {
+  border: 0;
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 0;
+}
+
 .subscribe-form #submit {
   border-radius: 0 0 10px 10px;
 }
