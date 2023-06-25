@@ -20,13 +20,13 @@ $(document).ready(function () {
             data: formData,
             success: function (response) {  
                 // Display the result in the corresponding container based on the form type
-                if (formType === "second_innings_interrupted") {
-                    $("#result-container-1").html("<p>Par Score: " + response.result + "</p>");
+                if (formType === "second_innings_delayed") {
+                    $("#result-container-1").html('<p class="badge mb-0">Par Score: ' + response.result + "</p>");
                     $("#error-container-1").empty(); // Clear any previous error messages
                 } else if (formType === "second_innings_cut_short") {
                     $("#result-container-2").html("<p>Par Score: " + response.result + "</p>");
                     $("#error-container-2").empty(); // Clear any previous error messages
-                } else if (formType === "second_innings_delayed") {
+                } else if (formType === "second_innings_interrupted") {
                     $("#result-container-3").html("<p>Par Score: " + response.result + "</p>");
                     $("#error-container-3").empty(); // Clear any previous error messages
                 } else if (formType === "first_innings_cut_short") {
@@ -54,7 +54,7 @@ $(document).ready(function () {
                             alertElement.append(closeButton, errorMessageElement);
 
                             // Append the alert to the error container
-                            if (formType === "second_innings_interrupted") {
+                            if (formType === "second_innings_delayed") {
                                 $("#error-container-1").empty();
                                 $("#result-container-1").empty();
                                 $("#error-container-1").append(alertElement);
@@ -62,7 +62,7 @@ $(document).ready(function () {
                                 $("#error-container-2").empty();
                                 $("#result-container-2").empty();
                                 $("#error-container-2").append(alertElement);
-                            } else if (formType === "second_innings_delayed") {
+                            } else if (formType === "second_innings_interrupted") {
                                 $("#error-container-3").empty();
                                 $("#result-container-3").empty();
                                 $("#error-container-3").append(alertElement);
