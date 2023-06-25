@@ -44,7 +44,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">DLS Calculators</a>
                             <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                                <li><a class="dropdown-item" href="#second_innings">Second Innings Delayed</a></li>
+                                <li><a class="dropdown-item" href="#second_innings_delayed">Second Innings Delayed</a></li>
                                 <li><a class="dropdown-item" href="detail-page.html">Second Innings Cutshort</a></li>
                                 <li><a class="dropdown-item" href="detail-page.html">Second Innings Interrupted</a></li>
                                 <li><a class="dropdown-item" href="detail-page.html">First Innings Cutshort</a></li>
@@ -76,7 +76,7 @@
             <div class="container">
                 <div class="jumbotron">
                     <div class="col-lg-8 col-12 mx-auto">
-                        <div class="pb-5 mb-3">
+                        <div class="pb-5 mb-2">
                             <div class="section-title-wrap mb-4">
                                 <h4 class="section-title">Duckworth Lewis Score Calculator</h4>
                             </div>
@@ -117,7 +117,7 @@
                 </div>
                 <hr>
                 <!-- FORM FOR DELAYED SECOND INNINGS -->
-                <div class="row mt-3 mb-5" id="second_innings">
+                <div class="row mt-5 mb-5" id="second_innings_delayed">
                     <div class="col-lg-9 col-12 mx-auto">
                         <div class="section-title-wrap mb-5">
                             <h4 class="section-title">Calculate DLS Par Score for Delayed Second Innings</h4>
@@ -142,33 +142,36 @@
                         <p class="mb-4">
                             Submit the form to calculate the revised target score
                         </p>
-                        <form method="POST" class="custom-form contact-form" id="dls-input-form" role="form">
-                            {% csrf_token %}
-                            <input type="hidden" name="form_type" value="second_innings_interrupted">
-                            <div class="row">
-                                {% for field in dls_second_innings_delayed_form %}
-                                <div class="col-lg-6 col-md-6 col-12">
-                                    <div class="form-floating">
-                                        {{field}}
-                                        {{field.label_tag}}
+                        <div class="custom-block custom-block-full">
+                            <div id="error-container-1"></div>
+                            <form method="POST" class="custom-form contact-form" id="dls-second-innings-delayed-form" role="form">
+                                {% csrf_token %}
+                                <input type="hidden" name="form_type" value="second_innings_delayed">
+                                <div class="row">
+                                    {% for field in dls_second_innings_delayed_form %}
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-floating">
+                                            {{field}}
+                                            {{field.label_tag}}
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div id="result-container-1"></div>
+                                    </div>
+                                    <div class="col-lg-4 col-12 ms-auto">
+                                        <button type="submit" class="form-control">Submit</button>
                                     </div>
                                 </div>
-                                {% endfor %}
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-12">
-                                    <div id="result-container-1"></div>
-                                </div>
-                                <div class="col-lg-4 col-12 ms-auto">
-                                    <button type="submit" class="form-control">Submit</button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
-
+                <hr>
                 <!-- FORM FOR CURTAILED SECOND INNINGS -->
-                <div class="row mt-3 mb-5" id="second_innings">
+                <div class="row mt-5 mb-5" id="second_innings">
 
                     <div class="col-lg-9 col-12 mx-auto">
                         <div class="section-title-wrap mb-5">
