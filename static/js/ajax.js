@@ -27,7 +27,7 @@ $(document).ready(function () {
                     $("#result-container-2").html('<p class="badge mb-0">Par Score: ' + response.result + "</p>");
                     $("#error-container-2").empty(); // Clear any previous error messages
                 } else if (formType === "second_innings_interrupted") {
-                    $("#result-container-3").html("<p>Par Score: " + response.result + "</p>");
+                    $("#result-container-3").html('<p class="badge mb-0">Par Score: ' + response.result + "</p>");
                     $("#error-container-3").empty(); // Clear any previous error messages
                 } else if (formType === "first_innings_cut_short") {
                     $("#result-container-4").html("<p>Par Score: " + response.result + "</p>");

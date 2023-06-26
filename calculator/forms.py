@@ -11,35 +11,35 @@ class DLSInputFormWhenSecondInningsIsInterrupted(forms.Form):
         max_value=20,
         widget=forms.NumberInput(
             attrs={
-                'step': '0.1', "class": "form-control", "placeholder": "Team One"
+                'step': '0.1', "class": "form-control"
             }
         )
     )
     runs_scored_by_team_one_when_second_innings_interrupted = forms.IntegerField(
         label="Runs scored by Team One",
-        widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "Team One"})
+        widget=forms.NumberInput(attrs={"class": "form-control"})
     )
     overs_available_to_team_two_at_start_when_second_innings_interrupted = forms.FloatField(
         label="Overs available to Team Two at Start of the innings",
         min_value=0,
         max_value=20,
-        widget=forms.NumberInput(attrs={'step': '0.1', "class": "form-control", "placeholder": "Team One"}),
+        widget=forms.NumberInput(attrs={'step': '0.1', "class": "form-control"}),
     )
     overs_used_by_team_two_until_interruption_when_second_innings_interrupted = forms.FloatField(
         label="Overs used by Team Two until interruption",
         min_value=0,
         max_value=20,
-        widget=forms.NumberInput(attrs={'step': '0.1', "class": "form-control", "placeholder": "Team One"})
+        widget=forms.NumberInput(attrs={'step': '0.1', "class": "form-control"})
     )
     wickets_lost_by_team_two_when_second_innings_interrupted = forms.IntegerField(
         label="Wickets lost by Team Two", min_value=0, max_value=9,
-        widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "Team One"})
+        widget=forms.NumberInput(attrs={"class": "form-control"})
     )
     maximum_overs_allotted_to_team_two_after_resumption_when_second_innings_interrupted = forms.FloatField(
         label="Maximum overs allotted to Team Two after resumption",
         min_value=0,
         max_value=20,
-        widget=forms.NumberInput(attrs={'step': '0.1', "class": "form-control", "placeholder": "Team One"})
+        widget=forms.NumberInput(attrs={'step': '0.1', "class": "form-control"})
     )
     
     # Additional Validations
@@ -98,6 +98,13 @@ class DLSInputFormWhenSecondInningsIsInterrupted(forms.Form):
                 )
         if maximum_overs_allotted_to_team_two_after_resumption and overs_used_by_team_two_until_interruption:
             if maximum_overs_allotted_to_team_two_after_resumption < overs_used_by_team_two_until_interruption:
+                self.add_error(
+                    'maximum_overs_allotted_to_team_two_after_resumption_when_second_innings_interrupted',
+                    'Maximum overs allotted to team two after resumption should be greater than the overs \
+                        used by Team Two during interruption'
+                )
+        if maximum_overs_allotted_to_team_two_after_resumption and overs_available_to_team_two_at_start:
+            if maximum_overs_allotted_to_team_two_after_resumption >= overs_available_to_team_two_at_start:
                 self.add_error(
                     'maximum_overs_allotted_to_team_two_after_resumption_when_second_innings_interrupted',
                     'Maximum overs allotted to team two after resumption should be less than the overs \
