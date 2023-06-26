@@ -176,7 +176,7 @@ class DLSInputFormSecondInningsIsCutshort(forms.Form):
                     'overs_available_to_team_two_at_start_when_second_innings_cut_short',
                     'Overs available to Team Two at start should be less than or equal to Overs available to Team One'
                 )
-
+        
         if overs_used_by_team_two_until_cutoff_when_second_innings_cut_short and overs_available_to_team_two_at_start_when_second_innings_cut_short:
             if overs_used_by_team_two_until_cutoff_when_second_innings_cut_short >= overs_available_to_team_two_at_start_when_second_innings_cut_short:
                 self.add_error(
