@@ -1,0 +1,26 @@
+{
+    "builds": [{
+            "src": "configs/wsgi.py",
+            "use": "@vercel/python",
+            "config": {
+                "maxLambdaSize": "80mb",
+                "runtime": "python3.9",
+                "wsgiApplicationName": "application"
+            }
+        },
+        {
+            "src": "build.sh",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "staticfiles_folder"
+            }
+        }
+    ],
+    "routes": [{
+        "src": "/static/(.*)",
+        "dest": "/static/$1"
+    }, {
+        "src": "/(.*)",
+        "dest": "/configs/wsgi.py"
+    }]
+}
