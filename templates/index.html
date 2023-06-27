@@ -28,7 +28,6 @@
 
 <body>
     <main>
-
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <a class="navbar-brand me-lg-5 me-0" href="{% url 'calculator:home' %}">
@@ -47,7 +46,7 @@
                                 <li><a class="dropdown-item" href="#second_innings_delayed">Second Innings Delayed</a></li>
                                 <li><a class="dropdown-item" href="#second_innings_curtailed">Second Innings Cutshort</a></li>
                                 <li><a class="dropdown-item" href="#second_innings_interrupted">Second Innings Interrupted</a></li>
-                                <li><a class="dropdown-item" href="detail-page.html">First Innings Cutshort</a></li>
+                                <li><a class="dropdown-item" href="#first_innings_curtailed">First Innings Cutshort</a></li>
                                 <li><a class="dropdown-item" href="detail-page.html">First Innings Interrupted</a></li>
                             </ul>
                         </li>
@@ -240,6 +239,52 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div id="result-container-3"></div>
+                                    </div>
+                                    <div class="col-lg-4 col-12 ms-auto">
+                                        <button type="submit" class="form-control">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <!-- FORM FOR CURTAILED FIRST INNINGS -->
+                <div class="row mt-5 mb-5" id="first_innings_curtailed">
+                    <div class="col-lg-9 col-12 mx-auto">
+                        <div class="section-title-wrap mb-5">
+                            <h4 class="section-title">Calculate DLS Par Score for Curtailed First Innings (Cutshort)</h4>
+                        </div>
+                        <p>
+                            The form below is used to calculate the Duckworth-Lewis-Stern (DLS) Par Score in a scenario where the first innings of a cricket match is Cutshort in the middle due to rain or other adverse conditions.
+                        </p>
+                        <p>
+                            This situation arises when the team batting first is playing their innings. If rain or another interruption occurs, causing a significant delay, the play is stopped.
+                            If the duration of the stoppage exceeds the maximum resumable time for the first innings, then the first innings will be cut short. 
+                            Following the interruption, Team Two will proceed with the second innings, either with the same number of overs as Team One batted or with reduced overs based on the stoppage time. 
+                        </p>
+                        <p class="mb-5">
+                            Consequently, the target score for Team Two will be adjusted based on the resources available to Team One during the cut short, as well as the overs allotted to Team Two. 
+                            The DLS Par Score calculation takes these factors into account.
+                        </p>
+                        <div class="custom-block custom-block-full">
+                            <div id="error-container-4"></div>
+                            <form method="POST" class="custom-form contact-form" id="dls-first-innings-cut-short-form" role="form">
+                                {% csrf_token %}
+                                <input type="hidden" name="form_type" value="first_innings_cut_short">
+                                <div class="row">
+                                    {% for field in dls_first_innings_cutshort_form %}
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-floating">
+                                            {{field}}
+                                            {{field.label_tag}}
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div id="result-container-4"></div>
                                     </div>
                                     <div class="col-lg-4 col-12 ms-auto">
                                         <button type="submit" class="form-control">Submit</button>
