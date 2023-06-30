@@ -71,7 +71,7 @@
             </div>
         </header>
 
-        <section class="contact-section section-padding pt-0">
+        <section class="contact-section section-padding pt-5">
             <div class="container">
                 <div class="jumbotron">
                     <div class="col-lg-8 col-12 mx-auto">
@@ -306,8 +306,7 @@
 
                 <div class="col-lg-6 col-12 mb-5 mb-lg-0">
                     <div class="subscribe-form-wrap">
-                        <h6>Subscribe. Every weekly.</h6>
-
+                        <h6>Developer's Contact</h6>
                         <form class="custom-form subscribe-form" action="#" method="get" role="form">
                             
                             <input type="email" name="subscribe-email" id="email" pattern="[^ @]*@[^ @]*"
@@ -321,46 +320,54 @@
                 </div>
 
                 <div class="col-lg-3 col-md-6 col-12 mb-4 mb-md-0 mb-lg-0">
-                    <h6 class="site-footer-title mb-3">Contact</h6>
-
-                    <p class="mb-2"><strong class="d-inline me-2">Phone:</strong> 010-020-0340</p>
-
+                    <h6 class="site-footer-title mb-3">DLS score Calculator Forms</h6>
                     <p>
-                        <strong class="d-inline me-2">Email:</strong>
-                        <a href="#">inquiry@pod.co</a>
+                        <a href="#second_innings_delayed">Second Innings Delayed</a>
+                    </p>
+                    <p class="site-footer-link">
+                        <a href="#second_innings_curtailed">Second Innings Cutshort</a>
+                    </p>
+                    <p>
+                        <a href="#second_innings_interrupted">Second Innings Interrupted</a>
+                    </p>
+                    <p>
+                        <a href="#first_innings_curtailed">First Innings Cutshort</a>
                     </p>
                 </div>
 
                 <div class="col-lg-3 col-md-6 col-12">
-                    <h6 class="site-footer-title mb-3">Download Mobile</h6>
-
+                    <h6 class="site-footer-title mb-3">References</h6>
                     <div class="site-footer-thumb mb-4 pb-2">
                         <div class="d-flex flex-wrap">
-                            <a href="#">
-                                <img src="images/app-store.png" class="me-3 mb-2 mb-lg-0 img-fluid" alt="">
+                            <a href="https://en.wikipedia.org/wiki/Duckworth%E2%80%93Lewis%E2%80%93Stern_method" target="_blank">
+                                Duckworth Lewis Method - Wikipedia
                             </a>
-
-                            <a href="#">
-                                <img src="images/play-store.png" class="img-fluid" alt="">
+                            <a href="https://www.espncricinfo.com/ci/content/page/409991.html" target="_blank">
+                                ESPN CricInfo
+                            </a>
+                            <a href="https://www.t20worldcup.com/news/287938#:~:text=The%20ICC%20formally%20adopted%20the,is%20lost%20in%20the%20match" target="_blank">
+                                DLS Method - t20worldcup.com
+                            </a>
+                            <a href="https://www.bruinsportsanalytics.com/post/duckworthlewissternmethod" target="_blank">
+                                Bruin Sports Analytics
                             </a>
                         </div>
                     </div>
-
-                    <h6 class="site-footer-title mb-3">Social</h6>
-
+                    <!-- <h6 class="site-footer-title mb-3">Social</h6>
+                        <a href="">
+                                
+                            </a>
                     <ul class="social-icon">
                         <li class="social-icon-item">
                             <a href="#" class="social-icon-link bi-instagram"></a>
                         </li>
-
                         <li class="social-icon-item">
                             <a href="#" class="social-icon-link bi-twitter"></a>
                         </li>
-
                         <li class="social-icon-item">
                             <a href="#" class="social-icon-link bi-whatsapp"></a>
                         </li>
-                    </ul>
+                    </ul> -->
                 </div>
 
             </div>
@@ -370,38 +377,35 @@
             <div class="row align-items-center">
 
                 <div class="col-lg-2 col-md-3 col-12">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="{% url 'calculator:home' %}">
                         <img src="{% static 'bootstrap/images/calculator.png' %}" class="logo-image img-fluid" alt="templatemo pod talk">
                     </a>
                 </div>
 
-                <div class="col-lg-7 col-md-9 col-12">
+                <div class="col-lg-10 col-md-9 col-12">
                     <ul class="site-footer-links">
                         <li class="site-footer-link-item">
-                            <a href="#" class="site-footer-link">Homepage</a>
+                            <a href="https://github.com/NishanthMuruganantham/duckworth-lewis-score-calculator" target="_blank">GitHub Page</a>
                         </li>
-
                         <li class="site-footer-link-item">
-                            <a href="#" class="site-footer-link">Browse episodes</a>
+                            <a href="https://en.wikipedia.org/wiki/Duckworth%E2%80%93Lewis%E2%80%93Stern_method" target="_blank">More About DLS</a>
                         </li>
-
                         <li class="site-footer-link-item">
-                            <a href="#" class="site-footer-link">Help Center</a>
+                            <a href="https://themewagon.com/themes/podtalk-free-bootstrap-5-html5-website-template/" target="_blank">Template Courtesy</a>
                         </li>
-
                         <li class="site-footer-link-item">
-                            <a href="#" class="site-footer-link">Contact Us</a>
+                            <a href="https://thesportsrush.com/cricket-news-weather-in-southampton-today-will-any-play-happen-on-day-3-of-eng-vs-pak-ageas-bowl-test/" target="_blank">Banner Image Courtesy</a>
                         </li>
                     </ul>
                 </div>
 
-                <div class="col-lg-3 col-12">
+                <!-- <div class="col-lg-3 col-12">
                     <ul class="copyright-text mb-0">
                         <li>
                             Main Reference: <a href="https://en.wikipedia.org/wiki/Duckworth%E2%80%93Lewis%E2%80%93Stern_method">DLS Method Wiki</a>
                         </li>
                     </ul>
-                </div>
+                </div> -->
             </div>
         </div>
     </footer>
