@@ -328,3 +328,108 @@ class DLSInputFormWhenFirstInningsIsCutshort(forms.Form):
                     'overs_available_to_team_two_at_start_when_first_innings_cut_short',
                     'Overs available to Team Two should be less than or equal to the overs used by Team One until Cut-short'
                 )
+
+
+
+class DLSInputFormWhenFirstInningsIsInterrupted(forms.Form):
+    
+    # Forms Fields
+    overs_available_to_team_one_when_first_innings_interrupted = forms.FloatField(
+        label="Overs available to Team One at start",
+        min_value=0,
+        max_value=20,
+        widget=forms.NumberInput(attrs={'step': '0.1', "class": "form-control"}),
+    )
+    overs_used_by_team_one_until_interruption_when_first_innings_interrupted = forms.FloatField(
+        label="Overs used by Team One until Interruption",
+        min_value=0,
+        max_value=20,
+        widget=forms.NumberInput(attrs={'step': '0.1', "class": "form-control"})
+    )
+    wickets_lost_by_team_one_until_interruption_when_first_innings_interrupted = forms.IntegerField(
+        label="Wickets lost by Team One",
+        min_value=0,
+        max_value=9,
+        widget=forms.NumberInput(attrs={"class": "form-control"})
+    )
+    maximum_overs_allotted_to_team_one_after_resumption_when_first_innings_interrupted = forms.FloatField(
+        label="Maximum overs allotted to Team One after resumption",
+        min_value=0,
+        max_value=20,
+        widget=forms.NumberInput(attrs={'step': '0.1', "class": "form-control"})
+    )
+    runs_scored_by_team_one_when_first_innings_interrupted = forms.IntegerField(
+        label="Total Runs scored by Team One",
+        widget=forms.NumberInput(attrs={"class": "form-control"})
+    )
+    overs_available_to_team_two_at_start_when_first_innings_interrupted = forms.FloatField(
+        label="Overs available to Team Two at start",
+        min_value=0,
+        max_value=20,
+        widget=forms.NumberInput(attrs={'step': '0.1', "class": "form-control"}),
+    )
+    
+    # Additional Validations
+    def clean(self):
+        
+        decimal_validation_message = "Invalid input for overs. Number after decimal should be between 1 and 5"
+        
+        cleaned_data = super().clean()
+        overs_available_to_team_one_when_first_innings_interrupted = cleaned_data.get(
+            'overs_available_to_team_one_when_first_innings_interrupted'
+        )
+        overs_used_by_team_one_until_interruption_when_first_innings_interrupted = cleaned_data.get(
+            'overs_used_by_team_one_until_interruption_when_first_innings_interrupted'
+        )
+        maximum_overs_allotted_to_team_one_after_resumption_when_first_innings_interrupted = cleaned_data.get(
+            'maximum_overs_allotted_to_team_one_after_resumption_when_first_innings_interrupted'
+        )
+        overs_available_to_team_two_at_start_when_first_innings_interrupted = cleaned_data.get(
+            'overs_available_to_team_two_at_start_when_first_innings_interrupted'
+        )
+        
+        if not decimal_validator(overs_available_to_team_one_when_first_innings_interrupted):
+            self.add_error(
+                "overs_available_to_team_one_when_first_innings_interrupted",
+                decimal_validation_message
+            )
+        if not decimal_validator(overs_used_by_team_one_until_interruption_when_first_innings_interrupted):
+            self.add_error(
+                "overs_used_by_team_one_until_interruption_when_first_innings_interrupted",
+                decimal_validation_message
+            )
+        if not decimal_validator(maximum_overs_allotted_to_team_one_after_resumption_when_first_innings_interrupted):
+            self.add_error(
+                "maximum_overs_allotted_to_team_one_after_resumption_when_first_innings_interrupted",
+                decimal_validation_message
+            )
+        if not decimal_validator(overs_available_to_team_two_at_start_when_first_innings_interrupted):
+            self.add_error(
+                "overs_available_to_team_two_at_start_when_first_innings_interrupted",
+                decimal_validation_message
+            )
+        
+        if overs_available_to_team_one_when_first_innings_interrupted and overs_used_by_team_one_until_interruption_when_first_innings_interrupted:
+            if overs_available_to_team_one_when_first_innings_interrupted <= overs_used_by_team_one_until_interruption_when_first_innings_interrupted:
+                self.add_error(
+                    'overs_used_by_team_one_until_interruption_when_first_innings_interrupted',
+                    'Overs used by Team One should be less than the Overs alloted to them at start'
+                )
+        if maximum_overs_allotted_to_team_one_after_resumption_when_first_innings_interrupted and overs_used_by_team_one_until_interruption_when_first_innings_interrupted:
+            if maximum_overs_allotted_to_team_one_after_resumption_when_first_innings_interrupted <= overs_used_by_team_one_until_interruption_when_first_innings_interrupted:
+                self.add_error(
+                    'maximum_overs_allotted_to_team_one_after_resumption_when_first_innings_interrupted',
+                    'Overs alloted to Team one after resumption should be greater than the Overs used by them until interruption'
+                )
+        if overs_available_to_team_one_when_first_innings_interrupted and maximum_overs_allotted_to_team_one_after_resumption_when_first_innings_interrupted:
+            if overs_available_to_team_one_when_first_innings_interrupted <= maximum_overs_allotted_to_team_one_after_resumption_when_first_innings_interrupted:
+                self.add_error(
+                    'maximum_overs_allotted_to_team_one_after_resumption_when_first_innings_interrupted',
+                    'Overs alloted to Team one after resumption should be greater than the Overs alloted to them at start'
+                )
+        if maximum_overs_allotted_to_team_one_after_resumption_when_first_innings_interrupted and overs_available_to_team_two_at_start_when_first_innings_interrupted:
+            if maximum_overs_allotted_to_team_one_after_resumption_when_first_innings_interrupted < overs_available_to_team_two_at_start_when_first_innings_interrupted:
+                self.add_error(
+                    'overs_available_to_team_two_at_start_when_first_innings_interrupted',
+                    'Overs alloted to Team Two should be less than or equal to the Overs allotted to Team one after resumption'
+                )
