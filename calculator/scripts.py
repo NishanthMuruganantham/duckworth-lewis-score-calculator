@@ -18,7 +18,7 @@ def convert_overs_to_balls(overs):
 
 
 def get_par_score_when_first_innings_is_completed_and_second_innings_is_interrupted(
-    overs_available_to_team_one,
+    overs_available_to_team_one_at_start,
     runs_scored_by_team_one,
     overs_available_to_team_two_at_start,
     overs_used_by_team_two_until_interruption,
@@ -27,7 +27,7 @@ def get_par_score_when_first_innings_is_completed_and_second_innings_is_interrup
 ):
     resource_for_0_wickets_lost = resource_table_df["0"][::-1]
     
-    balls_available_to_team_one_at_start = convert_overs_to_balls(overs_available_to_team_one)
+    balls_available_to_team_one_at_start = convert_overs_to_balls(overs_available_to_team_one_at_start)
     balls_available_to_team_two_at_start = convert_overs_to_balls(overs_available_to_team_two_at_start)
     balls_used_by_team_two_until_interruption = convert_overs_to_balls(overs_used_by_team_two_until_interruption)
     balls_remaining_to_team_two_during_interruption = balls_available_to_team_two_at_start - balls_used_by_team_two_until_interruption
