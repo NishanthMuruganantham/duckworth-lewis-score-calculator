@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#dls-input-form, #dls-interrupted-form, #dls-cut-short-form, #dls-second-innings-delayed-form, #dls-first-innings-cut-short-form").submit(function (e) {
+    $("#dls-input-form, #dls-interrupted-form, #dls-cut-short-form, #dls-second-innings-delayed-form, #dls-first-innings-cut-short-form, #dls-first-innings-interrupted-form").submit(function (e) {
         e.preventDefault(); // Prevent the form from submitting normally
         
         var $form = $(this); // Store the form element
@@ -32,6 +32,9 @@ $(document).ready(function () {
                 } else if (formType === "first_innings_cut_short") {
                     $("#result-container-4").html('<p class="btn custom-btn">Par Score: ' + response.result + "</p>");
                     $("#error-container-4").empty(); // Clear any previous error messages
+                } else if (formType === "first_innings_interrupted") {
+                    $("#result-container-5").html('<p class="btn custom-btn">Par Score: ' + response.result + "</p>");
+                    $("#error-container-5").empty(); // Clear any previous error messages
                 }
             },
             error: function (xhr, status, error) {
@@ -70,6 +73,10 @@ $(document).ready(function () {
                                 $("#error-container-4").empty();
                                 $("#result-container-4").empty();
                                 $("#error-container-4").append(alertElement);
+                            } else if (formType === "first_innings_interrupted") {
+                                $("#error-container-5").empty();
+                                $("#result-container-5").empty();
+                                $("#error-container-5").append(alertElement);
                             }
 
                             // Attach event handler to the close button to remove the alert when clicked

@@ -26,18 +26,22 @@ def index(request):
             return view_for_dls_input_when_first_innings_is_completed_and_second_innings_is_delayed(request)
         if request.POST['form_type'] == "first_innings_cut_short":
             return view_for_dls_input_when_first_innings_is_cut_short(request)
+        if request.POST["form_type"] == "first_innings_interrupted":
+            return view_for_dls_input_when_first_innings_is_interrupted(request)
     
     else:
         dls_second_innings_interrupted_form = DLSInputFormWhenSecondInningsIsInterrupted()
         dls_second_innings_cutshort_form = DLSInputFormSecondInningsIsCutshort()
         dls_second_innings_delayed_form = DLSInputFormWhenSecondInningsIsDelayed()
         dls_first_innings_cutshort_form = DLSInputFormWhenFirstInningsIsCutshort()
+        dls_first_innings_interrupted_form = DLSInputFormWhenFirstInningsIsInterrupted()
         return render(
             request, 'index.html', {
                 "dls_second_innings_interrupted_form": dls_second_innings_interrupted_form,
                 "dls_second_innings_cutshort_form": dls_second_innings_cutshort_form,
                 "dls_second_innings_delayed_form": dls_second_innings_delayed_form,
-                "dls_first_innings_cutshort_form": dls_first_innings_cutshort_form
+                "dls_first_innings_cutshort_form": dls_first_innings_cutshort_form,
+                "dls_first_innings_interrupted_form": dls_first_innings_interrupted_form
             }
         )
 
