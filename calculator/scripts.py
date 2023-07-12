@@ -154,7 +154,7 @@ def get_par_score_when_first_innings_is_cut_short(
     return par_score
 
 
-def get_par_score_when_first_innings_is_completed(
+def get_par_score_when_first_innings_is_interrupted(
     overs_available_to_team_one_at_start,
     wickets_lost_by_team_one_during_interruption,
     overs_used_by_team_one_until_interruption,
