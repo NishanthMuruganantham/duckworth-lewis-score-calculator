@@ -1,9 +1,8 @@
 from django.urls import path
-from . import views
+from .views import DLSScoreView
 
 app_name = "api"
 
 urlpatterns = [
-    path("hello/", views.hello_nishanth, name="hello_nishanth"),
-    path("calculate-dls-score/", views.calculate_dls_score, name="calculate_dls_score"),
+    path("calculate-dls-score/", DLSScoreView.as_view(), name="calculate_dls_score"),
 ]

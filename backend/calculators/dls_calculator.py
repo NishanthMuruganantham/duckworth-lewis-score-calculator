@@ -55,27 +55,11 @@ class DLSCalculator:
             # Use built-in T20 DLS resource table
             self.resource_table_df = pd.DataFrame(self.DLS_RESOURCE_DATA)
 
-    def calculate_par_score(self, scenario: str, **kwargs):
-
-        __func_map = {
-            "FirstInningsCurtailed": self.calculate_par_score_first_innings_cut_short,
-            "FirstInningsInterrupted": self.calculate_par_score_first_innings_interrupted,
-            "SecondInningsCurtailed": self.calculate_par_score_second_innings_cut_short,
-            "SecondInningsDelayed": self.calculate_par_score_second_innings_delayed,
-            "SecondInningsInterrupted": self.calculate_par_score_second_innings_interrupted
-        } 
-
-        func = __func_map.get(scenario)
-        if func:
-            return func(**kwargs)
-        else:
-            raise ValueError(f"Invalid scenario: {scenario}")
-
     def calculate_par_score_first_innings_cut_short(
         self,
         overs_available_to_team_1_at_start: float,
         runs_scored_by_team_1: int,
-        wickets_lost_by_team_1: int,
+        wickets_lost_by_team_1_during_curtailed: int,
         overs_used_by_team_1_during_curtailed: float,
         overs_available_to_team_2_at_start: float,
         **kwargs
@@ -89,7 +73,7 @@ class DLSCalculator:
         Args:
             overs_available_to_team_1_at_start: Overs available to Team 1 at start
             runs_scored_by_team_1: Runs scored by Team 1 before cutoff
-            wickets_lost_by_team_1: Wickets lost by Team 1 at cutoff
+            wickets_lost_by_team_1_during_curtailed: Wickets lost by Team 1 at cutoff
             overs_used_by_team_1_during_curtailed: Overs used by Team 1 until cutoff
             overs_available_to_team_2_at_start: Overs available to Team 2
             
@@ -112,7 +96,7 @@ class DLSCalculator:
         team_one_resource_initially = self._get_resource_percentage(team_one_balls_initially, wickets_lost=0)
         team_one_resource_remaining = self._get_resource_percentage(
             balls_remaining_team_one, 
-            wickets_lost_by_team_1
+            wickets_lost_by_team_1_during_curtailed
         )
         team_one_resource_used = team_one_resource_initially - team_one_resource_remaining
         
@@ -124,6 +108,72 @@ class DLSCalculator:
         )
         
         return round(par_score)
+
+    def calculate_par_score_first_innings_interrupted(
+        self,
+        overs_available_to_team_1_at_start: float,
+        wickets_lost_by_team_1_during_curtailed: int,
+        overs_used_by_team_1_during_curtailed: float,
+        overs_available_to_team_1_at_resumption: float,
+        runs_scored_by_team_1: int,
+        overs_available_to_team_2_at_start: float,
+        **kwargs
+    ) -> float:
+        """
+        Calculate par score when first innings is interrupted and then resumed.
+        
+        This scenario occurs when Team 1 faces an interruption, resumes with
+        reduced overs, completes their innings, and then we set a target for Team 2.
+        
+        Args:
+            overs_available_to_team_1_at_start: Overs available to Team 1 at start
+            wickets_lost_by_team_1_during_curtailed: Wickets lost by Team 1 at interruption
+            overs_used_by_team_1_during_curtailed: Overs used by Team 1 before interruption
+            overs_available_to_team_1_at_resumption: Maximum overs allotted to Team 1 after resumption
+            runs_scored_by_team_1: Total runs scored by Team 1 at end of innings
+            overs_available_to_team_2_at_start: Overs available to Team 2
+            
+        Returns:
+            Target score for Team 2
+        """
+        # Convert overs to balls
+        team_one_balls_initially = self.convert_overs_to_balls(overs_available_to_team_1_at_start)
+        team_one_balls_used = self.convert_overs_to_balls(overs_used_by_team_1_during_curtailed)
+        team_one_balls_after = self.convert_overs_to_balls(overs_available_to_team_1_at_resumption)
+        team_two_balls_available = self.convert_overs_to_balls(overs_available_to_team_2_at_start)
+        
+        # Calculate balls remaining at different stages
+        balls_remaining_during_interruption = team_one_balls_initially - team_one_balls_used
+        balls_remaining_after_resumption = team_one_balls_after - team_one_balls_used
+        
+        # Calculate G50 score (projected score without interruption)
+        # Simplified projection based on final run rate
+        run_rate = runs_scored_by_team_1 / team_one_balls_used if team_one_balls_used > 0 else 0
+        g50_score = run_rate * team_one_balls_initially
+        
+        # Get resource percentages
+        team_one_resource_initially = self._get_resource_percentage(team_one_balls_initially, wickets_lost=0)
+        team_two_resource_available = self._get_resource_percentage(team_two_balls_available, wickets_lost=0)
+        
+        team_one_resource_during_interruption = self._get_resource_percentage(
+            balls_remaining_during_interruption,
+            wickets_lost_by_team_1_during_curtailed
+        )
+        team_one_resource_after_resumption = self._get_resource_percentage(
+            balls_remaining_after_resumption,
+            wickets_lost_by_team_1_during_curtailed
+        )
+        
+        # Calculate resource lost due to interruption
+        resource_lost = team_one_resource_during_interruption - team_one_resource_after_resumption
+        team_one_total_resource = team_one_resource_initially - resource_lost
+        
+        # Calculate par score using DLS formula
+        par_score = runs_scored_by_team_1 + (
+            g50_score * (team_two_resource_available - team_one_total_resource) / 100
+        )
+        
+        return par_score
 
     @staticmethod
     def convert_balls_to_overs(balls: int) -> float:
@@ -314,70 +364,7 @@ class DLSCalculator:
     
     
     
-    def calculate_par_score_first_innings_interrupted(
-        self,
-        team_one_overs_available_initially: float,
-        team_one_wickets_lost_at_interruption: int,
-        team_one_overs_used_before_interruption: float,
-        team_one_overs_available_after_resumption: float,
-        team_one_total_runs_scored: int,
-        team_two_overs_available: float
-    ) -> float:
-        """
-        Calculate par score when first innings is interrupted and then resumed.
-        
-        This scenario occurs when Team 1 faces an interruption, resumes with
-        reduced overs, completes their innings, and then we set a target for Team 2.
-        
-        Args:
-            team_one_overs_available_initially: Overs available to Team 1 at start
-            team_one_wickets_lost_at_interruption: Wickets lost by Team 1 at interruption
-            team_one_overs_used_before_interruption: Overs used by Team 1 before interruption
-            team_one_overs_available_after_resumption: Maximum overs allotted to Team 1 after resumption
-            team_one_total_runs_scored: Total runs scored by Team 1 at end of innings
-            team_two_overs_available: Overs available to Team 2
-            
-        Returns:
-            Target score for Team 2
-        """
-        # Convert overs to balls
-        team_one_balls_initially = self.convert_overs_to_balls(team_one_overs_available_initially)
-        team_one_balls_used = self.convert_overs_to_balls(team_one_overs_used_before_interruption)
-        team_one_balls_after = self.convert_overs_to_balls(team_one_overs_available_after_resumption)
-        team_two_balls_available = self.convert_overs_to_balls(team_two_overs_available)
-        
-        # Calculate balls remaining at different stages
-        balls_remaining_during_interruption = team_one_balls_initially - team_one_balls_used
-        balls_remaining_after_resumption = team_one_balls_after - team_one_balls_used
-        
-        # Calculate G50 score (projected score without interruption)
-        # Simplified projection based on final run rate
-        run_rate = team_one_total_runs_scored / team_one_balls_used if team_one_balls_used > 0 else 0
-        g50_score = run_rate * team_one_balls_initially
-        
-        # Get resource percentages
-        team_one_resource_initially = self._get_resource_percentage(team_one_balls_initially, wickets_lost=0)
-        team_two_resource_available = self._get_resource_percentage(team_two_balls_available, wickets_lost=0)
-        
-        team_one_resource_during_interruption = self._get_resource_percentage(
-            balls_remaining_during_interruption,
-            team_one_wickets_lost_at_interruption
-        )
-        team_one_resource_after_resumption = self._get_resource_percentage(
-            balls_remaining_after_resumption,
-            team_one_wickets_lost_at_interruption
-        )
-        
-        # Calculate resource lost due to interruption
-        resource_lost = team_one_resource_during_interruption - team_one_resource_after_resumption
-        team_one_total_resource = team_one_resource_initially - resource_lost
-        
-        # Calculate par score using DLS formula
-        par_score = team_one_total_runs_scored + (
-            g50_score * (team_two_resource_available - team_one_total_resource) / 100
-        )
-        
-        return par_score
+    
 
 
 # Convenience functions for backward compatibility
