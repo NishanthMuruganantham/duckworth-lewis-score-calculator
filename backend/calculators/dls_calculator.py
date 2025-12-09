@@ -54,7 +54,77 @@ class DLSCalculator:
         else:
             # Use built-in T20 DLS resource table
             self.resource_table_df = pd.DataFrame(self.DLS_RESOURCE_DATA)
-    
+
+    def calculate_par_score(self, scenario: str, **kwargs):
+
+        __func_map = {
+            "FirstInningsCurtailed": self.calculate_par_score_first_innings_cut_short,
+            "FirstInningsInterrupted": self.calculate_par_score_first_innings_interrupted,
+            "SecondInningsCurtailed": self.calculate_par_score_second_innings_cut_short,
+            "SecondInningsDelayed": self.calculate_par_score_second_innings_delayed,
+            "SecondInningsInterrupted": self.calculate_par_score_second_innings_interrupted
+        } 
+
+        func = __func_map.get(scenario)
+        if func:
+            return func(**kwargs)
+        else:
+            raise ValueError(f"Invalid scenario: {scenario}")
+
+    def calculate_par_score_first_innings_cut_short(
+        self,
+        overs_available_to_team_1_at_start: float,
+        runs_scored_by_team_1: int,
+        wickets_lost_by_team_1: int,
+        overs_used_by_team_1_during_curtailed: float,
+        overs_available_to_team_2_at_start: float,
+        **kwargs
+    ) -> float:
+        """
+        Calculate par score when first innings is cut short.
+        
+        This scenario occurs when Team 1's innings is prematurely ended,
+        and we need to set a fair target for Team 2.
+        
+        Args:
+            overs_available_to_team_1_at_start: Overs available to Team 1 at start
+            runs_scored_by_team_1: Runs scored by Team 1 before cutoff
+            wickets_lost_by_team_1: Wickets lost by Team 1 at cutoff
+            overs_used_by_team_1_during_curtailed: Overs used by Team 1 until cutoff
+            overs_available_to_team_2_at_start: Overs available to Team 2
+            
+        Returns:
+            Target score for Team 2
+        """
+        # Convert overs to balls
+        team_one_balls_initially = self.convert_overs_to_balls(overs_available_to_team_1_at_start)
+        team_one_balls_used = self.convert_overs_to_balls(overs_used_by_team_1_during_curtailed)
+        team_two_balls_available = self.convert_overs_to_balls(overs_available_to_team_2_at_start)
+        
+        balls_remaining_team_one = team_one_balls_initially - team_one_balls_used
+        
+        # Calculate G50 score (projected score if Team 1 had completed their innings)
+        # This is a simplified projection based on current run rate
+        run_rate = runs_scored_by_team_1 / team_one_balls_used if team_one_balls_used > 0 else 0
+        g50_score = run_rate * team_one_balls_initially
+        
+        # Get resource percentages
+        team_one_resource_initially = self._get_resource_percentage(team_one_balls_initially, wickets_lost=0)
+        team_one_resource_remaining = self._get_resource_percentage(
+            balls_remaining_team_one, 
+            wickets_lost_by_team_1
+        )
+        team_one_resource_used = team_one_resource_initially - team_one_resource_remaining
+        
+        team_two_resource_available = self._get_resource_percentage(team_two_balls_available, wickets_lost=0)
+        
+        # Calculate par score using DLS formula
+        par_score = runs_scored_by_team_1 + (
+            g50_score * (team_two_resource_available - team_one_resource_used) / 100
+        )
+        
+        return round(par_score)
+
     @staticmethod
     def convert_balls_to_overs(balls: int) -> float:
         """
@@ -242,58 +312,7 @@ class DLSCalculator:
         
         return par_score
     
-    def calculate_par_score_first_innings_cut_short(
-        self,
-        team_one_overs_available_initially: float,
-        team_one_runs_scored: int,
-        team_one_wickets_lost: int,
-        team_one_overs_used: float,
-        team_two_overs_available: float
-    ) -> float:
-        """
-        Calculate par score when first innings is cut short.
-        
-        This scenario occurs when Team 1's innings is prematurely ended,
-        and we need to set a fair target for Team 2.
-        
-        Args:
-            team_one_overs_available_initially: Overs available to Team 1 at start
-            team_one_runs_scored: Runs scored by Team 1 before cutoff
-            team_one_wickets_lost: Wickets lost by Team 1 at cutoff
-            team_one_overs_used: Overs used by Team 1 until cutoff
-            team_two_overs_available: Overs available to Team 2
-            
-        Returns:
-            Target score for Team 2
-        """
-        # Convert overs to balls
-        team_one_balls_initially = self.convert_overs_to_balls(team_one_overs_available_initially)
-        team_one_balls_used = self.convert_overs_to_balls(team_one_overs_used)
-        team_two_balls_available = self.convert_overs_to_balls(team_two_overs_available)
-        
-        balls_remaining_team_one = team_one_balls_initially - team_one_balls_used
-        
-        # Calculate G50 score (projected score if Team 1 had completed their innings)
-        # This is a simplified projection based on current run rate
-        run_rate = team_one_runs_scored / team_one_balls_used if team_one_balls_used > 0 else 0
-        g50_score = run_rate * team_one_balls_initially
-        
-        # Get resource percentages
-        team_one_resource_initially = self._get_resource_percentage(team_one_balls_initially, wickets_lost=0)
-        team_one_resource_remaining = self._get_resource_percentage(
-            balls_remaining_team_one, 
-            team_one_wickets_lost
-        )
-        team_one_resource_used = team_one_resource_initially - team_one_resource_remaining
-        
-        team_two_resource_available = self._get_resource_percentage(team_two_balls_available, wickets_lost=0)
-        
-        # Calculate par score using DLS formula
-        par_score = team_one_runs_scored + (
-            g50_score * (team_two_resource_available - team_one_resource_used) / 100
-        )
-        
-        return par_score
+    
     
     def calculate_par_score_first_innings_interrupted(
         self,
