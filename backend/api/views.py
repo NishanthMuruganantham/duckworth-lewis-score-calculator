@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from calculators.dls_calculator import DLSCalculator
 from .serializers import DLSRequestSerializer
 from .enums import DLSScenarioEnum
+from django.http import JsonResponse
+from rest_framework import status
 
 @api_view(['GET'])
 def hello_nishanth(request):
@@ -18,5 +20,11 @@ def calculate_dls_score(request):
         dls_scenario = validated_data.get("dls_scenario")
         dls_calculator = DLSCalculator()
         par_score = dls_calculator.calculate_par_score(dls_scenario, **validated_data)
-        return Response({"par_score": par_score})
+        return JsonResponse(
+            {
+                "par_score": par_score,
+                "status": "success"
+            },
+            status=status.HTTP_202_ACCEPTED
+        )
     return Response(serializer.errors, status=400)
