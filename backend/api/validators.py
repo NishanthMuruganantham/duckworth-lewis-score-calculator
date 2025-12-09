@@ -7,10 +7,10 @@ class ScenarioValidator:
     field_map = {
         "overs_available_to_team_1_at_start": "oversAvailableToTeam1AtStart",
         "runs_scored_by_team_1": "runsScoredByTeam1",
-        "wickets_lost_by_team_1": "wicketsLostByTeam1",
+        "wickets_lost_by_team_1_during_curtailed": "wicketsLostByTeam1DuringCurtailed",
         "overs_used_by_team_1_during_curtailed": "oversUsedByTeam1DuringCurtailed",
+        "overs_available_to_team_1_at_resumption": "oversAvailableToTeam1AtResumption",
         "overs_available_to_team_2_at_start": "oversAvailableToTeam2AtStart",
-        "overs_available_to_team_2_after_interruption": "oversAvailableToTeam2AfterInterruption",
     }
 
     @classmethod
@@ -46,7 +46,7 @@ SCENARIO_RULES = {
         "required": [
             "overs_available_to_team_1_at_start",
             "runs_scored_by_team_1",
-            "wickets_lost_by_team_1",
+            "wickets_lost_by_team_1_during_curtailed",
             "overs_used_by_team_1_during_curtailed",
             "overs_available_to_team_2_at_start",
         ],
@@ -57,7 +57,8 @@ SCENARIO_RULES = {
         "required": [
             "overs_available_to_team_1_at_start",
             "runs_scored_by_team_1",
-            "wickets_lost_by_team_1",
+            "wickets_lost_by_team_1_during_curtailed",
+            "overs_available_to_team_1_at_resumption",
             "overs_used_by_team_1_during_curtailed",
         ],
         "validator": ScenarioValidator.validate_first_innings_interrupted,

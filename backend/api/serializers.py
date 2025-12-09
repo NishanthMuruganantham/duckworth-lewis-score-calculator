@@ -6,10 +6,12 @@ class DLSRequestSerializer(serializers.Serializer):
 
     dls_scenario = serializers.CharField()
 
+    overs_available_to_team_1_at_resumption = serializers.FloatField(required=False)
     overs_available_to_team_1_at_start = serializers.FloatField(required=False)
+    overs_used_by_team_1_during_curtailed = serializers.FloatField(required=False)
     runs_scored_by_team_1 = serializers.IntegerField(required=False)
     wickets_lost_by_team_1 = serializers.IntegerField(required=False)
-    overs_used_by_team_1_during_curtailed = serializers.FloatField(required=False)
+    wickets_lost_by_team_1_during_curtailed = serializers.IntegerField(required=False)
 
     overs_available_to_team_2_at_start = serializers.FloatField(required=False)
     overs_available_to_team_2_after_interruption = serializers.FloatField(required=False)

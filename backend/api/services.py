@@ -22,4 +22,4 @@ class DLSService:
         if not calculator_method:
             raise ValidationError({"dls_scenario": [f"Invalid scenario: {scenario}"]})
 
-        return calculator_method(**validated_data)
+        return round(calculator_method(**validated_data))
