@@ -55,22 +55,6 @@ class DLSCalculator:
             # Use built-in T20 DLS resource table
             self.resource_table_df = pd.DataFrame(self.DLS_RESOURCE_DATA)
 
-    def calculate_par_score(self, scenario: str, **kwargs):
-
-        __func_map = {
-            "FirstInningsCurtailed": self.calculate_par_score_first_innings_cut_short,
-            "FirstInningsInterrupted": self.calculate_par_score_first_innings_interrupted,
-            "SecondInningsCurtailed": self.calculate_par_score_second_innings_cut_short,
-            "SecondInningsDelayed": self.calculate_par_score_second_innings_delayed,
-            "SecondInningsInterrupted": self.calculate_par_score_second_innings_interrupted
-        } 
-
-        func = __func_map.get(scenario)
-        if func:
-            return func(**kwargs)
-        else:
-            raise ValueError(f"Invalid scenario: {scenario}")
-
     def calculate_par_score_first_innings_cut_short(
         self,
         overs_available_to_team_1_at_start: float,
