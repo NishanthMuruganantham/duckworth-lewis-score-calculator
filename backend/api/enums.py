@@ -2,11 +2,11 @@ from enum import Enum
 
 
 class DLSScenarioEnum(Enum):
-    FIRST_INNINGS_CURTAILED = "first_innings_curtailed"
-    FIRST_INNINGS_INTERRUPTED = "first_innings_interrupted"
-    SECOND_INNINGS_CURTAILED = "second_innings_curtailed"
-    SECOND_INNINGS_DELAYED = "second_innings_delayed"
-    SECOND_INNINGS_INTERRUPTED = "second_innings_interrupted"
+    FIRST_INNINGS_CURTAILED = "FirstInningsCurtailed"
+    FIRST_INNINGS_INTERRUPTED = "FirstInningsInterrupted"
+    SECOND_INNINGS_CURTAILED = "SecondInningsCurtailed"
+    SECOND_INNINGS_DELAYED = "SecondInningsDelayed"
+    SECOND_INNINGS_INTERRUPTED = "SecondInningsInterrupted"
 
 DLS_SCENARIO_CHOICES = [(member.value, member.name) for member in DLSScenarioEnum]
 
