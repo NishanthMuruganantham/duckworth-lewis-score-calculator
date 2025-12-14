@@ -1,13 +1,14 @@
 from .enums import DLSScenarioEnum
 from calculators.dls_calculator import DLSCalculator
 from rest_framework.exceptions import ValidationError
+from typing import Dict, Callable
 
 
 class DLSService:
-    
+
     def __init__(self):
         self.calculator = DLSCalculator()
-        self.scenario_map = {
+        self.scenario_map: Dict[str, Callable] = {
             DLSScenarioEnum.FIRST_INNINGS_CURTAILED.value: self.calculator.calculate_par_score_first_innings_cut_short,
             DLSScenarioEnum.FIRST_INNINGS_INTERRUPTED.value: self.calculator.calculate_par_score_first_innings_interrupted,
             DLSScenarioEnum.SECOND_INNINGS_CURTAILED.value: self.calculator.calculate_par_score_second_innings_cut_short,
@@ -15,11 +16,14 @@ class DLSService:
             DLSScenarioEnum.SECOND_INNINGS_INTERRUPTED.value: self.calculator.calculate_par_score_second_innings_interrupted,
         }
 
-    def calculate(self, validated_data):
-        scenario = validated_data.get("dls_scenario")
-        calculator_method = self.scenario_map.get(scenario)
+    def calculate(self, validated_data: Dict[str, str]) -> int:
+        scenario = validated_data.get("scenario_type")
+        match_format = validated_data.get("match_format")  # Placeholder for future ODI&T10 logic
+        inputs: Dict[str, str] = validated_data.get("inputs", {})
+
+        calculator_method: Callable = self.scenario_map.get(scenario)
 
         if not calculator_method:
-            raise ValidationError({"dls_scenario": [f"Invalid scenario: {scenario}"]})
+            raise ValidationError({"scenario_type": [f"Invalid scenario: {scenario}"]})
 
-        return round(calculator_method(**validated_data))
+        return round(calculator_method(**inputs))
