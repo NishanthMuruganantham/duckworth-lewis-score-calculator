@@ -1,5 +1,14 @@
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import List, Callable, Optional
 from calculators.dls_calculator import DLSCalculator
 from .enums import DLSScenarioEnum
+
+
+@dataclass(frozen=True)
+class ScenarioRule:
+    required_inputs: List[str]
+    validator: Callable
 
 
 class ScenarioValidator:
@@ -42,25 +51,25 @@ class ScenarioValidator:
 
 
 SCENARIO_RULES = {
-    DLSScenarioEnum.FIRST_INNINGS_CURTAILED.value: {
-        "required": [
+    DLSScenarioEnum.FIRST_INNINGS_CURTAILED.value: ScenarioRule(
+        required_inputs=[
             "overs_available_to_team_1_at_start",
             "runs_scored_by_team_1",
             "wickets_lost_by_team_1_during_curtailed",
             "overs_used_by_team_1_during_curtailed",
             "overs_available_to_team_2_at_start",
         ],
-        "validator": ScenarioValidator.validate_first_innings_curtailed,
-    },
+        validator=ScenarioValidator.validate_first_innings_curtailed,
+    ),
 
-    DLSScenarioEnum.FIRST_INNINGS_INTERRUPTED.value: {
-        "required": [
+    DLSScenarioEnum.FIRST_INNINGS_INTERRUPTED.value: ScenarioRule(
+        required_inputs=[
             "overs_available_to_team_1_at_start",
             "runs_scored_by_team_1",
             "wickets_lost_by_team_1_during_curtailed",
             "overs_available_to_team_1_at_resumption",
             "overs_used_by_team_1_during_curtailed",
         ],
-        "validator": ScenarioValidator.validate_first_innings_interrupted,
-    },
+        validator=ScenarioValidator.validate_first_innings_interrupted,
+    ),
 }

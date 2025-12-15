@@ -1,41 +1,51 @@
+from typing import Dict
 from rest_framework import serializers
+from .enums import DLS_SCENARIO_CHOICES
 from .validators import SCENARIO_RULES
 
 
 class DLSRequestSerializer(serializers.Serializer):
 
-    dls_scenario = serializers.CharField()
+    """
+    Serializer for DLS request body data.
+    """
 
-    overs_available_to_team_1_at_resumption = serializers.FloatField(required=False)
-    overs_available_to_team_1_at_start = serializers.FloatField(required=False)
-    overs_used_by_team_1_during_curtailed = serializers.FloatField(required=False)
-    runs_scored_by_team_1 = serializers.IntegerField(required=False)
-    wickets_lost_by_team_1 = serializers.IntegerField(required=False)
-    wickets_lost_by_team_1_during_curtailed = serializers.IntegerField(required=False)
-
-    overs_available_to_team_2_at_start = serializers.FloatField(required=False)
-    overs_available_to_team_2_after_interruption = serializers.FloatField(required=False)
+    scenario_type = serializers.ChoiceField(choices=DLS_SCENARIO_CHOICES)
+    match_format = serializers.ChoiceField(choices=["ODI", "T20", "T10"])
+    inputs = serializers.DictField()
 
     def validate(self, data):
-        scenario = data.get("dls_scenario")
-        rule = SCENARIO_RULES.get(scenario)
+        scenario = data.get("scenario_type")
+        inputs_data: Dict[str, str] = data.get("inputs", {})
+        rule = SCENARIO_RULES[scenario]
 
-        if not rule:
-            return data
-
-        # Validating missing fields
-        missing = [f for f in rule["required"] if data.get(f) is None]
+        # Validating missing fields in inputs for the requested scenario
+        missing = [input_field for input_field in rule.required_inputs if inputs_data.get(input_field) is None]
         if missing:
             raise serializers.ValidationError({
-                field: [f"This field is required for {scenario} scenario."]
-                for field in missing
+                "inputs": {field: ["This field is required."] for field in missing}
             })
 
-        # Validating scenario-specific rules
-        validator = rule.get("validator")
-        if validator:
-            errors = validator(data)
-            if errors:
-                raise serializers.ValidationError(errors)
+        # converting strings from JSON body to numbers
+        valid_inputs = {}
+        for key, value in inputs_data.items():
+            try:
+                if "wickets" in key or "runs" in key:
+                    valid_inputs[key] = int(float(value))
+                else:
+                    valid_inputs[key] = float(value)
+            except (ValueError, TypeError):
+                raise serializers.ValidationError({
+                    "inputs": {key: ["Must be a number."]}
+                })
+
+        # Updating inputs_data with converted values for the validator to use
+        inputs_data.update(valid_inputs)
+        data['inputs'] = inputs_data
+
+        # Additional validations based on the scenario
+        errors = rule.validator(inputs_data)
+        if errors:
+            raise serializers.ValidationError({"inputs": errors})
 
         return data

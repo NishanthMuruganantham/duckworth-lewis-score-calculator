@@ -9,3 +9,11 @@ class DLSScenarioEnum(Enum):
     SECOND_INNINGS_INTERRUPTED = "SecondInningsInterrupted"
 
 DLS_SCENARIO_CHOICES = [(member.value, member.name) for member in DLSScenarioEnum]
+
+
+class MatchFormatEnum(Enum):
+    ODI = "ODI"
+    T10 = "T10"
+    T20 = "T20"
+
+DLS_MATCH_FORMAT_CHOICES = [(member.value, member.name) for member in MatchFormatEnum]
