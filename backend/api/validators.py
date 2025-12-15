@@ -27,13 +27,18 @@ class ScenarioValidator:
         errors = {}
 
         if data["overs_available_to_team_1_at_start"] <= data["overs_available_to_team_2_at_start"]:
-            errors["overs_available_to_team_1_at_start"] = [
-                f"Must be greater than {cls.field_map['overs_available_to_team_2_at_start']}"
+            errors["overs_available_to_team_2_at_start"] = [
+                f"Must be less than {cls.field_map['overs_available_to_team_1_at_start']}"
             ]
 
         if data["overs_available_to_team_1_at_start"] <= data["overs_used_by_team_1_during_curtailed"]:
-            errors["overs_available_to_team_1_at_start"] = [
-                f"Must be greater than {cls.field_map['overs_used_by_team_1_during_curtailed']}"
+            errors["overs_used_by_team_1_during_curtailed"] = [
+                f"Must be lesser than {cls.field_map['overs_available_to_team_1_at_start']}"
+            ]
+
+        if data["overs_used_by_team_1_during_curtailed"] < data["overs_available_to_team_2_at_start"]:
+            errors["overs_available_to_team_2_at_start"] = [
+                f"Must be lesser than {cls.field_map['overs_used_by_team_1_during_curtailed']}"
             ]
 
         return errors
