@@ -21,9 +21,6 @@ class DLSService:
         match_format = validated_data.get("match_format")  # Placeholder for future ODI&T10 logic
         inputs: Dict[str, str] = validated_data.get("inputs", {})
 
-        calculator_method: Callable = self.scenario_map.get(scenario)
-
-        if not calculator_method:
-            raise ValidationError({"scenario_type": [f"Invalid scenario: {scenario}"]})
+        calculator_method: Callable = self.scenario_map[scenario]
 
         return round(calculator_method(**inputs))
