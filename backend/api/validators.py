@@ -23,7 +23,7 @@ class ScenarioValidator:
     }
 
     @classmethod
-    def validate_first_innings_curtailed(cls, data):
+    def validate_first_innings_curtailed_inputs(cls, data):
         errors = {}
 
         if data["overs_available_to_team_1_at_start"] <= data["overs_available_to_team_2_at_start"]:
@@ -44,7 +44,7 @@ class ScenarioValidator:
         return errors
 
     @classmethod
-    def validate_first_innings_interrupted(cls, data):
+    def validate_first_innings_interrupted_inputs(cls, data):
         errors = {}
 
         if data["overs_available_to_team_1_at_start"] <= data["overs_used_by_team_1_during_curtailed"]:
@@ -64,7 +64,7 @@ SCENARIO_RULES = {
             "overs_used_by_team_1_during_curtailed",
             "overs_available_to_team_2_at_start",
         ],
-        validator=ScenarioValidator.validate_first_innings_curtailed,
+        validator=ScenarioValidator.validate_first_innings_curtailed_inputs,
     ),
 
     DLSScenarioEnum.FIRST_INNINGS_INTERRUPTED.value: ScenarioRule(
@@ -75,6 +75,6 @@ SCENARIO_RULES = {
             "overs_available_to_team_1_at_resumption",
             "overs_used_by_team_1_during_curtailed",
         ],
-        validator=ScenarioValidator.validate_first_innings_interrupted,
+        validator=ScenarioValidator.validate_first_innings_interrupted_inputs,
     ),
 }
