@@ -35,6 +35,8 @@ class FirstInningsCurtailedSuccessTests(APITestCase):
         # We check structure primarily; exact values depend on the DLS table
         self.assertIsInstance(response.data['par_score'], int)
         self.assertIsInstance(response.data['revised_target'], int)
+        self.assertEqual(response.data['par_score'], 169)
+        self.assertEqual(response.data['revised_target'], 170)
 
     def test_calculate_dls_score_with_string_inputs(self):
         """
