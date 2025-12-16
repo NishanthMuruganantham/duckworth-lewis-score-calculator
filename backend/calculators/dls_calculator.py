@@ -34,26 +34,11 @@ class DLSCalculator:
         '9': [8.3, 8.3, 8.3, 8.3, 8.3, 8.3, 8.3, 8.3, 8.3, 8.3, 8.3, 8.3, 8.3, 8.3, 8.1, 8.1, 8, 7.4, 6.5, 4.4, 0]
     }
     
-    def __init__(self, resource_table_path: Union[str, None] = None):
+    def __init__(self):
         """
         Initialize the DLS Calculator with resource table data.
-        
-        Args:
-            resource_table_path: Optional path to a custom CSV file containing DLS resource data.
-                               If None, uses the built-in T20 resource table.
-            
-        Raises:
-            FileNotFoundError: If a custom resource table path is provided but file is not found
         """
-        if resource_table_path is not None:
-            if not os.path.exists(resource_table_path):
-                raise FileNotFoundError(
-                    f"Resource table not found at: {resource_table_path}"
-                )
-            self.resource_table_df = pd.read_csv(resource_table_path)
-        else:
-            # Use built-in T20 DLS resource table
-            self.resource_table_df = pd.DataFrame(self.DLS_RESOURCE_DATA)
+        self.resource_table_df = pd.DataFrame(self.DLS_RESOURCE_DATA)
 
     def calculate_par_score_first_innings_cut_short(
         self,
