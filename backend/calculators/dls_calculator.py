@@ -112,8 +112,8 @@ class DLSCalculator:
     def calculate_par_score_first_innings_interrupted(
         self,
         overs_available_to_team_1_at_start: float,
-        wickets_lost_by_team_1_during_curtailed: int,
-        overs_used_by_team_1_during_curtailed: float,
+        wickets_lost_by_team_1_during_interruption: int,
+        overs_used_by_team_1_during_interruption: float,
         overs_available_to_team_1_at_resumption: float,
         runs_scored_by_team_1: int,
         overs_available_to_team_2_at_start: float,
@@ -127,8 +127,8 @@ class DLSCalculator:
         
         Args:
             overs_available_to_team_1_at_start: Overs available to Team 1 at start
-            wickets_lost_by_team_1_during_curtailed: Wickets lost by Team 1 at interruption
-            overs_used_by_team_1_during_curtailed: Overs used by Team 1 before interruption
+            wickets_lost_by_team_1_during_interruption: Wickets lost by Team 1 at interruption
+            overs_used_by_team_1_during_interruption: Overs used by Team 1 before interruption
             overs_available_to_team_1_at_resumption: Maximum overs allotted to Team 1 after resumption
             runs_scored_by_team_1: Total runs scored by Team 1 at end of innings
             overs_available_to_team_2_at_start: Overs available to Team 2
@@ -138,7 +138,7 @@ class DLSCalculator:
         """
         # Convert overs to balls
         team_one_balls_initially = self.convert_overs_to_balls(overs_available_to_team_1_at_start)
-        team_one_balls_used = self.convert_overs_to_balls(overs_used_by_team_1_during_curtailed)
+        team_one_balls_used = self.convert_overs_to_balls(overs_used_by_team_1_during_interruption)
         team_one_balls_after = self.convert_overs_to_balls(overs_available_to_team_1_at_resumption)
         team_two_balls_available = self.convert_overs_to_balls(overs_available_to_team_2_at_start)
         
@@ -157,11 +157,11 @@ class DLSCalculator:
         
         team_one_resource_during_interruption = self._get_resource_percentage(
             balls_remaining_during_interruption,
-            wickets_lost_by_team_1_during_curtailed
+            wickets_lost_by_team_1_during_interruption
         )
         team_one_resource_after_resumption = self._get_resource_percentage(
             balls_remaining_after_resumption,
-            wickets_lost_by_team_1_during_curtailed
+            wickets_lost_by_team_1_during_interruption
         )
         
         # Calculate resource lost due to interruption

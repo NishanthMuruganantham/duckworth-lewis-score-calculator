@@ -18,28 +18,59 @@ class ScenarioValidator:
         "runs_scored_by_team_1": "runsScoredByTeam1",
         "wickets_lost_by_team_1_during_curtailed": "wicketsLostByTeam1DuringCurtailed",
         "overs_used_by_team_1_during_curtailed": "oversUsedByTeam1DuringCurtailed",
+        "overs_used_by_team_1_during_interruption": "oversUsedByTeam1DuringInterruption",
+        "wickets_lost_by_team_1_during_interruption": "wicketsLostByTeam1DuringInterruption",
         "overs_available_to_team_1_at_resumption": "oversAvailableToTeam1AtResumption",
         "overs_available_to_team_2_at_start": "oversAvailableToTeam2AtStart",
     }
 
     @classmethod
+    def _validate_greater(cls, data, errors, larger_key, smaller_key, strict=True, error_key=None):
+        """
+        Ensures that data[larger_key] is greater than (or equal to, if strict=False) data[smaller_key].
+        
+        Args:
+            strict (bool): If True, enforces >. If False, enforces >=.
+        """
+        is_invalid = False
+        if strict:
+            if data[larger_key] <= data[smaller_key]:
+                is_invalid = True
+        else:
+            if data[larger_key] < data[smaller_key]:
+                is_invalid = True
+        
+        if is_invalid:
+            target_key = error_key or smaller_key
+            if target_key == smaller_key:
+                msg = f"Must be lesser than {cls.field_map[larger_key]}"
+            else:
+                msg = f"Must be greater than {cls.field_map[smaller_key]}"
+            errors[target_key] = [msg]
+
+    @classmethod
     def validate_first_innings_curtailed_inputs(cls, data):
         errors = {}
 
-        if data["overs_available_to_team_1_at_start"] <= data["overs_available_to_team_2_at_start"]:
-            errors["overs_available_to_team_2_at_start"] = [
-                f"Must be less than {cls.field_map['overs_available_to_team_1_at_start']}"
-            ]
+        cls._validate_greater(
+            data, errors, 
+            "overs_available_to_team_1_at_start", 
+            "overs_available_to_team_2_at_start"
+        )
 
-        if data["overs_available_to_team_1_at_start"] <= data["overs_used_by_team_1_during_curtailed"]:
-            errors["overs_used_by_team_1_during_curtailed"] = [
-                f"Must be lesser than {cls.field_map['overs_available_to_team_1_at_start']}"
-            ]
+        cls._validate_greater(
+            data, errors,
+            "overs_available_to_team_1_at_start",
+            "overs_used_by_team_1_during_curtailed",
+            error_key="overs_used_by_team_1_during_curtailed"
+        )
 
-        if data["overs_used_by_team_1_during_curtailed"] < data["overs_available_to_team_2_at_start"]:
-            errors["overs_available_to_team_2_at_start"] = [
-                f"Must be lesser than {cls.field_map['overs_used_by_team_1_during_curtailed']}"
-            ]
+        cls._validate_greater(
+            data, errors,
+            "overs_used_by_team_1_during_curtailed",
+            "overs_available_to_team_2_at_start",
+            strict=False
+        )
 
         return errors
 
@@ -47,10 +78,30 @@ class ScenarioValidator:
     def validate_first_innings_interrupted_inputs(cls, data):
         errors = {}
 
-        if data["overs_available_to_team_1_at_start"] <= data["overs_used_by_team_1_during_curtailed"]:
-            errors["overs_available_to_team_1_at_start"] = [
-                f"Must be greater than {cls.field_map['overs_used_by_team_1_during_curtailed']}"
-            ]
+        cls._validate_greater(
+            data, errors,
+            "overs_available_to_team_1_at_start",
+            "overs_used_by_team_1_during_interruption",
+            error_key="overs_available_to_team_1_at_start"
+        )
+
+        cls._validate_greater(
+            data, errors,
+            "overs_available_to_team_1_at_start",
+            "overs_available_to_team_2_at_start"
+        )
+
+        cls._validate_greater(
+            data, errors,
+            "overs_available_to_team_1_at_start",
+            "overs_available_to_team_1_at_resumption"
+        )
+
+        cls._validate_greater(
+            data, errors,
+            "overs_available_to_team_1_at_resumption",
+            "overs_available_to_team_2_at_start"
+        )
 
         return errors
 
@@ -70,10 +121,11 @@ SCENARIO_RULES = {
     DLSScenarioEnum.FIRST_INNINGS_INTERRUPTED.value: ScenarioRule(
         required_inputs=[
             "overs_available_to_team_1_at_start",
-            "runs_scored_by_team_1",
-            "wickets_lost_by_team_1_during_curtailed",
+            "overs_used_by_team_1_during_interruption",
+            "wickets_lost_by_team_1_during_interruption",
             "overs_available_to_team_1_at_resumption",
-            "overs_used_by_team_1_during_curtailed",
+            "runs_scored_by_team_1",
+            "overs_available_to_team_2_at_start",
         ],
         validator=ScenarioValidator.validate_first_innings_interrupted_inputs,
     ),
