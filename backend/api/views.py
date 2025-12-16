@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from .serializers import DLSRequestSerializer
 from .services import DLSService
+from calculators.dls_calculator import DLSCalculator
 
 
 class DLSScoreView(APIView):
@@ -45,7 +46,7 @@ class ResourceTableView(APIView):
         Returns the DLS resource table data.
         """
         match_format = request.query_params.get("format", "T20")
-        calculator = DLSService().calculator
+        calculator = DLSCalculator(match_format)
         df = calculator.resource_table_df
 
         data = {

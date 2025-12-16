@@ -80,3 +80,53 @@ class FirstInningsCurtailedSuccessTests(APITestCase):
 
         response = self.client.post(self.url, payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_calculate_dls_score_odi_success(self):
+        """
+        Verify that a valid ODI payload returns a 200 OK and expected DLS results.
+        Input: Team 1 scores 250/4 in 40 overs (curtailed from 50), Team 2 has 40 overs.
+        """
+        odi_payload = {
+            "scenario_type": DLSScenarioEnum.FIRST_INNINGS_CURTAILED.value,
+            "match_format": "ODI",
+            "inputs": {
+                "overs_available_to_team_1_at_start": 50.0,
+                "runs_scored_by_team_1": 250,
+                "wickets_lost_by_team_1_during_curtailed": 4,
+                "overs_used_by_team_1_during_curtailed": 40.0,
+                "overs_available_to_team_2_at_start": 40.0
+            }
+        }
+        response = self.client.post(self.url, odi_payload, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('par_score', response.data)
+        self.assertIn('revised_target', response.data)
+        self.assertIsInstance(response.data['par_score'], int)
+        self.assertIsInstance(response.data['revised_target'], int)
+
+    def test_calculate_dls_score_t10_success(self):
+        """
+        Verify that a valid T10 payload returns a 200 OK and expected DLS results.
+        Input: Team 1 scores 80/3 in 8 overs (curtailed from 10), Team 2 has 8 overs.
+        """
+        t10_payload = {
+            "scenario_type": DLSScenarioEnum.FIRST_INNINGS_CURTAILED.value,
+            "match_format": "T10",
+            "inputs": {
+                "overs_available_to_team_1_at_start": 10.0,
+                "runs_scored_by_team_1": 80,
+                "wickets_lost_by_team_1_during_curtailed": 3,
+                "overs_used_by_team_1_during_curtailed": 8.0,
+                "overs_available_to_team_2_at_start": 8.0
+            }
+        }
+        response = self.client.post(self.url, t10_payload, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('par_score', response.data)
+        self.assertIn('revised_target', response.data)
+        self.assertIn('messages', response.data)
+
+        self.assertIsInstance(response.data['par_score'], int)
+        self.assertIsInstance(response.data['revised_target'], int)
