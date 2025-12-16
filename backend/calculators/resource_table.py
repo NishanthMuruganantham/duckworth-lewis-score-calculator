@@ -85,12 +85,26 @@ DLS_ODI_RESOURCE_DATA = {
     ]
 }
 
+DLS_T10_RESOURCE_DATA = {
+    'balls': [60, 54, 48, 42, 36, 30, 24, 18, 12, 6, 0],
+    '0': [100, 92.2, 84.1, 75.4, 66.4, 56.7, 46.6, 35.9, 24.6, 12.7, 0],
+    '1': [96.8, 89.6, 81.8, 73.7, 65, 55.8, 45.9, 35.5, 24.4, 12.5, 0],
+    '2': [92.6, 85.9, 79, 71.4, 63.3, 54.4, 45.1, 35, 24.2, 12.5, 0],
+    '3': [86.7, 81.1, 74.7, 68, 60.6, 52.7, 43.8, 34.3, 23.9, 12.4, 0],
+    '4': [78.8, 74.2, 69.1, 63.4, 57.1, 50, 42, 33.2, 23.3, 12.4, 0],
+    '5': [68.2, 65, 61.3, 56.9, 51.9, 46.1, 39.4, 31.4, 22.4, 12, 0],
+    '6': [54.4, 52.7, 50.4, 47.7, 44.3, 40.3, 35.2, 29, 21.2, 11.7, 0],
+    '7': [37.5, 36.9, 36.2, 35.2, 33.6, 31.6, 28.6, 24.6, 18.9, 11, 0],
+    '8': [21.3, 21, 20.8, 20.7, 20.5, 20.1, 19.3, 17.8, 14.8, 9.7, 0],
+    '9': [8.3, 8.3, 8.3, 8.3, 8.3, 8.3, 8.3, 8.1, 8, 6.5, 0]
+}
+
 
 class ResourceTable:
     def __init__(self, match_type: str = 'T20'):
-        if match_type == 'T20':
-            self.resource_df = pd.DataFrame(DLS_T20_RESOURCE_DATA)
-        elif match_type == 'ODI':
-            self.resource_df = pd.DataFrame(DLS_ODI_RESOURCE_DATA)
-        else:
-            raise ValueError("Invalid match type specified for ResourceTable.")
+        resource = {
+            'T20': DLS_T20_RESOURCE_DATA,
+            'ODI': DLS_ODI_RESOURCE_DATA,
+            'T10': DLS_T10_RESOURCE_DATA
+        }
+        self.resource_df = pd.DataFrame(resource[match_type])
