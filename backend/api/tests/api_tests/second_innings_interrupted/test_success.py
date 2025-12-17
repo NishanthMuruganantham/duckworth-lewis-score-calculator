@@ -12,12 +12,12 @@ class SecondInningsInterruptedSuccessTests(APITestCase):
             "scenario_type": DLSScenarioEnum.SECOND_INNINGS_INTERRUPTED.value,
             "match_format": "T20",
             "inputs": {
-                "oversAvailableToTeam1AtStart": 20.0,
-                "runsScoredByTeam1": 230,
-                "oversAvailableToTeam2AtStart": 20.0,
-                "oversUsedByTeam2DuringInterruption": 5.0,
-                "wicketsLostByTeam2DuringInterruption": 4,
-                "revisedOversToTeam2AfterResumption": 7
+                "overs_available_to_team_1_at_start": 20.0,
+                "runs_scored_by_team_1": 230,
+                "overs_available_to_team_2_at_start": 20.0,
+                "overs_used_by_team_2_during_interruption": 5.0,
+                "wickets_lost_by_team_2_during_interruption": 4,
+                "revised_overs_to_team_2_after_resumption": 7
             }
         }
 
@@ -64,7 +64,7 @@ class SecondInningsInterruptedSuccessTests(APITestCase):
         Test with 0 runs scored before interruption.
         """
         payload = self.valid_payload.copy()
-        payload['inputs']['runs_scored_by_team_2_before_interruption'] = 0
+        payload['inputs']['runsScoredByTeam1'] = 0
 
         response = self.client.post(self.url, payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -75,7 +75,7 @@ class SecondInningsInterruptedSuccessTests(APITestCase):
         Test with 9 wickets lost before interruption.
         """
         payload = self.valid_payload.copy()
-        payload['inputs']['wickets_lost_by_team_2_before_interruption'] = 9
+        payload['inputs']['wicketsLostByTeam2DuringInterruption'] = 9
 
         response = self.client.post(self.url, payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
