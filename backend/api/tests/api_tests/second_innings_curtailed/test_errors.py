@@ -81,5 +81,5 @@ class SecondInningsCurtailedErrorTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn('inputs', response.data)
         self.assertIn('overs_available_to_team_2_at_start', response.data['inputs'])
-        expected_msg = "Must be lesser than oversAvailableToTeam1AtStart"
+        expected_msg = "Must be lesser than or equal to oversAvailableToTeam1AtStart"
         self.assertIn(expected_msg, response.data['inputs']['overs_available_to_team_2_at_start'])
