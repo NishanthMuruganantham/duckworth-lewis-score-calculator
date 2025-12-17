@@ -12,11 +12,11 @@ class FirstInningsCurtailedSuccessTests(APITestCase):
             "scenario_type": DLSScenarioEnum.FIRST_INNINGS_CURTAILED.value,
             "match_format": "T20",
             "inputs": {
-                "overs_available_to_team_1_at_start": 20.0,
-                "runs_scored_by_team_1": 150,
-                "wickets_lost_by_team_1_during_curtailed": 2,
-                "overs_used_by_team_1_during_curtailed": 15.0,
-                "overs_available_to_team_2_at_start": 15.0
+                "oversAvailableToTeam1AtStart": 20.0,
+                "runsScoredByTeam1": 150,
+                "wicketsLostByTeam1DuringCurtailed": 2,
+                "oversUsedByTeam1DuringCurtailed": 15.0,
+                "oversAvailableToTeam2AtStart": 15.0
             }
         }
 
@@ -46,11 +46,11 @@ class FirstInningsCurtailedSuccessTests(APITestCase):
             "scenario_type": DLSScenarioEnum.FIRST_INNINGS_CURTAILED.value,
             "match_format": "T20",
             "inputs": {
-                "overs_available_to_team_1_at_start": "20.0",
-                "runs_scored_by_team_1": "150",
-                "wickets_lost_by_team_1_during_curtailed": "2",
-                "overs_used_by_team_1_during_curtailed": "15.0",
-                "overs_available_to_team_2_at_start": "15.0"
+                "oversAvailableToTeam1AtStart": "20.0",
+                "runsScoredByTeam1": "150",
+                "wicketsLostByTeam1DuringCurtailed": "2",
+                "oversUsedByTeam1DuringCurtailed": "15.0",
+                "oversAvailableToTeam2AtStart": "15.0"
             }
         }
 
@@ -90,11 +90,11 @@ class FirstInningsCurtailedSuccessTests(APITestCase):
             "scenario_type": DLSScenarioEnum.FIRST_INNINGS_CURTAILED.value,
             "match_format": "ODI",
             "inputs": {
-                "overs_available_to_team_1_at_start": 50.0,
-                "runs_scored_by_team_1": 250,
-                "wickets_lost_by_team_1_during_curtailed": 4,
-                "overs_used_by_team_1_during_curtailed": 40.0,
-                "overs_available_to_team_2_at_start": 40.0
+                "oversAvailableToTeam1AtStart": 50.0,
+                "runsScoredByTeam1": 250,
+                "wicketsLostByTeam1DuringCurtailed": 4,
+                "oversUsedByTeam1DuringCurtailed": 40.0,
+                "oversAvailableToTeam2AtStart": 40.0
             }
         }
         response = self.client.post(self.url, odi_payload, format='json')
@@ -114,11 +114,11 @@ class FirstInningsCurtailedSuccessTests(APITestCase):
             "scenario_type": DLSScenarioEnum.FIRST_INNINGS_CURTAILED.value,
             "match_format": "T10",
             "inputs": {
-                "overs_available_to_team_1_at_start": 10.0,
-                "runs_scored_by_team_1": 80,
-                "wickets_lost_by_team_1_during_curtailed": 3,
-                "overs_used_by_team_1_during_curtailed": 8.0,
-                "overs_available_to_team_2_at_start": 8.0
+                "oversAvailableToTeam1AtStart": 10.0,
+                "runsScoredByTeam1": 80,
+                "wicketsLostByTeam1DuringCurtailed": 3,
+                "oversUsedByTeam1DuringCurtailed": 8.0,
+                "oversAvailableToTeam2AtStart": 8.0
             }
         }
         response = self.client.post(self.url, t10_payload, format='json')
