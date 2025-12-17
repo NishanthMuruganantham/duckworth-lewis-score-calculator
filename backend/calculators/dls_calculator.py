@@ -89,7 +89,7 @@ class DLSCalculator:
         overs_available_to_team_1_at_start: float,
         wickets_lost_by_team_1_during_interruption: int,
         overs_used_by_team_1_during_interruption: float,
-        overs_available_to_team_1_after_resumption: float,
+        revised_overs_to_team_1_after_resumption: float,
         runs_scored_by_team_1: int,
         overs_available_to_team_2_at_start: float,
         **kwargs
@@ -104,7 +104,7 @@ class DLSCalculator:
             overs_available_to_team_1_at_start: Overs available to Team 1 at start
             wickets_lost_by_team_1_during_interruption: Wickets lost by Team 1 at interruption
             overs_used_by_team_1_during_interruption: Overs used by Team 1 before interruption
-            overs_available_to_team_1_after_resumption: Maximum overs allotted to Team 1 after resumption
+            revised_overs_to_team_1_after_resumption: Maximum overs allotted to Team 1 after resumption
             runs_scored_by_team_1: Total runs scored by Team 1 at end of innings
             overs_available_to_team_2_at_start: Overs available to Team 2
             
@@ -114,7 +114,7 @@ class DLSCalculator:
         # Convert overs to balls
         team_one_balls_initially = self.convert_overs_to_balls(overs_available_to_team_1_at_start)
         team_one_balls_used = self.convert_overs_to_balls(overs_used_by_team_1_during_interruption)
-        team_one_balls_after = self.convert_overs_to_balls(overs_available_to_team_1_after_resumption)
+        team_one_balls_after = self.convert_overs_to_balls(revised_overs_to_team_1_after_resumption)
         team_two_balls_available = self.convert_overs_to_balls(overs_available_to_team_2_at_start)
         
         # Calculate balls remaining at different stages
