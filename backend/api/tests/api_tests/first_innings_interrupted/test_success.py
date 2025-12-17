@@ -12,12 +12,12 @@ class FirstInningsInterruptedSuccessTests(APITestCase):
             "scenario_type": DLSScenarioEnum.FIRST_INNINGS_INTERRUPTED.value,
             "match_format": "T20",
             "inputs": {
-                "overs_available_to_team_1_at_start": 20.0,
-                "overs_used_by_team_1_during_interruption": 10.0,
-                "wickets_lost_by_team_1_during_interruption": 2,
-                "overs_available_to_team_1_at_resumption": 18.0,
-                "runs_scored_by_team_1": 150,
-                "overs_available_to_team_2_at_start": 15.0
+                "oversAvailableToTeam1AtStart": 20.0,
+                "oversUsedByTeam1DuringInterruption": 10.0,
+                "wicketsLostByTeam1DuringInterruption": 2,
+                "oversAvailableToTeam1AtResumption": 18.0,
+                "runsScoredByTeam1": 150,
+                "oversAvailableToTeam2AtStart": 15.0
             }
         }
 

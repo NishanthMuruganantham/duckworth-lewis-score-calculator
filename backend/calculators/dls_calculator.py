@@ -194,21 +194,6 @@ class DLSCalculator:
         par_score = runs_scored_by_team_1 * (team_two_resource_used / team_one_resource_available)
         
         return par_score
-
-    @staticmethod
-    def convert_balls_to_overs(balls: int) -> float:
-        """
-        Convert number of balls to overs.
-        
-        Args:
-            balls: Total number of balls
-            
-        Returns:
-            Number of overs in decimal format (e.g., 10.3 for 10 overs and 3 balls)
-        """
-        complete_overs = balls // 6
-        remaining_balls = balls % 6
-        return complete_overs + remaining_balls * 0.1
     
     @staticmethod
     def convert_overs_to_balls(overs: float) -> int:
@@ -337,18 +322,3 @@ class DLSCalculator:
         par_score = team_one_runs_scored * (team_two_resource / team_one_resource)
         
         return par_score
-    
-    
-    
-    
-
-
-# Convenience functions for backward compatibility
-def convert_balls_to_overs(balls: int) -> float:
-    """Convert balls to overs. See DLSCalculator.convert_balls_to_overs for details."""
-    return DLSCalculator.convert_balls_to_overs(balls)
-
-
-def convert_overs_to_balls(overs: float) -> int:
-    """Convert overs to balls. See DLSCalculator.convert_overs_to_balls for details."""
-    return DLSCalculator.convert_overs_to_balls(overs)
