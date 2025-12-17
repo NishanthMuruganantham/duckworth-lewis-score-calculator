@@ -25,7 +25,7 @@ class ScenarioValidator:
         "overs_used_by_team_2_during_curtailed": "oversUsedByTeam2DuringCurtailed",
         "overs_used_by_team_2_during_interruption": "oversUsedByTeam2DuringInterruption",
         "wickets_lost_by_team_2_during_interruption": "wicketsLostByTeam2DuringInterruption",
-        "overs_available_to_team_2_after_resumption": "oversAvailableToTeam2AfterResumption",
+        "revised_overs_to_team_2_after_resumption": "revisedOversToTeam2AfterResumption",
         "wickets_lost_by_team_2_during_curtailed": "wicketsLostByTeam2DuringCurtailed",
     }
 
@@ -155,12 +155,12 @@ class ScenarioValidator:
         cls._validate_greater(
             data, errors,
             "overs_available_to_team_2_at_start",
-            "overs_available_to_team_2_after_resumption",
+            "revised_overs_to_team_2_after_resumption",
         )
 
         cls._validate_greater(
             data, errors,
-            "overs_available_to_team_2_after_resumption",
+            "revised_overs_to_team_2_after_resumption",
             "overs_used_by_team_2_during_interruption",
         )
 
@@ -209,7 +209,7 @@ SCENARIO_RULES = {
             "overs_available_to_team_2_at_start",
             "overs_used_by_team_2_during_interruption",
             "wickets_lost_by_team_2_during_interruption",
-            "overs_available_to_team_2_after_resumption",
+            "revised_overs_to_team_2_after_resumption",
         ],
         validator=ScenarioValidator.validate_second_innings_interrupted_inputs,
     ),
