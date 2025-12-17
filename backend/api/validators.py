@@ -20,9 +20,12 @@ class ScenarioValidator:
         "overs_used_by_team_1_during_curtailed": "oversUsedByTeam1DuringCurtailed",
         "overs_used_by_team_1_during_interruption": "oversUsedByTeam1DuringInterruption",
         "wickets_lost_by_team_1_during_interruption": "wicketsLostByTeam1DuringInterruption",
-        "overs_available_to_team_1_at_resumption": "oversAvailableToTeam1AtResumption",
+        "overs_available_to_team_1_after_resumption": "oversAvailableToTeam1AfterResumption",
         "overs_available_to_team_2_at_start": "oversAvailableToTeam2AtStart",
         "overs_used_by_team_2_during_curtailed": "oversUsedByTeam2DuringCurtailed",
+        "overs_used_by_team_2_during_interruption": "oversUsedByTeam2DuringInterruption",
+        "wickets_lost_by_team_2_during_interruption": "wicketsLostByTeam2DuringInterruption",
+        "overs_available_to_team_2_after_resumption": "oversAvailableToTeam2AfterResumption",
         "wickets_lost_by_team_2_during_curtailed": "wicketsLostByTeam2DuringCurtailed",
     }
 
@@ -96,12 +99,12 @@ class ScenarioValidator:
         cls._validate_greater(
             data, errors,
             "overs_available_to_team_1_at_start",
-            "overs_available_to_team_1_at_resumption"
+            "overs_available_to_team_1_after_resumption"
         )
 
         cls._validate_greater(
             data, errors,
-            "overs_available_to_team_1_at_resumption",
+            "overs_available_to_team_1_after_resumption",
             "overs_available_to_team_2_at_start"
         )
 
@@ -132,6 +135,37 @@ class ScenarioValidator:
 
         return errors
 
+    @classmethod
+    def validate_second_innings_interrupted_inputs(cls, data):
+        errors = {}
+
+        cls._validate_greater(
+            data, errors,
+            "overs_available_to_team_1_at_start",
+            "overs_available_to_team_2_at_start",
+            strict=False
+        )
+
+        cls._validate_greater(
+            data, errors,
+            "overs_available_to_team_2_at_start",
+            "overs_used_by_team_2_during_interruption",
+        )
+
+        cls._validate_greater(
+            data, errors,
+            "overs_available_to_team_2_at_start",
+            "overs_available_to_team_2_after_resumption",
+        )
+
+        cls._validate_greater(
+            data, errors,
+            "overs_available_to_team_2_after_resumption",
+            "overs_used_by_team_2_during_interruption",
+        )
+
+        return errors
+
 
 SCENARIO_RULES = {
     DLSScenarioEnum.FIRST_INNINGS_CURTAILED.value: ScenarioRule(
@@ -150,7 +184,7 @@ SCENARIO_RULES = {
             "overs_available_to_team_1_at_start",
             "overs_used_by_team_1_during_interruption",
             "wickets_lost_by_team_1_during_interruption",
-            "overs_available_to_team_1_at_resumption",
+            "overs_available_to_team_1_after_resumption",
             "runs_scored_by_team_1",
             "overs_available_to_team_2_at_start",
         ],
@@ -166,5 +200,17 @@ SCENARIO_RULES = {
             "wickets_lost_by_team_2_during_curtailed",
         ],
         validator=ScenarioValidator.validate_second_innings_curtailed_inputs,
+    ),
+
+    DLSScenarioEnum.SECOND_INNINGS_INTERRUPTED.value: ScenarioRule(
+        required_inputs=[
+            "overs_available_to_team_1_at_start",
+            "runs_scored_by_team_1",
+            "overs_available_to_team_2_at_start",
+            "overs_used_by_team_2_during_interruption",
+            "wickets_lost_by_team_2_during_interruption",
+            "overs_available_to_team_2_after_resumption",
+        ],
+        validator=ScenarioValidator.validate_second_innings_interrupted_inputs,
     ),
 }
