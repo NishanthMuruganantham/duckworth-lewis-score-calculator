@@ -15,7 +15,7 @@ class FirstInningsInterruptedErrorTests(APITestCase):
                 "overs_available_to_team_1_at_start": 50.0,
                 "overs_used_by_team_1_during_interruption": 20.0,
                 "wickets_lost_by_team_1_during_interruption": 2,
-                "overs_available_to_team_1_at_resumption": 45.0,
+                "revised_overs_to_team_1_after_resumption": 45.0,
                 "runs_scored_by_team_1": 250,
                 "overs_available_to_team_2_at_start": 40.0
             }
@@ -27,13 +27,13 @@ class FirstInningsInterruptedErrorTests(APITestCase):
         """
         payload = self.base_payload.copy()
         payload['inputs'] = self.base_payload['inputs'].copy()
-        del payload['inputs']['overs_available_to_team_1_at_resumption']
+        del payload['inputs']['revised_overs_to_team_1_after_resumption']
 
         response = self.client.post(self.url, payload, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn('inputs', response.data)
-        self.assertIn('overs_available_to_team_1_at_resumption', response.data['inputs'])
+        self.assertIn('revised_overs_to_team_1_after_resumption', response.data['inputs'])
 
     def test_start_overs_vs_used_overs(self):
         """
@@ -58,15 +58,15 @@ class FirstInningsInterruptedErrorTests(APITestCase):
         """
         payload = self.base_payload.copy()
         payload['inputs'] = self.base_payload['inputs'].copy()
-        payload['inputs']['overs_available_to_team_1_at_resumption'] = 50.0
+        payload['inputs']['revised_overs_to_team_1_after_resumption'] = 50.0
 
         response = self.client.post(self.url, payload, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn('overs_available_to_team_1_at_resumption', response.data['inputs'])
+        self.assertIn('revised_overs_to_team_1_after_resumption', response.data['inputs'])
         self.assertIn(
             'Must be lesser than oversAvailableToTeam1AtStart', 
-            response.data['inputs']['overs_available_to_team_1_at_resumption']
+            response.data['inputs']['revised_overs_to_team_1_after_resumption']
         )
 
     def test_resumption_overs_vs_team2_start(self):
@@ -82,6 +82,6 @@ class FirstInningsInterruptedErrorTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn('overs_available_to_team_2_at_start', response.data['inputs'])
         self.assertIn(
-            'Must be lesser than oversAvailableToTeam1AtResumption', 
+            'Must be lesser than revisedOversToTeam1AfterResumption', 
             response.data['inputs']['overs_available_to_team_2_at_start']
         )

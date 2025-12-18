@@ -15,7 +15,7 @@ class FirstInningsInterruptedSuccessTests(APITestCase):
                 "oversAvailableToTeam1AtStart": 20.0,
                 "oversUsedByTeam1DuringInterruption": 10.0,
                 "wicketsLostByTeam1DuringInterruption": 2,
-                "oversAvailableToTeam1AtResumption": 18.0,
+                "revisedOversToTeam1AfterResumption": 18.0,
                 "runsScoredByTeam1": 150,
                 "oversAvailableToTeam2AtStart": 15.0
             }
