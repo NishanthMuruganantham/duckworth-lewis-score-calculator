@@ -1,6 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import List, Callable, Optional
+from typing import Dict, List, Callable, Optional
 from calculators.dls_calculator import DLSCalculator
 from .enums import DLSScenarioEnum
 
@@ -13,7 +13,7 @@ class ScenarioRule:
 
 class ScenarioValidator:
 
-    field_map = {
+    field_map: Dict[str, str] = {
         "overs_available_to_team_1_at_start": "oversAvailableToTeam1AtStart",
         "runs_scored_by_team_1": "runsScoredByTeam1",
         "wickets_lost_by_team_1_during_curtailed": "wicketsLostByTeam1DuringCurtailed",
@@ -138,7 +138,8 @@ class ScenarioValidator:
         return errors
 
     @classmethod
-    def validate_second_innings_interrupted_inputs(cls, data, errors = {}):
+    def validate_second_innings_interrupted_inputs(cls, data):
+        errors = {}
 
         cls._validate_greater(
             data, errors,
