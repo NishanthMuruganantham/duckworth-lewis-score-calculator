@@ -138,6 +138,19 @@ class ScenarioValidator:
         return errors
 
     @classmethod
+    def validate_second_innings_delayed_inputs(cls, data):
+        errors = {}
+
+        cls._validate_greater(
+            data, errors,
+            "overs_available_to_team_1_at_start",
+            "overs_available_to_team_2_at_start",
+            strict=False
+        )
+
+        return errors
+
+    @classmethod
     def validate_second_innings_interrupted_inputs(cls, data):
         errors = {}
 
@@ -202,6 +215,15 @@ SCENARIO_RULES = {
             "wickets_lost_by_team_2_during_curtailed",
         ],
         validator=ScenarioValidator.validate_second_innings_curtailed_inputs,
+    ),
+
+    DLSScenarioEnum.SECOND_INNINGS_DELAYED.value: ScenarioRule(
+        required_inputs=[
+            "overs_available_to_team_1_at_start",
+            "runs_scored_by_team_1",
+            "overs_available_to_team_2_at_start",
+        ],
+        validator=ScenarioValidator.validate_second_innings_delayed_inputs,
     ),
 
     DLSScenarioEnum.SECOND_INNINGS_INTERRUPTED.value: ScenarioRule(

@@ -56,9 +56,9 @@ class DLSCalculator:
             Target score for Team 2
         """
         # Convert overs to balls
-        team_one_balls_initially = self.convert_overs_to_balls(overs_available_to_team_1_at_start)
-        team_one_balls_used = self.convert_overs_to_balls(overs_used_by_team_1_during_curtailed)
-        team_two_balls_available = self.convert_overs_to_balls(overs_available_to_team_2_at_start)
+        team_one_balls_initially = self._convert_overs_to_balls(overs_available_to_team_1_at_start)
+        team_one_balls_used = self._convert_overs_to_balls(overs_used_by_team_1_during_curtailed)
+        team_two_balls_available = self._convert_overs_to_balls(overs_available_to_team_2_at_start)
         
         balls_remaining_team_one = team_one_balls_initially - team_one_balls_used
         
@@ -112,10 +112,10 @@ class DLSCalculator:
             Target score for Team 2
         """
         # Convert overs to balls
-        team_one_balls_initially = self.convert_overs_to_balls(overs_available_to_team_1_at_start)
-        team_one_balls_used = self.convert_overs_to_balls(overs_used_by_team_1_during_interruption)
-        team_one_balls_after = self.convert_overs_to_balls(revised_overs_to_team_1_after_resumption)
-        team_two_balls_available = self.convert_overs_to_balls(overs_available_to_team_2_at_start)
+        team_one_balls_initially = self._convert_overs_to_balls(overs_available_to_team_1_at_start)
+        team_one_balls_used = self._convert_overs_to_balls(overs_used_by_team_1_during_interruption)
+        team_one_balls_after = self._convert_overs_to_balls(revised_overs_to_team_1_after_resumption)
+        team_two_balls_available = self._convert_overs_to_balls(overs_available_to_team_2_at_start)
         
         # Calculate balls remaining at different stages
         balls_remaining_during_interruption = team_one_balls_initially - team_one_balls_used
@@ -176,9 +176,9 @@ class DLSCalculator:
             Par score for Team 2 at the cutoff point
         """
         # Convert overs to balls
-        team_one_balls_available = self.convert_overs_to_balls(overs_available_to_team_1_at_start)
-        team_two_balls_available = self.convert_overs_to_balls(overs_available_to_team_2_at_start)
-        team_two_balls_used = self.convert_overs_to_balls(overs_used_by_team_2_during_curtailed)
+        team_one_balls_available = self._convert_overs_to_balls(overs_available_to_team_1_at_start)
+        team_two_balls_available = self._convert_overs_to_balls(overs_available_to_team_2_at_start)
+        team_two_balls_used = self._convert_overs_to_balls(overs_used_by_team_2_during_curtailed)
         
         balls_remaining = team_two_balls_available - team_two_balls_used
         
@@ -192,6 +192,40 @@ class DLSCalculator:
         
         # Calculate par score
         par_score = runs_scored_by_team_1 * (team_two_resource_used / team_one_resource_available)
+        
+        return par_score
+
+    def calculate_par_score_second_innings_delayed(
+        self,
+        overs_available_to_team_1_at_start: float,
+        runs_scored_by_team_1: int,
+        overs_available_to_team_2_at_start: float,
+        **kwargs
+    ) -> float:
+        """
+        Calculate par score when first innings is completed and second innings is delayed.
+        
+        This scenario occurs when Team 2 starts with fewer overs than Team 1 had,
+        but faces no further interruptions.
+        
+        Args:
+            overs_available_to_team_1_at_start: Overs available to Team 1 at start
+            runs_scored_by_team_1: Total runs scored by Team 1
+            overs_available_to_team_2_at_start: Overs available to Team 2 at start
+            
+        Returns:
+            Revised target for Team 2
+        """
+        # Convert overs to balls
+        team_one_balls_available = self._convert_overs_to_balls(overs_available_to_team_1_at_start)
+        team_two_balls_available = self._convert_overs_to_balls(overs_available_to_team_2_at_start)
+        
+        # Get resource percentages (both teams start with 0 wickets lost)
+        team_one_resource = self._get_resource_percentage(team_one_balls_available, wickets_lost=0)
+        team_two_resource = self._get_resource_percentage(team_two_balls_available, wickets_lost=0)
+        
+        # Calculate revised target
+        par_score = runs_scored_by_team_1 * (team_two_resource / team_one_resource)
         
         return par_score
 
@@ -223,10 +257,10 @@ class DLSCalculator:
             Par score for Team 2 to win
         """
         # Convert overs to balls for precise calculations
-        team_one_balls_available = self.convert_overs_to_balls(overs_available_to_team_1_at_start)
-        team_two_balls_available_initially = self.convert_overs_to_balls(overs_available_to_team_2_at_start)
-        team_two_balls_used = self.convert_overs_to_balls(overs_used_by_team_2_during_interruption)
-        team_two_balls_available_after = self.convert_overs_to_balls(revised_overs_to_team_2_after_resumption)
+        team_one_balls_available = self._convert_overs_to_balls(overs_available_to_team_1_at_start)
+        team_two_balls_available_initially = self._convert_overs_to_balls(overs_available_to_team_2_at_start)
+        team_two_balls_used = self._convert_overs_to_balls(overs_used_by_team_2_during_interruption)
+        team_two_balls_available_after = self._convert_overs_to_balls(revised_overs_to_team_2_after_resumption)
         
         # Calculate balls remaining at different stages
         balls_remaining_during_interruption = team_two_balls_available_initially - team_two_balls_used
@@ -255,7 +289,7 @@ class DLSCalculator:
         return par_score
 
     @staticmethod
-    def convert_overs_to_balls(overs: float) -> int:
+    def _convert_overs_to_balls(overs: float) -> int:
         """
         Convert overs to number of balls.
         
@@ -290,36 +324,3 @@ class DLSCalculator:
         reversed_resources = self.resource_table_df[wicket_column][::-1]
         
         return np.interp(balls_remaining, reversed_balls, reversed_resources)
-    
-    def calculate_par_score_second_innings_delayed(
-        self,
-        team_one_overs_available: float,
-        team_one_runs_scored: int,
-        team_two_overs_available: float
-    ) -> float:
-        """
-        Calculate par score when first innings is completed and second innings is delayed.
-        
-        This scenario occurs when Team 2 starts with fewer overs than Team 1 had,
-        but faces no further interruptions.
-        
-        Args:
-            team_one_overs_available: Overs available to Team 1
-            team_one_runs_scored: Total runs scored by Team 1
-            team_two_overs_available: Overs available to Team 2 at start
-            
-        Returns:
-            Revised target for Team 2
-        """
-        # Convert overs to balls
-        team_one_balls_available = self.convert_overs_to_balls(team_one_overs_available)
-        team_two_balls_available = self.convert_overs_to_balls(team_two_overs_available)
-        
-        # Get resource percentages (both teams start with 0 wickets lost)
-        team_one_resource = self._get_resource_percentage(team_one_balls_available, wickets_lost=0)
-        team_two_resource = self._get_resource_percentage(team_two_balls_available, wickets_lost=0)
-        
-        # Calculate revised target
-        par_score = team_one_runs_scored * (team_two_resource / team_one_resource)
-        
-        return par_score
