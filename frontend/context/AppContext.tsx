@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { MatchFormat, Theme } from '../types';
 
+export type ApiStatus = 'online' | 'offline' | 'checking' | 'error';
+
 interface AppContextType {
 	theme: Theme;
 	toggleTheme: () => void;
@@ -8,6 +10,8 @@ interface AppContextType {
 	setMatchFormat: (format: MatchFormat) => void;
 	isCalculating: boolean;
 	setIsCalculating: (val: boolean) => void;
+	apiStatus: ApiStatus;
+	setApiStatus: (status: ApiStatus) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -24,6 +28,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 	});
 
 	const [isCalculating, setIsCalculating] = useState(false);
+	const [apiStatus, setApiStatus] = useState<ApiStatus>('online'); // Default to online for better UX flow
 
 	useEffect(() => {
 		localStorage.setItem('dls_theme', theme);
@@ -48,7 +53,16 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 	};
 
 	return (
-		<AppContext.Provider value={{ theme, toggleTheme, matchFormat, setMatchFormat, isCalculating, setIsCalculating }}>
+		<AppContext.Provider value={{
+			theme,
+			toggleTheme,
+			matchFormat,
+			setMatchFormat,
+			isCalculating,
+			setIsCalculating,
+			apiStatus,
+			setApiStatus
+		}}>
 			{children}
 		</AppContext.Provider>
 	);
