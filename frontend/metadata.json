@@ -1,0 +1,5 @@
+{
+	"name": "DLS Calculator",
+	"description": "A premium, production-grade Duckworth-Lewis-Stern calculator for professional cricket analytics. Supports multiple formats (ODI, T20, T10) and offline capabilities via Capacitor.",
+	"requestFramePermissions": []
+}
