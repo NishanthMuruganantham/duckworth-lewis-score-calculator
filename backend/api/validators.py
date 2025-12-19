@@ -107,7 +107,8 @@ class ScenarioValidator:
         cls._validate_greater(
             data, errors,
             "revised_overs_to_team_1_after_resumption",
-            "overs_available_to_team_2_at_start"
+            "overs_available_to_team_2_at_start",
+            strict=False
         )
 
         return errors
