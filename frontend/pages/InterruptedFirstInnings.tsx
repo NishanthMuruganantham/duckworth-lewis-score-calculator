@@ -4,6 +4,7 @@ import { calculateDLS } from '../services/dlsApi';
 import { ScenarioType, MatchFormat } from '../types';
 import StadiumLoader from '../components/ui/StadiumLoader';
 import { WicketError } from '../components/ui/WicketError';
+import { ConnectionError } from '../components/ui/ConnectionError';
 import { HelpCircle, X, ArrowRight, Save } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconInn1Interrupted } from '../components/ui/CricketIcons';
@@ -22,6 +23,7 @@ const InterruptedFirstInnings: React.FC = () => {
 	const [loading, setLoading] = useState(false);
 	const [result, setResult] = useState<any>(null);
 	const [apiError, setApiError] = useState<string | null>(null);
+	const [isConnError, setIsConnError] = useState(false);
 	const [showRules, setShowRules] = useState(false);
 	const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -37,6 +39,7 @@ const InterruptedFirstInnings: React.FC = () => {
 	useEffect(() => {
 		setResult(null);
 		setApiError(null);
+		setIsConnError(false);
 		validateForm(formData);
 	}, [matchFormat]);
 
@@ -117,6 +120,7 @@ const InterruptedFirstInnings: React.FC = () => {
 			overs_available_to_team_2_at_start: '',
 		});
 		setApiError(null);
+		setIsConnError(false);
 		setResult(null);
 		setErrors({});
 	};
@@ -127,6 +131,7 @@ const InterruptedFirstInnings: React.FC = () => {
 		setLoading(true);
 		setIsCalculating(true);
 		setApiError(null);
+		setIsConnError(false);
 		setResult(null);
 
 		const payload = {
@@ -144,10 +149,17 @@ const InterruptedFirstInnings: React.FC = () => {
 
 		try {
 			const response = await calculateDLS(payload);
-			if (response.success && response.data) setResult(response.data);
-			else setApiError(response.error || "Calculation failed");
+			if (response.success && response.data) {
+				setResult(response.data);
+			} else {
+				if (response.error === 'CONNECTIVITY_ERROR') {
+					setIsConnError(true);
+				} else {
+					setApiError(response.error || "Calculation failed");
+				}
+			}
 		} catch (err) {
-			setApiError("Network error.");
+			setIsConnError(true);
 		} finally {
 			setLoading(false);
 			setIsCalculating(false);
@@ -250,6 +262,8 @@ const InterruptedFirstInnings: React.FC = () => {
 					<AnimatePresence mode="wait">
 						{loading ? (
 							<StadiumLoader key="loader" message="Calculating Adjusted Target" loading={true} />
+						) : isConnError ? (
+							<ConnectionError key="conn-error" onRetry={() => handleSubmit()} />
 						) : apiError ? (
 							<WicketError key="error" onRetry={() => handleSubmit()} onBack={handleClearForm} message={apiError} />
 						) : result ? (
