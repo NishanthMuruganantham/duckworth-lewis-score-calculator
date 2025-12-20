@@ -10,6 +10,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
 INSTALLED_APPS = [
+    'django.contrib.contenttypes',
     'django.contrib.staticfiles',
     'api',
     'rest_framework',
@@ -75,4 +76,6 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
+    "UNAUTHENTICATED_USER": None,
+    "UNAUTHENTICATED_TOKEN": None,
 }
