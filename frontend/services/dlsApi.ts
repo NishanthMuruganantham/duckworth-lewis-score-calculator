@@ -62,6 +62,11 @@ export const calculateDLS = async (payload: CalculationPayload): Promise<Calcula
 
 		if (!response.ok) {
 			const errorData = await response.json();
+
+			if (response.status === 400) {
+				throw new Error('Invalid inputs detected. Please verify your inputs and try again.');
+			}
+
 			throw new Error(errorData.message || 'Calculation failed');
 		}
 

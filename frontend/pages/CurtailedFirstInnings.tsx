@@ -70,7 +70,7 @@ const CurtailedFirstInnings: React.FC = () => {
 		if (data.runs_scored_by_team_1 !== '' && Number(data.runs_scored_by_team_1) < 0) newErrors.runs_scored_by_team_1 = "Cannot be negative";
 		if (data.wickets_lost_by_team_1_during_curtailed !== '') {
 			const w = Number(data.wickets_lost_by_team_1_during_curtailed);
-			if (w < 0 || w > 10) newErrors.wickets_lost_by_team_1_during_curtailed = "Must be 0-10";
+			if (w < 0 || w > 9) newErrors.wickets_lost_by_team_1_during_curtailed = "Must be 0 - 9";
 		}
 
 		if (data.overs_used_by_team_1_during_curtailed !== '') {
@@ -83,6 +83,7 @@ const CurtailedFirstInnings: React.FC = () => {
 			const t2 = Number(data.overs_available_to_team_2_at_start);
 			if (!validateOvers(data.overs_available_to_team_2_at_start)) newErrors.overs_available_to_team_2_at_start = "Invalid format (.0-.5)";
 			if (data.overs_available_to_team_1_at_start !== '' && t2 > Number(data.overs_available_to_team_1_at_start)) newErrors.overs_available_to_team_2_at_start = "Cannot exceed Team 1 starting overs";
+			if (data.overs_used_by_team_1_during_curtailed !== '' && t2 > Number(data.overs_used_by_team_1_during_curtailed)) newErrors.overs_available_to_team_2_at_start = "Cannot exceed overs used by Team 1";
 		}
 
 		setErrors(newErrors);
@@ -198,7 +199,7 @@ const CurtailedFirstInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Team 1 Starting Overs</label>
-										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()}.0 Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
 										{errors.overs_available_to_team_1_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_1_at_start}</p>}
 									</div>
 								</div>
@@ -214,12 +215,12 @@ const CurtailedFirstInnings: React.FC = () => {
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Wickets Lost</label>
-										<input type="number" name="wickets_lost_by_team_1_during_curtailed" value={formData.wickets_lost_by_team_1_during_curtailed} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_1_during_curtailed')}`} placeholder="0-10" required />
+										<input type="number" name="wickets_lost_by_team_1_during_curtailed" value={formData.wickets_lost_by_team_1_during_curtailed} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_1_during_curtailed')}`} placeholder="0 - 9" required />
 										{errors.wickets_lost_by_team_1_during_curtailed && <p className="text-xs text-red-500 mt-1">{errors.wickets_lost_by_team_1_during_curtailed}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Overs Used</label>
-										<input type="number" step="0.1" name="overs_used_by_team_1_during_curtailed" value={formData.overs_used_by_team_1_during_curtailed} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_1_during_curtailed')}`} placeholder={`Up to ${getMaxOvers()}.0 Overs`} required />
+										<input type="number" step="0.1" name="overs_used_by_team_1_during_curtailed" value={formData.overs_used_by_team_1_during_curtailed} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_1_during_curtailed')}`} placeholder={`Up to ${getMaxOvers()} Overs`} required />
 										{errors.overs_used_by_team_1_during_curtailed && <p className="text-xs text-red-500 mt-1">{errors.overs_used_by_team_1_during_curtailed}</p>}
 									</div>
 								</div>
@@ -230,14 +231,14 @@ const CurtailedFirstInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Team 2 Overs Available</label>
-										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()}.0 Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
 										{errors.overs_available_to_team_2_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_2_at_start}</p>}
 									</div>
 								</div>
 							</div>
 						</div>
 						<div className="p-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex justify-end">
-							<button type="submit" disabled={loading || !isFormComplete || hasErrors} className="flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg active:scale-95 transition-transform disabled:opacity-50"><Save className="w-5 h-5" /><span>Calculate Adjustment</span></button>
+							<button type="submit" disabled={loading || !isFormComplete || hasErrors} className="flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg active:scale-95 transition-transform disabled:opacity-50"><Save className="w-5 h-5" /><span>Calculate Target</span></button>
 						</div>
 					</form>
 				</div>

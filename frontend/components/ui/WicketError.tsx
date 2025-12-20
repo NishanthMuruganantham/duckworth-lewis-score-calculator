@@ -58,7 +58,7 @@ export const WicketError: React.FC<WicketErrorProps> = ({ onRetry, onBack, messa
                 <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">
                     Server Error Occurred
                 </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 max-w-[260px] mx-auto leading-relaxed">
+                <p className="text-xs text-red-600 dark:text-red-400 max-w-[260px] mx-auto leading-relaxed">
                     {message || "We encountered an issue processing the DLS request."}
                 </p>
             </div>
