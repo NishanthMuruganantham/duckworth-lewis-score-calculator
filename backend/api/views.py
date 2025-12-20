@@ -54,3 +54,12 @@ class ResourceTableView(APIView):
             "data": df.values.tolist()
         }
         return Response(data, status=status.HTTP_200_OK)
+
+
+class HealthCheckView(APIView):
+    """
+    API View for health checks.
+    """
+
+    def get(self, request):
+        return Response({"status": "ok"}, status=status.HTTP_200_OK)

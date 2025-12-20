@@ -31,7 +31,7 @@ export const checkApiHealth = async (): Promise<boolean> => {
 	for (let attempt = 1; attempt <= NETWORK_CONFIG.HEALTH_CHECK_RETRIES; attempt++) {
 		try {
 			const response = await fetchWithTimeout(
-				`${BASE_URL}/health/`,
+				`${BASE_URL}/health-check/`,
 				{ method: 'GET' },
 				NETWORK_CONFIG.HEALTH_CHECK_TIMEOUT
 			);
