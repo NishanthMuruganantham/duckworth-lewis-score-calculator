@@ -45,7 +45,7 @@ class ResourceTableView(APIView):
         """
         Returns the DLS resource table data.
         """
-        match_format = request.query_params.get("format", "T20")
+        match_format = request.query_params.get("match_format", "T20")
         calculator = DLSCalculator(match_format)
         df = calculator.resource_table_df
 

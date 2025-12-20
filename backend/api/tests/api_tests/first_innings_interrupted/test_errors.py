@@ -71,17 +71,17 @@ class FirstInningsInterruptedErrorTests(APITestCase):
 
     def test_resumption_overs_vs_team2_start(self):
         """
-        Resumption overs (T1 total) must be > T2 start overs.
+        Resumption overs (T1 total) must be greater than or equal to T2 start overs.
         """
         payload = self.base_payload.copy()
         payload['inputs'] = self.base_payload['inputs'].copy()
-        payload['inputs']['overs_available_to_team_2_at_start'] = 45.0
+        payload['inputs']['overs_available_to_team_2_at_start'] = 46.0
 
         response = self.client.post(self.url, payload, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn('overs_available_to_team_2_at_start', response.data['inputs'])
         self.assertIn(
-            'Must be lesser than revisedOversToTeam1AfterResumption', 
+            'Must be lesser than or equal to revisedOversToTeam1AfterResumption', 
             response.data['inputs']['overs_available_to_team_2_at_start']
         )
