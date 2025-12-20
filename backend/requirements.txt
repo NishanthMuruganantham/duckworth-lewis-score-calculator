@@ -1,0 +1,15 @@
+asgiref==3.11.0
+coverage==7.13.0
+django==6.0
+django-cors-headers==4.6.0
+djangorestframework==3.15.2
+djangorestframework-camel-case==1.4.2
+drf-camel-case==1.0.2
+numpy==2.3.5
+orjson==3.11.5
+pandas==2.3.3
+python-dateutil==2.9.0.post0
+pytz==2025.2
+six==1.17.0
+sqlparse==0.5.4
+tzdata==2025.2
