@@ -99,14 +99,49 @@ export const calculateDLS = async (payload: CalculationPayload): Promise<Calcula
 };
 
 export const fetchResourceTable = async (format: MatchFormat): Promise<ResourceTableResponse> => {
-	return {
-		columns: ["Overs Left", "0 Wkts", "1 Wkt", "2 Wkts", "3 Wkts", "4 Wkts"],
-		data: [
-			[50, 100.0, 93.4, 85.1, 74.9, 62.7],
-			[40, 90.3, 85.2, 79.8, 71.3, 60.5],
-			[30, 75.1, 71.9, 68.3, 62.4, 54.1],
-			[20, 54.2, 52.8, 50.9, 47.6, 42.9],
-			[10, 31.4, 30.8, 29.9, 28.5, 26.1],
-		]
-	};
+	try {
+		const response = await fetchWithTimeout(
+			`${BASE_URL}/resource-table/?match_format=${format}`,
+			{
+				method: 'GET',
+				headers: { 'Content-Type': 'application/json' },
+			},
+			NETWORK_CONFIG.API_CALL_TIMEOUT
+		);
+
+		if (!response.ok) {
+			const errorData = await response.json();
+
+			if (response.status === 400) {
+				throw new Error('Invalid inputs detected. Please verify your inputs and try again.');
+			}
+
+			throw new Error(errorData.message || 'Failed to fetch resource table');
+		}
+
+		const data = await response.json();
+		return {
+			columns: data.columns,
+			data: data.data,
+		};
+	} catch (error) {
+		if (error instanceof Error) {
+			if (error.name === 'AbortError') {
+				console.error('Resource Table Timeout');
+				return {
+					columns: [],
+					data: [],
+				};
+			}
+			console.error('Resource Table Error:', error);
+			return {
+				columns: [],
+				data: [],
+			};
+		}
+		return {
+			columns: [],
+			data: [],
+		};
+	}
 };
