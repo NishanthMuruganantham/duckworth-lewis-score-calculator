@@ -17,11 +17,11 @@ const Sidebar: React.FC = () => {
 	const { matchFormat, setMatchFormat } = useApp();
 
 	const navItems = [
-		{ to: '/interrupted-inn1', label: '1st Inn Resume', icon: IconInn1Interrupted },
-		{ to: '/curtailed-inn1', label: '1st Inn Cut', icon: IconInn1Curtailed },
-		{ to: '/delayed-inn2', label: '2nd Inn Delayed', icon: IconInn2Delayed },
-		{ to: '/interrupted-inn2', label: '2nd Inn Resume', icon: IconInn2Interrupted },
-		{ to: '/curtailed-inn2', label: '2nd Inn Cut', icon: IconInn2Curtailed },
+		{ to: '/interrupted-first-innings', label: '1st Inn Resume', icon: IconInn1Interrupted },
+		{ to: '/curtailed-first-innings', label: '1st Inn Cut', icon: IconInn1Curtailed },
+		{ to: '/delayed-second-innings', label: '2nd Inn Delayed', icon: IconInn2Delayed },
+		{ to: '/interrupted-second-innings', label: '2nd Inn Resume', icon: IconInn2Interrupted },
+		{ to: '/curtailed-second-innings', label: '2nd Inn Cut', icon: IconInn2Curtailed },
 	];
 
 	return (
@@ -75,7 +75,7 @@ const Sidebar: React.FC = () => {
 				<div className="pt-4 pb-2">
 					<h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-2">Resources</h3>
 					<NavLink
-						to="/resources"
+						to="/resource-table"
 						className={({ isActive }) =>
 							`flex items-center space-x-3 px-4 py-2.5 rounded-xl transition-colors duration-200 group ${isActive
 								? 'bg-emerald-600 text-white shadow-md'
@@ -88,7 +88,7 @@ const Sidebar: React.FC = () => {
 					</NavLink>
 
 					<NavLink
-						to="/docs"
+						to="/how-it-works"
 						className={({ isActive }) =>
 							`flex items-center space-x-3 px-4 py-2.5 rounded-xl transition-colors duration-200 mt-1 group ${isActive
 								? 'bg-emerald-600 text-white shadow-md'
