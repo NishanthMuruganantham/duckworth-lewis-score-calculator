@@ -16,6 +16,8 @@ interface FormState {
 	overs_used_by_team_1_during_curtailed: number | '';
 	overs_available_to_team_2_at_start: number | '';
 }
+import SEO from '../components/seo/SEO';
+import SEOContent from '../components/seo/SEOContent';
 
 const CurtailedFirstInnings: React.FC = () => {
 	const { matchFormat, setIsCalculating } = useApp();
@@ -25,6 +27,41 @@ const CurtailedFirstInnings: React.FC = () => {
 	const [isConnError, setIsConnError] = useState(false);
 	const [showRules, setShowRules] = useState(false);
 	const [errors, setErrors] = useState<Record<string, string>>({});
+
+	// SEO Content for this page
+	const pageSEO = {
+		title: 'Curtailed First Innings DLS Calculator',
+		description: 'Calculate DLS par scores and targets when the first innings ends prematurely. Accurate cricket math for ODI and T20.',
+		canonical: 'https://dls.nishanthm.com/curtailed-first-innings',
+		schema: JSON.stringify([
+			{
+				"@context": "https://schema.org",
+				"@type": "WebApplication",
+				"name": "Curtailed 1st Innings DLS Calculator",
+				"description": "Calculate targets for curtailed first innings in cricket.",
+				"applicationCategory": "SportsApplication"
+			}
+		])
+	};
+
+	const seoText = {
+		title: "Curtailed First Innings",
+		description: `A curtailed first innings happens when the batting team's innings is finished earlier than planned, often due to a sudden downpour or light issues. Unlike an interruption where play might resume, curtailment means they won't bat again.
+        
+        The Duckworth–Lewis–Stern (DLS) method is vital here. It adjusts the target for the second innings to account for the 'lost' potential Team 1 had. If they had many wickets remaining, they were likely to score at an accelerated rate in the final overs.
+        
+        Use this DLS tool to accurately determine the revised target score for the chasing team in rain-affected games.`,
+		faqs: [
+			{
+				question: "What happens if a match is curtailed?",
+				answer: "If the first team's innings is curtailed, the second team's target is adjusted based on the resources both teams have available."
+			},
+			{
+				question: "Why does the target increase after curtailment?",
+				answer: "The target often increases because DLS assumes the first team would have scored more aggressively in their remaining overs if they hadn't been interrupted."
+			}
+		]
+	};
 
 	const [formData, setFormData] = useState<FormState>({
 		overs_available_to_team_1_at_start: '',
@@ -163,14 +200,15 @@ const CurtailedFirstInnings: React.FC = () => {
 	};
 
 	return (
-		<div className="space-y-6">
+		<main className="space-y-6">
+			<SEO {...pageSEO} />
 			<div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-slate-800">
 				<div className="flex items-start justify-between">
 					<div className="flex items-start space-x-4">
 						<div className="p-3 bg-amber-100 dark:bg-amber-900/30 rounded-xl"><IconInn1Curtailed className="w-6 h-6" /></div>
 						<div>
 							<div className="flex items-center space-x-2">
-								<h2 className="text-xl font-bold text-slate-800 dark:text-white">Curtailed 1st Innings</h2>
+								<h1 className="text-xl font-bold text-slate-800 dark:text-white">Curtailed 1st Innings</h1>
 								<button onClick={() => setShowRules(!showRules)} className="p-1 rounded-full text-slate-400 hover:text-amber-600 transition-colors"><HelpCircle className="w-4 h-4" /></button>
 							</div>
 							<p className="text-slate-500 text-sm mt-1">Calculate target when 1st innings terminates prematurely. Format: <span className="font-bold text-emerald-600">{matchFormat}</span></p>
@@ -199,7 +237,7 @@ const CurtailedFirstInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Team 1 Starting Overs</label>
-										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
 										{errors.overs_available_to_team_1_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_1_at_start}</p>}
 									</div>
 								</div>
@@ -210,17 +248,17 @@ const CurtailedFirstInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Runs Scored</label>
-										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 200" required />
+										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} aria-label="Team 1 Total Runs" className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 180" required />
 										{errors.runs_scored_by_team_1 && <p className="text-xs text-red-500 mt-1">{errors.runs_scored_by_team_1}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Wickets Lost</label>
-										<input type="number" name="wickets_lost_by_team_1_during_curtailed" value={formData.wickets_lost_by_team_1_during_curtailed} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_1_during_curtailed')}`} placeholder="0 - 9" required />
+										<input type="number" name="wickets_lost_by_team_1_during_curtailed" value={formData.wickets_lost_by_team_1_during_curtailed} onChange={handleInputChange} aria-label="Team 1 Wickets Lost" className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_1_during_curtailed')}`} placeholder="0 - 9" required />
 										{errors.wickets_lost_by_team_1_during_curtailed && <p className="text-xs text-red-500 mt-1">{errors.wickets_lost_by_team_1_during_curtailed}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Overs Used</label>
-										<input type="number" step="0.1" name="overs_used_by_team_1_during_curtailed" value={formData.overs_used_by_team_1_during_curtailed} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_1_during_curtailed')}`} placeholder={`Up to ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_used_by_team_1_during_curtailed" value={formData.overs_used_by_team_1_during_curtailed} onChange={handleInputChange} aria-label="Team 1 Overs Used" className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_1_during_curtailed')}`} placeholder={`Up to ${getMaxOvers()} Overs`} required />
 										{errors.overs_used_by_team_1_during_curtailed && <p className="text-xs text-red-500 mt-1">{errors.overs_used_by_team_1_during_curtailed}</p>}
 									</div>
 								</div>
@@ -231,7 +269,7 @@ const CurtailedFirstInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Team 2 Overs Available</label>
-										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Team 2 Available Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
 										{errors.overs_available_to_team_2_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_2_at_start}</p>}
 									</div>
 								</div>
@@ -268,7 +306,9 @@ const CurtailedFirstInnings: React.FC = () => {
 					</AnimatePresence>
 				</div>
 			</div>
-		</div>
+
+			<SEOContent {...seoText} />
+		</main>
 	);
 };
 
