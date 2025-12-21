@@ -8,6 +8,8 @@ import { ConnectionError } from '../components/ui/ConnectionError';
 import { HelpCircle, X, ArrowRight, Save } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconInn1Interrupted } from '../components/ui/CricketIcons';
+import SEO from '../components/seo/SEO';
+import SEOContent from '../components/seo/SEOContent';
 
 interface FormState {
 	overs_available_to_team_1_at_start: number | '';
@@ -26,6 +28,41 @@ const InterruptedFirstInnings: React.FC = () => {
 	const [isConnError, setIsConnError] = useState(false);
 	const [showRules, setShowRules] = useState(false);
 	const [errors, setErrors] = useState<Record<string, string>>({});
+
+	// SEO Content for this page
+	const pageSEO = {
+		title: 'Interrupted First Innings DLS Calculator',
+		description: 'Calculate adjusted targets when rain stops play during the first innings. Professional DLS tool for ODI and T20 cricket.',
+		canonical: 'https://dls.nishanthm.com/interrupted-first-innings',
+		schema: JSON.stringify([
+			{
+				"@context": "https://schema.org",
+				"@type": "WebApplication",
+				"name": "Interrupted 1st Innings DLS Calculator",
+				"description": "Calculate adjusted targets for interruptions during the first innings.",
+				"applicationCategory": "SportsApplication"
+			}
+		])
+	};
+
+	const seoText = {
+		title: "Interrupted First Innings",
+		description: `When play is interrupted during the first innings of a limited-overs match and overs are lost, the Duckworth–Lewis–Stern (DLS) method handles the adjustment of the target score. 
+        
+        If Team 1 has their innings shortened after starting, they lose some of their expected resources. The DLS method calculates this loss and adjusts the target for Team 2 to ensure neither side gains an unfair advantage from the weather interruption.
+        
+        This calculator accurately implements these rules, providing precise par scores and revised targets for ODI, T20, and T10 formats.`,
+		faqs: [
+			{
+				question: "How does a 1st innings interruption affect the target?",
+				answer: "Generally, if Team 1's innings is reduced after starting, the target for Team 2 is increased because Team 1 was 'penalized' by not knowing how many overs they truly had."
+			},
+			{
+				question: "What is the DLS resource percentage?",
+				answer: "DLS uses a resource table where each ball and wicket represents a percentage of a team's total potential to score runs. Interruptions reduce these percentages."
+			}
+		]
+	};
 
 	const [formData, setFormData] = useState<FormState>({
 		overs_available_to_team_1_at_start: '',
@@ -77,7 +114,7 @@ const InterruptedFirstInnings: React.FC = () => {
 
 		if (data.wickets_lost_by_team_1_during_interruption !== '') {
 			const w = Number(data.wickets_lost_by_team_1_during_interruption);
-			if (w < 0 || w > 10) newErrors.wickets_lost_by_team_1_during_interruption = "Must be 0-10";
+			if (w < 0 || w > 9) newErrors.wickets_lost_by_team_1_during_interruption = "Must be 0 - 9";
 		}
 
 		if (data.revised_overs_to_team_1_after_resumption !== '') {
@@ -176,13 +213,14 @@ const InterruptedFirstInnings: React.FC = () => {
 	};
 
 	return (
-		<div className="space-y-6">
+		<main className="space-y-6">
+			<SEO {...pageSEO} />
 			<div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-slate-800">
 				<div className="flex items-start justify-between">
 					<div className="flex items-start space-x-4">
 						<div className="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl"><div className="w-6 h-6 flex items-center justify-center"><IconInn1Interrupted className="w-6 h-6" /></div></div>
 						<div>
-							<div className="flex items-center space-x-2"><h2 className="text-xl font-bold text-slate-800 dark:text-white">Interrupted 1st Innings</h2><button onClick={() => setShowRules(!showRules)} className="p-1 rounded-full text-slate-400 hover:text-indigo-600 transition-colors"><HelpCircle className="w-4 h-4" /></button></div>
+							<div className="flex items-center space-x-2"><h1 className="text-xl font-bold text-slate-800 dark:text-white">Interrupted 1st Innings</h1><button onClick={() => setShowRules(!showRules)} className="p-1 rounded-full text-slate-400 hover:text-indigo-600 transition-colors"><HelpCircle className="w-4 h-4" /></button></div>
 							<p className="text-slate-500 text-sm mt-1">Adjustments for interrupted 1st innings. Format: <span className="font-bold text-emerald-600">{matchFormat}</span></p>
 						</div>
 					</div>
@@ -209,7 +247,7 @@ const InterruptedFirstInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Team 1 Starting Overs</label>
-										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
 										{errors.overs_available_to_team_1_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_1_at_start}</p>}
 									</div>
 								</div>
@@ -219,13 +257,13 @@ const InterruptedFirstInnings: React.FC = () => {
 								<h3 className="text-xs font-semibold uppercase tracking-wider text-emerald-400">At Interruption</h3>
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
-										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Overs Used</label>
-										<input type="number" step="0.1" name="overs_used_by_team_1_during_interruption" value={formData.overs_used_by_team_1_during_interruption} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_1_during_interruption')}`} placeholder={`Up to ${getMaxOvers()} Overs`} required />
+										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Overs Played at Delay</label>
+										<input type="number" step="0.1" name="overs_used_by_team_1_during_interruption" value={formData.overs_used_by_team_1_during_interruption} onChange={handleInputChange} aria-label="Overs Played at Delay" className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_1_during_interruption')}`} placeholder="e.g., 25.4" required />
 										{errors.overs_used_by_team_1_during_interruption && <p className="text-xs text-red-500 mt-1">{errors.overs_used_by_team_1_during_interruption}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Wickets Lost</label>
-										<input type="number" name="wickets_lost_by_team_1_during_interruption" value={formData.wickets_lost_by_team_1_during_interruption} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_1_during_interruption')}`} placeholder="0-10" required />
+										<input type="number" name="wickets_lost_by_team_1_during_interruption" value={formData.wickets_lost_by_team_1_during_interruption} onChange={handleInputChange} aria-label="Team 1 Wickets Lost" className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_1_during_interruption')}`} placeholder="0 - 9" required />
 										{errors.wickets_lost_by_team_1_during_interruption && <p className="text-xs text-red-500 mt-1">{errors.wickets_lost_by_team_1_during_interruption}</p>}
 									</div>
 								</div>
@@ -236,18 +274,18 @@ const InterruptedFirstInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Revised Team 1 Overs</label>
-										<input type="number" step="0.1" name="revised_overs_to_team_1_after_resumption" value={formData.revised_overs_to_team_1_after_resumption} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('revised_overs_to_team_1_after_resumption')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="revised_overs_to_team_1_after_resumption" value={formData.revised_overs_to_team_1_after_resumption} onChange={handleInputChange} aria-label="Revised Team 1 Overs" className={`${inputBaseClass} ${getInputBorderClass('revised_overs_to_team_1_after_resumption')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
 										{errors.revised_overs_to_team_1_after_resumption && <p className="text-xs text-red-500 mt-1">{errors.revised_overs_to_team_1_after_resumption}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Team 1 Final Score</label>
-										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="Total runs scored" required />
+										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} aria-label="Team 1 Final Score" className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="Total runs scored" required />
 										{errors.runs_scored_by_team_1 && <p className="text-xs text-red-500 mt-1">{errors.runs_scored_by_team_1}</p>}
 									</div>
 									<div className="h-px bg-slate-100 dark:bg-slate-800 md:col-span-2 my-2" />
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Team 2 Overs Available</label>
-										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Team 2 Overs Available" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
 										{errors.overs_available_to_team_2_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_2_at_start}</p>}
 									</div>
 								</div>
@@ -284,7 +322,9 @@ const InterruptedFirstInnings: React.FC = () => {
 					</AnimatePresence>
 				</div>
 			</div>
-		</div>
+
+			<SEOContent {...seoText} />
+		</main>
 	);
 };
 

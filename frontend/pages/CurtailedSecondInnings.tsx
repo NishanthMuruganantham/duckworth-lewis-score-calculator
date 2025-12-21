@@ -16,6 +16,8 @@ interface FormState {
 	overs_used_by_team_2_during_curtailed: number | '';
 	wickets_lost_by_team_2_during_curtailed: number | '';
 }
+import SEO from '../components/seo/SEO';
+import SEOContent from '../components/seo/SEOContent';
 
 const CurtailedSecondInnings: React.FC = () => {
 	const { matchFormat, setIsCalculating } = useApp();
@@ -25,6 +27,41 @@ const CurtailedSecondInnings: React.FC = () => {
 	const [isConnError, setIsConnError] = useState(false);
 	const [showRules, setShowRules] = useState(false);
 	const [errors, setErrors] = useState<Record<string, string>>({});
+
+	// SEO Content for this page
+	const pageSEO = {
+		title: 'Curtailed Second Innings DLS Par Score Calculator',
+		description: 'Calculate DLS par scores for matches abandoned during the second innings chase. Essential for ODI and T20 winners.',
+		canonical: 'https://dls.nishanthm.com/curtailed-second-innings',
+		schema: JSON.stringify([
+			{
+				"@context": "https://schema.org",
+				"@type": "WebApplication",
+				"name": "Curtailed 2nd Innings DLS Calculator",
+				"description": "Determine par scores for abandoned second innings.",
+				"applicationCategory": "SportsApplication"
+			}
+		])
+	};
+
+	const seoText = {
+		title: "Curtailed Second Innings",
+		description: `A curtailed second innings occurs when a match is abandoned permanently while the chasing team is batting. The winner is decided by comparing the current score to the DLS Par Score.
+        
+        The Par Score is calculated based on the original target and the resources used by the chasing team (overs faced and wickets lost). If the team is above the par score when play stops, they are declared the winners. If they are below, they lose.
+        
+        This DLS par score calculator provides the most accurate results for ODI, T20, and T10 cricket formats during abandonment scenarios.`,
+		faqs: [
+			{
+				question: "What is a DLS abandonment?",
+				answer: "It is when a match cannot continue due to rain or other reasons, and the DLS method is used to determine the final result based on the state of the game at that moment."
+			},
+			{
+				question: "Does the par score change every ball?",
+				answer: "Yes, the par score is updated for every ball bowled and every wicket lost, reflecting the changing resource levels of the batting team."
+			}
+		]
+	};
 
 	const [formData, setFormData] = useState<FormState>({
 		overs_available_to_team_1_at_start: '',
@@ -164,14 +201,15 @@ const CurtailedSecondInnings: React.FC = () => {
 	};
 
 	return (
-		<div className="space-y-6">
+		<main className="space-y-6">
+			<SEO {...pageSEO} />
 			<div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-slate-800">
 				<div className="flex items-start justify-between">
 					<div className="flex items-start space-x-4">
 						<div className="p-3 bg-amber-100 dark:bg-amber-900/30 rounded-xl"><IconInn2Curtailed className="w-6 h-6" /></div>
 						<div>
 							<div className="flex items-center space-x-2">
-								<h2 className="text-xl font-bold text-slate-800 dark:text-white">Curtailed 2nd Innings</h2>
+								<h1 className="text-xl font-bold text-slate-800 dark:text-white">Curtailed 2nd Innings</h1>
 								<button onClick={() => setShowRules(!showRules)} className="p-1 rounded-full text-slate-400 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-slate-800 transition-colors"><HelpCircle className="w-4 h-4" /></button>
 							</div>
 							<p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Abandonment logic. Format: <span className="font-bold text-emerald-600">{matchFormat} ({getMaxOvers()} overs max)</span></p>
@@ -200,12 +238,12 @@ const CurtailedSecondInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Total Runs Scored</label>
-										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 250" required />
+										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} aria-label="Team 1 Runs Scored" className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 280" required />
 										{errors.runs_scored_by_team_1 && <p className="text-xs text-red-500 mt-1">{errors.runs_scored_by_team_1}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Total Overs Available</label>
-										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
 										{errors.overs_available_to_team_1_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_1_at_start}</p>}
 									</div>
 								</div>
@@ -216,17 +254,17 @@ const CurtailedSecondInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Initial Overs Available</label>
-										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Team 2 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
 										{errors.overs_available_to_team_2_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_2_at_start}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Overs Batted</label>
-										<input type="number" step="0.1" name="overs_used_by_team_2_during_curtailed" value={formData.overs_used_by_team_2_during_curtailed} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_2_during_curtailed')}`} placeholder={`Up to ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_used_by_team_2_during_curtailed" value={formData.overs_used_by_team_2_during_curtailed} onChange={handleInputChange} aria-label="Overs Played Before Abandonment" className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_2_during_curtailed')}`} placeholder={`Up to ${getMaxOvers()} Overs`} required />
 										{errors.overs_used_by_team_2_during_curtailed && <p className="text-xs text-red-500 mt-1">{errors.overs_used_by_team_2_during_curtailed}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Wickets Lost</label>
-										<input type="number" name="wickets_lost_by_team_2_during_curtailed" value={formData.wickets_lost_by_team_2_during_curtailed} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_2_during_curtailed')}`} placeholder="0 - 9" required />
+										<input type="number" name="wickets_lost_by_team_2_during_curtailed" value={formData.wickets_lost_by_team_2_during_curtailed} onChange={handleInputChange} aria-label="Team 2 Wickets Lost" className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_2_during_curtailed')}`} placeholder="0 - 9" required />
 										{errors.wickets_lost_by_team_2_during_curtailed && <p className="text-xs text-red-500 mt-1">{errors.wickets_lost_by_team_2_during_curtailed}</p>}
 									</div>
 								</div>
@@ -262,7 +300,9 @@ const CurtailedSecondInnings: React.FC = () => {
 					</AnimatePresence>
 				</div>
 			</div>
-		</div>
+
+			<SEOContent {...seoText} />
+		</main>
 	);
 };
 

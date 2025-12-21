@@ -2,8 +2,33 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { BookOpen, Info, Timer, Scissors, CloudRain, PlayCircle, Star } from 'lucide-react';
 import { AppIcon } from '../components/ui/AppIcon';
+import SEO from '../components/seo/SEO';
 
 const Documentation: React.FC = () => {
+	// SEO Content for this page
+	const pageSEO = {
+		title: 'DLS Method Explained | Cricket Duckworth-Lewis-Stern Guide',
+		description: 'Learn how the DLS method works in cricket. Detailed guide on rain-adjusted targets, par scores, and official ICC protocols.',
+		canonical: 'https://dls.nishanthm.com/how-it-works',
+		schema: JSON.stringify([
+			{
+				"@context": "https://schema.org",
+				"@type": "FAQPage",
+				"mainEntity": [
+					{
+						"@type": "Question",
+						"name": "What is the DLS method in cricket?",
+						"content": "The Duckworth-Lewis-Stern (DLS) method is a mathematical formula used to calculate target scores for the team batting second in limited-overs cricket matches interrupted by weather."
+					},
+					{
+						"@type": "Question",
+						"name": "How does DLS calculate par scores?",
+						"content": "DLS treats wickets and overs as resources. It calculates how much resource a team has used and has remaining to set a fair, adjusted target score."
+					}
+				]
+			}
+		])
+	};
 	const sections = [
 		{
 			title: "What is DLS?",
@@ -55,7 +80,8 @@ const Documentation: React.FC = () => {
 	];
 
 	return (
-		<div className="space-y-8 pb-12">
+		<main className="space-y-8 pb-12">
+			<SEO {...pageSEO} />
 			<div className="bg-white dark:bg-slate-900 rounded-3xl p-8 md:p-12 shadow-sm border border-slate-100 dark:border-slate-800 text-center relative overflow-hidden">
 				<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] pointer-events-none">
 					<AppIcon size={400} />
@@ -70,7 +96,7 @@ const Documentation: React.FC = () => {
 						<AppIcon className="w-20 h-20 shadow-xl rounded-2xl" size={128} />
 					</motion.div>
 
-					<h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight uppercase">DLS Professional Guide</h2>
+					<h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight uppercase">DLS Professional Guide</h1>
 					<p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mt-4 font-medium leading-relaxed">
 						The Duckworth-Lewis-Stern method is the global standard for ensuring fair outcomes in weather-interrupted cricket.
 						Our calculator implements the latest v5.0 protocols.
@@ -141,7 +167,7 @@ const Documentation: React.FC = () => {
 					</button>
 				</div>
 			</div>
-		</div>
+		</main>
 	);
 };
 
