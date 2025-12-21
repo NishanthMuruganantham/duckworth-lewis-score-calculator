@@ -1,9 +1,12 @@
+import os
+from django.conf import settings
+from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from calculators.dls_calculator import DLSCalculator
 from .serializers import DLSRequestSerializer
 from .services import DLSService
-from calculators.dls_calculator import DLSCalculator
 
 
 class DLSScoreView(APIView):
@@ -72,12 +75,27 @@ class APIRootView(APIView):
 
     def get(self, request):
         return Response({
-            "message": "Welcome to the Duckworth-Lewis-Stern (DLS) Score Calculator API developed by Nishanth Muruganantham.",
+            "message": "Welcome to the Duckworth-Lewis-Stern (DLS) Score Calculator API",
             "endpoints": {
                 "calculate-dls-score": "/calculate-dls-score/",
                 "resource-table": "/resource-table/",
                 "health-check": "/health-check/",
+                "openapi-schema": "/openapi-schema.yaml",
             },
             "version": "v1.0.0",
             "documentation": "https://github.com/NishanthMuruganantham/duckworth-lewis-score-calculator"
         }, status=status.HTTP_200_OK)
+
+
+class SwaggerSchemaView(APIView):
+    """
+    API View for serving the OpenAPI schema.
+    """
+
+    def get(self, request):
+        file_path = os.path.join(settings.BASE_DIR, "openapi-schema.yaml")
+        if os.path.exists(file_path):
+            with open(file_path, "r") as f:
+                content = f.read()
+            return HttpResponse(content, content_type="text/yaml")
+        return Response({"error": "Schema not found"}, status=status.HTTP_404_NOT_FOUND)
