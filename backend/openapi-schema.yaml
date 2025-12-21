@@ -1,0 +1,225 @@
+openapi: 3.0.0
+info:
+  title: Duckworth-Lewis-Stern (DLS) Score Calculator API
+  description: |
+    API for calculating Duckworth-Lewis-Stern (DLS) par scores in cricket.
+    Supports 5 scenarios and 3 match formats (ODI, T20, T10).
+  version: 1.0.0
+  contact:
+    name: Nishanth Muruganantham
+    url: https://github.com/NishanthMuruganantham/duckworth-lewis-score-calculator
+
+servers:
+  - url: https://api.dls.nishanthm.com
+    description: Production server
+  - url: http://localhost:8000
+    description: Local development server
+
+paths:
+  /:
+    get:
+      summary: Root endpoint
+      description: Returns a welcome message and available endpoints.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                message: "Welcome to the Duckworth-Lewis-Stern (DLS) Score Calculator API"
+                endpoints:
+                  calculate-dls-score: "/calculate-dls-score/"
+                  resource-table: "/resource-table/"
+                  health-check: "/health-check/"
+                version: "v1.0.0"
+                documentation: "https://github.com/NishanthMuruganantham/duckworth-lewis-score-calculator"
+
+  /calculate-dls-score/:
+    post:
+      summary: Calculate DLS Par Score
+      description: Calculates the par score based on the match scenario and current data.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DLSRequest'
+      responses:
+        '200':
+          description: Successfully calculated par score
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DLSResponse'
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /resource-table/:
+    get:
+      summary: Get DLS Resource Table
+      description: Returns the resource table for a specific match format.
+      parameters:
+        - name: match_format
+          in: query
+          description: Match format (ODI, T20, T10)
+          schema:
+            type: string
+            enum: [ODI, T20, T10]
+            default: T20
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  columns:
+                    type: array
+                    items:
+                      type: string
+                  data:
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        type: number
+
+  /health-check/:
+    get:
+      summary: API Health Check
+      description: Status check to ensure the API is running.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                status: "ok"
+
+components:
+  schemas:
+    DLSRequest:
+      type: object
+      required:
+        - scenario_type
+        - match_format
+        - inputs
+      properties:
+        scenario_type:
+          type: string
+          enum:
+            - FirstInningsCurtailed
+            - FirstInningsInterrupted
+            - SecondInningsCurtailed
+            - SecondInningsDelayed
+            - SecondInningsInterrupted
+        match_format:
+          type: string
+          enum: [ODI, T20, T10]
+        inputs:
+          oneOf:
+            - $ref: '#/components/schemas/FirstInningsCurtailedInputs'
+            - $ref: '#/components/schemas/FirstInningsInterruptedInputs'
+            - $ref: '#/components/schemas/SecondInningsCurtailedInputs'
+            - $ref: '#/components/schemas/SecondInningsDelayedInputs'
+            - $ref: '#/components/schemas/SecondInningsInterruptedInputs'
+
+    FirstInningsCurtailedInputs:
+      type: object
+      required:
+        - overs_available_to_team_1_at_start
+        - runs_scored_by_team_1
+        - wickets_lost_by_team_1_during_curtailed
+        - overs_used_by_team_1_during_curtailed
+        - overs_available_to_team_2_at_start
+      properties:
+        overs_available_to_team_1_at_start: {type: number}
+        runs_scored_by_team_1: {type: integer}
+        wickets_lost_by_team_1_during_curtailed: {type: integer}
+        overs_used_by_team_1_during_curtailed: {type: number}
+        overs_available_to_team_2_at_start: {type: number}
+
+    FirstInningsInterruptedInputs:
+      type: object
+      required:
+        - overs_available_to_team_1_at_start
+        - overs_used_by_team_1_during_interruption
+        - wickets_lost_by_team_1_during_interruption
+        - revised_overs_to_team_1_after_resumption
+        - runs_scored_by_team_1
+        - overs_available_to_team_2_at_start
+      properties:
+        overs_available_to_team_1_at_start: {type: number}
+        overs_used_by_team_1_during_interruption: {type: number}
+        wickets_lost_by_team_1_during_interruption: {type: integer}
+        revised_overs_to_team_1_after_resumption: {type: number}
+        runs_scored_by_team_1: {type: integer}
+        overs_available_to_team_2_at_start: {type: number}
+
+    SecondInningsCurtailedInputs:
+      type: object
+      required:
+        - overs_available_to_team_1_at_start
+        - runs_scored_by_team_1
+        - overs_available_to_team_2_at_start
+        - overs_used_by_team_2_during_curtailed
+        - wickets_lost_by_team_2_during_curtailed
+      properties:
+        overs_available_to_team_1_at_start: {type: number}
+        runs_scored_by_team_1: {type: integer}
+        overs_available_to_team_2_at_start: {type: number}
+        overs_used_by_team_2_during_curtailed: {type: number}
+        wickets_lost_by_team_2_during_curtailed: {type: integer}
+
+    SecondInningsDelayedInputs:
+      type: object
+      required:
+        - overs_available_to_team_1_at_start
+        - runs_scored_by_team_1
+        - overs_available_to_team_2_at_start
+      properties:
+        overs_available_to_team_1_at_start: {type: number}
+        runs_scored_by_team_1: {type: integer}
+        overs_available_to_team_2_at_start: {type: number}
+
+    SecondInningsInterruptedInputs:
+      type: object
+      required:
+        - overs_available_to_team_1_at_start
+        - runs_scored_by_team_1
+        - overs_available_to_team_2_at_start
+        - overs_used_by_team_2_during_interruption
+        - wickets_lost_by_team_2_during_interruption
+        - revised_overs_to_team_2_after_resumption
+      properties:
+        overs_available_to_team_1_at_start: {type: number}
+        runs_scored_by_team_1: {type: integer}
+        overs_available_to_team_2_at_start: {type: number}
+        overs_used_by_team_2_during_interruption: {type: number}
+        wickets_lost_by_team_2_during_interruption: {type: integer}
+        revised_overs_to_team_2_after_resumption: {type: number}
+
+    DLSResponse:
+      type: object
+      properties:
+        par_score: {type: integer}
+        revised_target: {type: integer}
+        messages:
+          type: array
+          items: {type: string}
+
+    ErrorResponse:
+      type: object
+      properties:
+        status: {type: string}
+        message: {type: string}
+        inputs:
+          type: object
+          additionalProperties:
+            type: array
+            items: {type: string}
