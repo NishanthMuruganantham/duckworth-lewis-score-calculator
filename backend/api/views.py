@@ -63,3 +63,21 @@ class HealthCheckView(APIView):
 
     def get(self, request):
         return Response({"status": "ok"}, status=status.HTTP_200_OK)
+
+
+class APIRootView(APIView):
+    """
+    Root API View to provide information about available endpoints.
+    """
+
+    def get(self, request):
+        return Response({
+            "message": "Welcome to the Duckworth-Lewis-Stern (DLS) Score Calculator API developed by Nishanth Muruganantham.",
+            "endpoints": {
+                "calculate-dls-score": "/calculate-dls-score/",
+                "resource-table": "/resource-table/",
+                "health-check": "/health-check/",
+            },
+            "version": "v1.0.0",
+            "documentation": "https://github.com/NishanthMuruganantham/duckworth-lewis-score-calculator"
+        }, status=status.HTTP_200_OK)
