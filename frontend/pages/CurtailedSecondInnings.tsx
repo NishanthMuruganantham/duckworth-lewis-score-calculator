@@ -234,7 +234,10 @@ const CurtailedSecondInnings: React.FC = () => {
 					<form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
 						<div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
 							<div className="space-y-4 md:col-span-2">
-								<h3 className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Team 1 (First Innings)</h3>
+								<div className="flex items-center space-x-2 mb-3">
+									<div className="w-[2px] h-4 bg-emerald-500 rounded-full" />
+									<h3 className="text-xs font-bold uppercase tracking-[0.15em] text-emerald-600 dark:text-emerald-400">Team 1 (First Innings)</h3>
+								</div>
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Total Runs Scored</label>
@@ -250,7 +253,10 @@ const CurtailedSecondInnings: React.FC = () => {
 							</div>
 							<div className="h-px bg-slate-100 dark:bg-slate-800 md:col-span-2 my-2" />
 							<div className="space-y-4 md:col-span-2">
-								<h3 className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Team 2 (At Abandonment)</h3>
+								<div className="flex items-center space-x-2 mb-3">
+									<div className="w-[2px] h-4 bg-emerald-500 rounded-full" />
+									<h3 className="text-xs font-bold uppercase tracking-[0.15em] text-emerald-600 dark:text-emerald-400">Team 2 (At Abandonment)</h3>
+								</div>
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Initial Overs Available</label>
