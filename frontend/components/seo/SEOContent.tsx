@@ -10,13 +10,14 @@ interface SEOContentProps {
     title: string;
     description: string;
     faqs?: FAQItem[];
+    id?: string;
 }
 
-const SEOContent: React.FC<SEOContentProps> = ({ title, description, faqs }) => {
+const SEOContent: React.FC<SEOContentProps> = ({ title, description, faqs, id }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <section className="mt-12 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden transition-all duration-300">
+        <section id={id} className="mt-12 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden transition-all duration-300">
             {/* Mobile Header (Collapsible) */}
             <button
                 onClick={() => setIsOpen(!isOpen)}

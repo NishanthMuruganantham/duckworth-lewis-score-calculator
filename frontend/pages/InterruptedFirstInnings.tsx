@@ -26,7 +26,6 @@ const InterruptedFirstInnings: React.FC = () => {
 	const [result, setResult] = useState<any>(null);
 	const [apiError, setApiError] = useState<string | null>(null);
 	const [isConnError, setIsConnError] = useState(false);
-	const [showRules, setShowRules] = useState(false);
 	const [errors, setErrors] = useState<Record<string, string>>({});
 
 	// SEO Content for this page
@@ -79,6 +78,13 @@ const InterruptedFirstInnings: React.FC = () => {
 		setIsConnError(false);
 		validateForm(formData);
 	}, [matchFormat]);
+
+	const scrollToHelp = () => {
+		const element = document.getElementById('how-it-works');
+		if (element) {
+			element.scrollIntoView({ behavior: 'smooth' });
+		}
+	};
 
 	const getMaxOvers = () => {
 		switch (matchFormat) {
@@ -220,22 +226,20 @@ const InterruptedFirstInnings: React.FC = () => {
 					<div className="flex items-start space-x-4">
 						<div className="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl"><div className="w-6 h-6 flex items-center justify-center"><IconInn1Interrupted className="w-6 h-6" /></div></div>
 						<div>
-							<div className="flex items-center space-x-2"><h1 className="text-xl font-bold text-slate-800 dark:text-white">Interrupted 1st Innings</h1><button onClick={() => setShowRules(!showRules)} className="p-1 rounded-full text-slate-400 hover:text-indigo-600 transition-colors"><HelpCircle className="w-4 h-4" /></button></div>
+							<div className="flex items-center space-x-2">
+								<h1 className="text-xl font-bold text-slate-800 dark:text-white">Interrupted 1st Innings</h1>
+								<button
+									onClick={scrollToHelp}
+									className="p-1 rounded-full text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-slate-800 transition-colors"
+									title="How this works"
+								>
+									<HelpCircle className="w-4 h-4" />
+								</button>
+							</div>
 							<p className="text-slate-500 text-sm mt-1">Adjustments for interrupted 1st innings. Format: <span className="font-bold text-emerald-600">{matchFormat}</span></p>
 						</div>
 					</div>
 				</div>
-				<AnimatePresence>
-					{showRules && (
-						<motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden bg-indigo-50 dark:bg-indigo-900/10 rounded-xl border border-indigo-100 dark:border-indigo-800 mt-4">
-							<div className="p-4 relative text-sm text-indigo-700 dark:text-indigo-300">
-								<button onClick={() => setShowRules(false)} className="absolute top-2 right-2 text-indigo-400 hover:text-indigo-600"><X className="w-4 h-4" /></button>
-								<h4 className="font-bold mb-1">Logic</h4>
-								Calculates resources lost when 1st innings is reduced. Compares resources Team 1 had vs what they finished with.
-							</div>
-						</motion.div>
-					)}
-				</AnimatePresence>
 			</div>
 
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -332,7 +336,7 @@ const InterruptedFirstInnings: React.FC = () => {
 				</div>
 			</div>
 
-			<SEOContent {...seoText} />
+			<SEOContent id="how-it-works" {...seoText} />
 		</main>
 	);
 };

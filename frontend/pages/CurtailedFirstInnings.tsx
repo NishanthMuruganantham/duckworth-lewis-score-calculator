@@ -25,7 +25,6 @@ const CurtailedFirstInnings: React.FC = () => {
 	const [result, setResult] = useState<any>(null);
 	const [apiError, setApiError] = useState<string | null>(null);
 	const [isConnError, setIsConnError] = useState(false);
-	const [showRules, setShowRules] = useState(false);
 	const [errors, setErrors] = useState<Record<string, string>>({});
 
 	// SEO Content for this page
@@ -77,6 +76,13 @@ const CurtailedFirstInnings: React.FC = () => {
 		setIsConnError(false);
 		validateForm(formData);
 	}, [matchFormat]);
+
+	const scrollToHelp = () => {
+		const element = document.getElementById('how-it-works');
+		if (element) {
+			element.scrollIntoView({ behavior: 'smooth' });
+		}
+	};
 
 	const getMaxOvers = () => {
 		switch (matchFormat) {
@@ -209,23 +215,18 @@ const CurtailedFirstInnings: React.FC = () => {
 						<div>
 							<div className="flex items-center space-x-2">
 								<h1 className="text-xl font-bold text-slate-800 dark:text-white">Curtailed 1st Innings</h1>
-								<button onClick={() => setShowRules(!showRules)} className="p-1 rounded-full text-slate-400 hover:text-amber-600 transition-colors"><HelpCircle className="w-4 h-4" /></button>
+								<button
+									onClick={scrollToHelp}
+									className="p-1 rounded-full text-slate-400 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-slate-800 transition-colors"
+									title="How this works"
+								>
+									<HelpCircle className="w-4 h-4" />
+								</button>
 							</div>
 							<p className="text-slate-500 text-sm mt-1">Calculate target when 1st innings terminates prematurely. Format: <span className="font-bold text-emerald-600">{matchFormat}</span></p>
 						</div>
 					</div>
 				</div>
-				<AnimatePresence>
-					{showRules && (
-						<motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden bg-amber-50 dark:bg-amber-900/10 rounded-xl border border-amber-100 dark:border-amber-800 mt-4">
-							<div className="p-4 relative text-sm text-amber-700 dark:text-amber-300">
-								<button onClick={() => setShowRules(false)} className="absolute top-2 right-2 text-amber-400 hover:text-amber-600"><X className="w-4 h-4" /></button>
-								<h4 className="font-bold mb-1">Resource Logic</h4>
-								Adjusts target because Team 1 paced their innings for a longer match but were cut short with wickets remaining.
-							</div>
-						</motion.div>
-					)}
-				</AnimatePresence>
 			</div>
 
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -316,7 +317,7 @@ const CurtailedFirstInnings: React.FC = () => {
 				</div>
 			</div>
 
-			<SEOContent {...seoText} />
+			<SEOContent id="how-it-works" {...seoText} />
 		</main>
 	);
 };
