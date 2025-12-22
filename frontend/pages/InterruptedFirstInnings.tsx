@@ -254,7 +254,7 @@ const InterruptedFirstInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Team 1 Starting Overs</label>
-										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} inputMode="decimal" required />
 										{errors.overs_available_to_team_1_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_1_at_start}</p>}
 									</div>
 								</div>
@@ -268,12 +268,12 @@ const InterruptedFirstInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Overs Played at Delay</label>
-										<input type="number" step="0.1" name="overs_used_by_team_1_during_interruption" value={formData.overs_used_by_team_1_during_interruption} onChange={handleInputChange} aria-label="Overs Played at Delay" className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_1_during_interruption')}`} placeholder="e.g., 25.4" required />
+										<input type="number" step="0.1" name="overs_used_by_team_1_during_interruption" value={formData.overs_used_by_team_1_during_interruption} onChange={handleInputChange} aria-label="Overs Played at Delay" className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_1_during_interruption')}`} placeholder="e.g., 25.4" inputMode="decimal" required />
 										{errors.overs_used_by_team_1_during_interruption && <p className="text-xs text-red-500 mt-1">{errors.overs_used_by_team_1_during_interruption}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Wickets Lost</label>
-										<input type="number" name="wickets_lost_by_team_1_during_interruption" value={formData.wickets_lost_by_team_1_during_interruption} onChange={handleInputChange} aria-label="Team 1 Wickets Lost" className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_1_during_interruption')}`} placeholder="0 - 9" required />
+										<input type="number" name="wickets_lost_by_team_1_during_interruption" value={formData.wickets_lost_by_team_1_during_interruption} onChange={handleInputChange} aria-label="Team 1 Wickets Lost" className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_1_during_interruption')}`} placeholder="0 - 9" inputMode="decimal" required />
 										{errors.wickets_lost_by_team_1_during_interruption && <p className="text-xs text-red-500 mt-1">{errors.wickets_lost_by_team_1_during_interruption}</p>}
 									</div>
 								</div>
@@ -287,18 +287,18 @@ const InterruptedFirstInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Revised Team 1 Overs</label>
-										<input type="number" step="0.1" name="revised_overs_to_team_1_after_resumption" value={formData.revised_overs_to_team_1_after_resumption} onChange={handleInputChange} aria-label="Revised Team 1 Overs" className={`${inputBaseClass} ${getInputBorderClass('revised_overs_to_team_1_after_resumption')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="revised_overs_to_team_1_after_resumption" value={formData.revised_overs_to_team_1_after_resumption} onChange={handleInputChange} aria-label="Revised Team 1 Overs" className={`${inputBaseClass} ${getInputBorderClass('revised_overs_to_team_1_after_resumption')}`} placeholder={`Max ${getMaxOvers()} Overs`} inputMode="decimal" required />
 										{errors.revised_overs_to_team_1_after_resumption && <p className="text-xs text-red-500 mt-1">{errors.revised_overs_to_team_1_after_resumption}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Team 1 Final Score</label>
-										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} aria-label="Team 1 Final Score" className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="Total runs scored" required />
+										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} aria-label="Team 1 Final Score" className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="Total runs scored" inputMode="decimal" required />
 										{errors.runs_scored_by_team_1 && <p className="text-xs text-red-500 mt-1">{errors.runs_scored_by_team_1}</p>}
 									</div>
 									<div className="h-px bg-slate-100 dark:bg-slate-800 md:col-span-2 my-2" />
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Team 2 Overs Available</label>
-										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Team 2 Overs Available" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Team 2 Overs Available" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} inputMode="decimal" required />
 										{errors.overs_available_to_team_2_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_2_at_start}</p>}
 									</div>
 								</div>

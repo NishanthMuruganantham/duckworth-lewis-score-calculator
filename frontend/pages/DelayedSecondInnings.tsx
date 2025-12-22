@@ -242,12 +242,12 @@ const DelayedSecondInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Total Runs Scored</label>
-										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} aria-label="Team 1 Runs Scored" className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 250" required />
+										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} aria-label="Team 1 Runs Scored" className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 250" inputMode="decimal" required />
 										{errors.runs_scored_by_team_1 && <p className="text-xs text-red-500 mt-1">{errors.runs_scored_by_team_1}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Overs Played/Allocated</label>
-										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Total Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Total Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} inputMode="decimal" required />
 										{errors.overs_available_to_team_1_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_1_at_start}</p>}
 									</div>
 								</div>
@@ -261,7 +261,7 @@ const DelayedSecondInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Revised Overs Allocated</label>
-										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Revised Overs Allocated" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Revised Overs Allocated" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} inputMode="decimal" required />
 										{errors.overs_available_to_team_2_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_2_at_start}</p>}
 									</div>
 								</div>

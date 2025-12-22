@@ -242,12 +242,12 @@ const CurtailedSecondInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Total Runs Scored</label>
-										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} aria-label="Team 1 Runs Scored" className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 280" required />
+										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} aria-label="Team 1 Runs Scored" className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 280" inputMode="decimal" required />
 										{errors.runs_scored_by_team_1 && <p className="text-xs text-red-500 mt-1">{errors.runs_scored_by_team_1}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Total Overs Available</label>
-										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} inputMode="decimal" required />
 										{errors.overs_available_to_team_1_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_1_at_start}</p>}
 									</div>
 								</div>
@@ -261,17 +261,17 @@ const CurtailedSecondInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Initial Overs Available</label>
-										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Team 2 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Team 2 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} inputMode="decimal" required />
 										{errors.overs_available_to_team_2_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_2_at_start}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Overs Batted</label>
-										<input type="number" step="0.1" name="overs_used_by_team_2_during_curtailed" value={formData.overs_used_by_team_2_during_curtailed} onChange={handleInputChange} aria-label="Overs Played Before Abandonment" className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_2_during_curtailed')}`} placeholder={`Up to ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_used_by_team_2_during_curtailed" value={formData.overs_used_by_team_2_during_curtailed} onChange={handleInputChange} aria-label="Overs Played Before Abandonment" className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_2_during_curtailed')}`} placeholder={`Up to ${getMaxOvers()} Overs`} inputMode="decimal" required />
 										{errors.overs_used_by_team_2_during_curtailed && <p className="text-xs text-red-500 mt-1">{errors.overs_used_by_team_2_during_curtailed}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Wickets Lost</label>
-										<input type="number" name="wickets_lost_by_team_2_during_curtailed" value={formData.wickets_lost_by_team_2_during_curtailed} onChange={handleInputChange} aria-label="Team 2 Wickets Lost" className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_2_during_curtailed')}`} placeholder="0 - 9" required />
+										<input type="number" name="wickets_lost_by_team_2_during_curtailed" value={formData.wickets_lost_by_team_2_during_curtailed} onChange={handleInputChange} aria-label="Team 2 Wickets Lost" className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_2_during_curtailed')}`} placeholder="0 - 9" inputMode="decimal" required />
 										{errors.wickets_lost_by_team_2_during_curtailed && <p className="text-xs text-red-500 mt-1">{errors.wickets_lost_by_team_2_during_curtailed}</p>}
 									</div>
 								</div>
