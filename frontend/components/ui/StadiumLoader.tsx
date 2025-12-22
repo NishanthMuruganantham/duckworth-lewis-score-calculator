@@ -248,13 +248,21 @@ const StadiumLoader: React.FC<StadiumLoaderProps> = ({
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							transition={{ delay: 1 }}
-							className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700"
+							className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 mb-3"
 						>
 							<div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
 							<span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
 								DLS Professional Analytics
 							</span>
 						</motion.div>
+						<motion.p
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							transition={{ delay: 1.2 }}
+							className="text-[9px] text-slate-400 dark:text-slate-600 max-w-[250px] mx-auto leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-3"
+						>
+							Based on calculations from ICC sources. Not a reflection of the official ICC calculator. G50 resource percentages vary based on current playing standards.
+						</motion.p>
 					</div>
 				</motion.div>
 			)}
