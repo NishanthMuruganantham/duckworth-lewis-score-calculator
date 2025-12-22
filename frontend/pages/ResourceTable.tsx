@@ -1,16 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { fetchResourceTable } from '../services/dlsApi';
-import { ResourceTableResponse, MatchFormat } from '../types';
+import { ResourceTableResponse } from '../types';
 import { OverLoader } from '../components/ui/OverLoader';
 import { WicketError } from '../components/ui/WicketError';
 import { FileSpreadsheet, Info } from 'lucide-react';
+import SEO from '../components/seo/SEO';
+import SEOContent from '../components/seo/SEOContent';
 
 const ResourceTable: React.FC = () => {
 	const { matchFormat } = useApp();
 	const [data, setData] = useState<ResourceTableResponse | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
+
+	// SEO Content for this page
+	const pageSEO = {
+		title: 'DLS Resource Table | Official Cricket Calculation Reference',
+		description: 'View official DLS resource conversion percentages for ODI, T20, and T10. The standard reference for rain-affected cricket math.',
+		canonical: 'https://dls.nishanthm.com/resource-table',
+		schema: JSON.stringify([
+			{
+				"@context": "https://schema.org",
+				"@type": "WebApplication",
+				"name": "DLS Resource Table Reference",
+				"description": "Interactive resource tables for DLS cricket calculations.",
+				"applicationCategory": "ReferenceApplication"
+			}
+		])
+	};
+
+	const seoText = {
+		title: "DLS Resource Percentage Table",
+		description: `The standard DLS resource table is a data-driven model that calculates exactly how much 'potential' a batting team has left based on their current situation. 
+        
+        In DLS terms, 'resources' are defined as the combination of overs remaining and wickets in hand. This table shows the percentage of resources available at any given point in an innings. For example, at the start of a 50-over match, a team has 100% of their resources. As balls are bowled and wickets fall, this percentage drops towards zero.
+        
+        Browse our verified reference table to see how DLS constants apply to One Day Internationals (ODI) and T20 matches.`,
+		faqs: [
+			{
+				question: "What does the resource table number mean?",
+				answer: "The number in each cell represents the percentage of total resources a team has remaining, given the number of balls left and wickets lost."
+			},
+			{
+				question: "Is the resource table the same for T20 and ODI?",
+				answer: "While the principle is the same, different constants (G50) and resource curves are often used to account for the different scoring rates and aggression levels in various formats."
+			}
+		]
+	};
 
 	const loadData = async () => {
 		setLoading(true);
@@ -111,12 +148,13 @@ const ResourceTable: React.FC = () => {
 	};
 
 	return (
-		<div className="space-y-6">
+		<main className="space-y-6">
+			<SEO {...pageSEO} />
 			<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-1">
 				<div>
 					<div className="flex items-center space-x-2">
 						<FileSpreadsheet className="w-5 h-5 text-emerald-600" />
-						<h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Analytical Reference</h2>
+						<h1 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Analytical Reference</h1>
 					</div>
 					<p className="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
 						G50 Resource Constants for <span className="text-emerald-600 font-bold">{matchFormat}</span>
@@ -151,7 +189,9 @@ const ResourceTable: React.FC = () => {
 					DLS V5.0 Verified Reference
 				</div>
 			</div>
-		</div>
+
+			<SEOContent {...seoText} />
+		</main>
 	);
 };
 

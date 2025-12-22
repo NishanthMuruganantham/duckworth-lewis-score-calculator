@@ -17,6 +17,8 @@ interface FormState {
 	wickets_lost_by_team_2_during_interruption: number | '';
 	revised_overs_to_team_2_after_resumption: number | '';
 }
+import SEO from '../components/seo/SEO';
+import SEOContent from '../components/seo/SEOContent';
 
 const InterruptedSecondInnings: React.FC = () => {
 	const { matchFormat, setIsCalculating } = useApp();
@@ -26,6 +28,55 @@ const InterruptedSecondInnings: React.FC = () => {
 	const [isConnError, setIsConnError] = useState(false);
 	const [showRules, setShowRules] = useState(false);
 	const [errors, setErrors] = useState<Record<string, string>>({});
+
+	// SEO Content for this page
+	const pageSEO = {
+		title: 'Interrupted Second Innings Chase Calculator',
+		description: 'Calculate DLS par scores and revised targets when rain stops play during the second innings chase. Essential for ODI and T20 cricket matches.',
+		canonical: 'https://dls.nishanthm.com/interrupted-second-innings',
+		schema: JSON.stringify([
+			{
+				"@context": "https://schema.org",
+				"@type": "WebApplication",
+				"name": "Interrupted 2nd Innings DLS Calculator",
+				"description": "Calculate revised targets for interrupted cricket matches.",
+				"applicationCategory": "SportsApplication"
+			},
+			{
+				"@context": "https://schema.org",
+				"@type": "FAQPage",
+				"mainEntity": [
+					{
+						"@type": "Question",
+						"name": "How is the DLS par score calculated during a chase?",
+						"acceptedAnswer": {
+							"@type": "Answer",
+							"text": "The par score depends on the number of overs bowled, runs scored, and wickets lost in relation to the original target and remaining resources."
+						}
+					}
+				]
+			}
+		])
+	};
+
+	const seoText = {
+		title: "Interrupted Second Innings",
+		description: `When rain or other interruptions occur during the second innings of a limited-overs cricket match, the Duckworth–Lewis–Stern (DLS) method is used to determine if the match has reached a result or to set a revised target if play can resume.
+        
+        Our calculator accurately implements the DLS method by considering the resource percentages of both teams. For the second innings, it specifically calculates the "Par Score"—the score the chasing team should have reached at a specific point for the match to be a tie. If the team's actual score is above the par score, they are winning; if below, they are losing.
+        
+        This tool is essential for fans, commentators, and analysts to understand the "DLS Par Score" in real-time during wet weather interruptions in ODI and T20 games.`,
+		faqs: [
+			{
+				question: "What is a DLS Par Score?",
+				answer: "The par score is the total a team should have scored to be equal with the opposition when a match is interrupted. If they are above it when play stops permanently, they win."
+			},
+			{
+				question: "How many overs are needed for a DLS result?",
+				answer: "In ODIs, at least 20 overs must be bowled in the second innings for a result. In T20s, it is usually 5 overs."
+			}
+		]
+	};
 
 	const [formData, setFormData] = useState<FormState>({
 		runs_scored_by_team_1: '',
@@ -87,7 +138,7 @@ const InterruptedSecondInnings: React.FC = () => {
 
 		if (data.wickets_lost_by_team_2_during_interruption !== '') {
 			const w = Number(data.wickets_lost_by_team_2_during_interruption);
-			if (w < 0 || w > 10) newErrors.wickets_lost_by_team_2_during_interruption = "Must be 0-10";
+			if (w < 0 || w > 9) newErrors.wickets_lost_by_team_2_during_interruption = "Must be 0 - 9";
 		}
 
 		if (data.revised_overs_to_team_2_after_resumption !== '') {
@@ -176,14 +227,15 @@ const InterruptedSecondInnings: React.FC = () => {
 	};
 
 	return (
-		<div className="space-y-6">
+		<main className="space-y-6">
+			<SEO {...pageSEO} />
 			<div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-slate-800">
 				<div className="flex items-start justify-between">
 					<div className="flex items-start space-x-4">
 						<div className="p-3 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl"><IconInn2Interrupted className="w-6 h-6" /></div>
 						<div>
 							<div className="flex items-center space-x-2">
-								<h2 className="text-xl font-bold text-slate-800 dark:text-white">Interrupted 2nd Innings</h2>
+								<h1 className="text-xl font-bold text-slate-800 dark:text-white">Interrupted 2nd Innings</h1>
 								<button onClick={() => setShowRules(!showRules)} className="p-1 rounded-full text-slate-400 hover:text-emerald-600 transition-colors"><HelpCircle className="w-4 h-4" /></button>
 							</div>
 							<p className="text-slate-500 text-sm mt-1">Calculate par scores/revised targets during chase interruption. Format: <span className="font-bold text-emerald-600">{matchFormat}</span></p>
@@ -212,12 +264,12 @@ const InterruptedSecondInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Total Runs Scored</label>
-										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 285" required />
+										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} aria-label="Team 1 Total Runs" className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 250" required />
 										{errors.runs_scored_by_team_1 && <p className="text-xs text-red-500 mt-1">{errors.runs_scored_by_team_1}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Total Overs Allocated</label>
-										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()}.0 Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
 										{errors.overs_available_to_team_1_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_1_at_start}</p>}
 									</div>
 								</div>
@@ -228,22 +280,22 @@ const InterruptedSecondInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Team 2 Entitled Overs (Start)</label>
-										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()}.0 Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Team 2 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
 										{errors.overs_available_to_team_2_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_2_at_start}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Overs Bowled (At Rain)</label>
-										<input type="number" step="0.1" name="overs_used_by_team_2_during_interruption" value={formData.overs_used_by_team_2_during_interruption} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_2_during_interruption')}`} placeholder={`Up to ${getMaxOvers()}.0 Overs`} required />
+										<input type="number" step="0.1" name="overs_used_by_team_2_during_interruption" value={formData.overs_used_by_team_2_during_interruption} onChange={handleInputChange} aria-label="Overs Played at Delay" className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_2_during_interruption')}`} placeholder="e.g., 15.2" required />
 										{errors.overs_used_by_team_2_during_interruption && <p className="text-xs text-red-500 mt-1">{errors.overs_used_by_team_2_during_interruption}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Wickets Lost</label>
-										<input type="number" name="wickets_lost_by_team_2_during_interruption" value={formData.wickets_lost_by_team_2_during_interruption} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_2_during_interruption')}`} placeholder="0-10" required />
+										<input type="number" name="wickets_lost_by_team_2_during_interruption" value={formData.wickets_lost_by_team_2_during_interruption} onChange={handleInputChange} aria-label="Wickets Lost at Delay" className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_2_during_interruption')}`} placeholder="0 - 9" required />
 										{errors.wickets_lost_by_team_2_during_interruption && <p className="text-xs text-red-500 mt-1">{errors.wickets_lost_by_team_2_during_interruption}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Revised Total Overs</label>
-										<input type="number" step="0.1" name="revised_overs_to_team_2_after_resumption" value={formData.revised_overs_to_team_2_after_resumption} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('revised_overs_to_team_2_after_resumption')}`} placeholder={`Max ${getMaxOvers()}.0 Overs`} required />
+										<input type="number" step="0.1" name="revised_overs_to_team_2_after_resumption" value={formData.revised_overs_to_team_2_after_resumption} onChange={handleInputChange} aria-label="Revised Overs Allocated" className={`${inputBaseClass} ${getInputBorderClass('revised_overs_to_team_2_after_resumption')}`} placeholder="e.g., 20" required />
 										{errors.revised_overs_to_team_2_after_resumption && <p className="text-xs text-red-500 mt-1">{errors.revised_overs_to_team_2_after_resumption}</p>}
 									</div>
 								</div>
@@ -282,7 +334,9 @@ const InterruptedSecondInnings: React.FC = () => {
 					</AnimatePresence>
 				</div>
 			</div>
-		</div>
+
+			<SEOContent {...seoText} />
+		</main>
 	);
 };
 

@@ -14,6 +14,8 @@ interface FormState {
 	runs_scored_by_team_1: number | '';
 	overs_available_to_team_2_at_start: number | '';
 }
+import SEO from '../components/seo/SEO';
+import SEOContent from '../components/seo/SEOContent';
 
 const DelayedSecondInnings: React.FC = () => {
 	const { matchFormat, setIsCalculating } = useApp();
@@ -23,6 +25,41 @@ const DelayedSecondInnings: React.FC = () => {
 	const [isConnError, setIsConnError] = useState(false);
 	const [showRules, setShowRules] = useState(false);
 	const [errors, setErrors] = useState<Record<string, string>>({});
+
+	// SEO Content for this page
+	const pageSEO = {
+		title: 'Delayed Second Innings DLS Target Calculator',
+		description: 'Calculate adjusted DLS targets when the second innings start is delayed. Professional tool for accurate cricket match results.',
+		canonical: 'https://dls.nishanthm.com/delayed-second-innings',
+		schema: JSON.stringify([
+			{
+				"@context": "https://schema.org",
+				"@type": "WebApplication",
+				"name": "Delayed 2nd Innings DLS Calculator",
+				"description": "Calculate revised targets for delayed second innings in cricket.",
+				"applicationCategory": "SportsApplication"
+			}
+		])
+	};
+
+	const seoText = {
+		title: "Delayed Second Innings",
+		description: `A delayed second innings happens when the chase is shortened before a single ball is bowled. This usually occurs due to rain during the innings break. 
+        
+        Since Team 2 will have fewer overs but all 10 wickets intact, the DLS method often sets a target that is higher than the original pro-rata score. This accounts for the fact that a team can bat much more aggressively when they know they have fewer overs to face with full resource.
+        
+        Our DLS calculator precisely determines these revised targets for ODI, T20, and T10 matches.`,
+		faqs: [
+			{
+				question: "Why does the target go up in a delayed start?",
+				answer: "The target increases because the chasing team has the advantage of knowing they have fewer overs to face with all 10 wickets, allowing for a higher scoring rate."
+			},
+			{
+				question: "What is the minimum number of overs for a DLS result?",
+				answer: "In most international T20s, at least 5 overs must be bowled to each side. In ODIs, it's typically 20 overs per side."
+			}
+		]
+	};
 
 	const [formData, setFormData] = useState<FormState>({
 		overs_available_to_team_1_at_start: '',
@@ -159,7 +196,8 @@ const DelayedSecondInnings: React.FC = () => {
 	};
 
 	return (
-		<div className="space-y-6">
+		<main className="space-y-6">
+			<SEO {...pageSEO} />
 			<div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-slate-800">
 				<div className="flex items-start justify-between">
 					<div className="flex items-start space-x-4">
@@ -168,7 +206,7 @@ const DelayedSecondInnings: React.FC = () => {
 						</div>
 						<div>
 							<div className="flex items-center space-x-2">
-								<h2 className="text-xl font-bold text-slate-800 dark:text-white">Delayed Start 2nd Innings</h2>
+								<h1 className="text-xl font-bold text-slate-800 dark:text-white">Delayed Start 2nd Innings</h1>
 								<button onClick={() => setShowRules(!showRules)} className="p-1 rounded-full text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors">
 									<HelpCircle className="w-4 h-4" />
 								</button>
@@ -202,12 +240,12 @@ const DelayedSecondInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Total Runs Scored</label>
-										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 250" required />
+										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} aria-label="Team 1 Runs Scored" className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 250" required />
 										{errors.runs_scored_by_team_1 && <p className="text-xs text-red-500 mt-1">{errors.runs_scored_by_team_1}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Overs Played/Allocated</label>
-										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Total Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
 										{errors.overs_available_to_team_1_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_1_at_start}</p>}
 									</div>
 								</div>
@@ -218,7 +256,7 @@ const DelayedSecondInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Revised Overs Allocated</label>
-										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Revised Overs Allocated" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
 										{errors.overs_available_to_team_2_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_2_at_start}</p>}
 									</div>
 								</div>
@@ -258,7 +296,9 @@ const DelayedSecondInnings: React.FC = () => {
 					</AnimatePresence>
 				</div>
 			</div>
-		</div>
+
+			<SEOContent {...seoText} />
+		</main>
 	);
 };
 
