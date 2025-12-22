@@ -8,7 +8,7 @@ const Documentation: React.FC = () => {
 	// SEO Content for this page
 	const pageSEO = {
 		title: 'DLS Method Explained | Cricket Duckworth-Lewis-Stern Guide',
-		description: 'Learn how the DLS method works in cricket. Detailed guide on rain-adjusted targets, par scores, and official ICC protocols.',
+		description: 'Learn how the DLS method works in cricket. Detailed guide on rain-adjusted targets, par scores, and standard protocols.',
 		canonical: 'https://dls.nishanthm.com/how-it-works',
 		schema: JSON.stringify([
 			{

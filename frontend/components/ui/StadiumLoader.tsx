@@ -193,7 +193,7 @@ const StadiumLoader: React.FC<StadiumLoaderProps> = ({
 
 						<div className="space-y-1">
 							<h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 dark:text-slate-500">
-								Official DLS Outcome
+								Standard DLS Outcome
 							</h3>
 							<p className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase">
 								{results?.targetScore ? 'Chase Revised' : 'Match Par Result'}
