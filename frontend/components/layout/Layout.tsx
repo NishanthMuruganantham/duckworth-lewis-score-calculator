@@ -9,7 +9,7 @@ import {
 	X,
 	ChevronDown,
 	ChevronUp,
-	LayoutGrid,
+	Home,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { BrandLogo } from '../ui/BrandLogo';
@@ -41,7 +41,7 @@ const Layout: React.FC = () => {
 	};
 
 	const navItems = [
-		{ to: '/', label: 'Home', icon: LayoutGrid },
+		{ to: '/', label: 'Home', icon: Home },
 		{ to: '/interrupted-first-innings', label: '1st Inn Resume', icon: IconInn1Interrupted },
 		{ to: '/curtailed-first-innings', label: '1st Inn Cut', icon: IconInn1Curtailed },
 		{ to: '/delayed-second-innings', label: '2nd Inn Delayed', icon: IconInn2Delayed },

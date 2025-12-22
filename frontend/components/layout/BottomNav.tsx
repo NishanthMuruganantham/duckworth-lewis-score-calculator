@@ -7,11 +7,11 @@ import {
 	IconInn2Interrupted,
 	IconInn2Curtailed
 } from '../ui/CricketIcons';
-import { LayoutGrid } from 'lucide-react';
+import { Home } from 'lucide-react';
 
 const BottomNav: React.FC = () => {
 	const navItems = [
-		{ to: '/', label: 'Home', icon: LayoutGrid },
+		{ to: '/', label: 'Home', icon: Home },
 		{ to: '/interrupted-second-innings', label: 'Ings 2 Interup', icon: IconInn2Interrupted },
 		{ to: '/delayed-second-innings', label: 'Ings 2 Delay', icon: IconInn2Delayed },
 		{ to: '/interrupted-first-innings', label: 'Ings 1 Interup', icon: IconInn1Interrupted },

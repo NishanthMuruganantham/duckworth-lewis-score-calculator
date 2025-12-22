@@ -1,76 +1,66 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { MdSportsCricket } from 'react-icons/md';
+import { TbTargetArrow, TbCloudRain, TbClock, TbHandStop } from 'react-icons/tb';
 
 interface IconProps {
 	className?: string;
 }
 
-// 1. First Innings Interrupted
+// Helper to cast icons to any to avoid strict React 19 type mismatch
+const MdBat = MdSportsCricket as React.ComponentType<any>;
+const TbTarget = TbTargetArrow as React.ComponentType<any>;
+const TbCloud = TbCloudRain as React.ComponentType<any>;
+const TbClockIcon = TbClock as React.ComponentType<any>;
+const TbStop = TbHandStop as React.ComponentType<any>;
+
+// 1. First Innings Interrupted (Bat + Cloud)
 export const IconInn1Interrupted: React.FC<IconProps> = ({ className = "w-6 h-6" }) => (
-	<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-		{/* Cloud Background */}
-		<path d="M17.5 19C19.9 19 22 16.9 22 14.5C22 12.1 19.9 10 17.5 10C17.3 10 17.1 10 16.9 10.1C15.9 7.2 13.2 5 10 5C6.1 5 3 8.1 3 12C3 12.1 3 12.2 3 12.3C1.3 13.1 0 14.9 0 17C0 20.3 2.7 23 6 23H17.5" className="fill-emerald-600/10 stroke-emerald-600 dark:stroke-emerald-400" strokeWidth="1.5" />
-		{/* Play / Resume Arrow */}
-		<path d="M10 13L14 16L10 19V13Z" className="fill-emerald-600 dark:fill-emerald-400" />
-		<path d="M6 9L6 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-	</svg>
+	<div className={`relative ${className} flex items-center justify-center`}>
+		<MdBat className="w-full h-full text-emerald-600 dark:text-emerald-400" />
+		<div className="absolute -bottom-1 -right-1 bg-white dark:bg-slate-900 rounded-full p-[1px]">
+			<TbCloud className="w-3.5 h-3.5 text-emerald-500 fill-emerald-500/10" />
+		</div>
+	</div>
 );
 
-// 2. First Innings Curtailed
+// 2. First Innings Curtailed (Bat + Stop)
 export const IconInn1Curtailed: React.FC<IconProps> = ({ className = "w-6 h-6" }) => (
-	<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-		{/* Bat Silhouette */}
-		<rect x="10" y="4" width="4" height="16" rx="1" className="fill-emerald-600/20" />
-		{/* "Cut" Line */}
-		<motion.path
-			initial={{ pathLength: 0 }}
-			animate={{ pathLength: 1 }}
-			d="M4 12L20 12"
-			stroke="#ef4444"
-			strokeWidth="2.5"
-			strokeLinecap="round"
-			strokeDasharray="4 4"
-		/>
-		<path d="M7 8L17 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
-	</svg>
+	<div className={`relative ${className} flex items-center justify-center`}>
+		<MdBat className="w-full h-full text-emerald-600 dark:text-emerald-400" />
+		<div className="absolute -bottom-1 -right-1 bg-white dark:bg-slate-900 rounded-full p-[1px]">
+			<TbStop className="w-3.5 h-3.5 text-red-500 fill-red-500/10" />
+		</div>
+	</div>
 );
 
-// 3. Second Innings Delayed
+// 3. Second Innings Delayed (Target + Clock)
 export const IconInn2Delayed: React.FC<IconProps> = ({ className = "w-6 h-6" }) => (
-	<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-		{/* Clock Circle */}
-		<circle cx="12" cy="12" r="9" className="stroke-emerald-600 dark:stroke-emerald-400" strokeWidth="1.5" />
-		{/* Clock Hands */}
-		<path d="M12 7V12L15 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-		{/* Target Indicator */}
-		<circle cx="18" cy="6" r="3" className="fill-emerald-600 dark:fill-emerald-400 shadow-sm" />
-	</svg>
+	<div className={`relative ${className} flex items-center justify-center`}>
+		<TbTarget className="w-full h-full text-emerald-600 dark:text-emerald-400 stroke-[1.5]" />
+		<div className="absolute -bottom-1 -right-1 bg-white dark:bg-slate-900 rounded-full p-[1px]">
+			<TbClockIcon className="w-3.5 h-3.5 text-amber-500 fill-amber-500/10" />
+		</div>
+	</div>
 );
 
-// 4. Second Innings Interrupted
+// 4. Second Innings Interrupted (Target + Cloud)
 export const IconInn2Interrupted: React.FC<IconProps> = ({ className = "w-6 h-6" }) => (
-	<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-		{/* Rain Cloud */}
-		<path d="M17.5 14C19.9 14 22 11.9 22 9.5C22 7.1 19.9 5 17.5 5C17.3 5 17.1 5 16.9 5.1C15.9 2.2 13.2 0 10 0C6.1 0 3 3.1 3 7C3 7.1 3 7.2 3 7.3C1.3 8.1 0 9.9 0 12C0 15.3 2.7 18 6 18H17.5" className="fill-emerald-600/10 stroke-emerald-600 dark:stroke-emerald-400" strokeWidth="1.5" />
-		{/* Rain Drops */}
-		<path d="M8 19L7 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-		<path d="M12 19L11 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-		<path d="M16 19L15 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-		{/* Target Path Arrow */}
-		<path d="M13 13H20M20 13L17 10M20 13L17 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-600 dark:text-emerald-400" />
-	</svg>
+	<div className={`relative ${className} flex items-center justify-center`}>
+		<TbTarget className="w-full h-full text-emerald-600 dark:text-emerald-400 stroke-[1.5]" />
+		<div className="absolute -bottom-1 -right-1 bg-white dark:bg-slate-900 rounded-full p-[1px]">
+			<TbCloud className="w-3.5 h-3.5 text-emerald-500 fill-emerald-500/10" />
+		</div>
+	</div>
 );
 
-// 5. Second Innings Curtailed
+// 5. Second Innings Curtailed (Target + Stop)
 export const IconInn2Curtailed: React.FC<IconProps> = ({ className = "w-6 h-6" }) => (
-	<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-		{/* Abandoned / Stop Sign */}
-		<path d="M12 2L22 12L12 22L2 12L12 2Z" className="stroke-red-500" strokeWidth="2" strokeLinejoin="round" />
-		<path d="M8 12H16" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" />
-		{/* Result / Scoreboard Marker */}
-		<rect x="10" y="8" width="4" height="8" rx="0.5" className="fill-emerald-600/30" />
-		<circle cx="12" cy="12" r="1.5" className="fill-emerald-600 dark:fill-emerald-400" />
-	</svg>
+	<div className={`relative ${className} flex items-center justify-center`}>
+		<TbTarget className="w-full h-full text-emerald-600 dark:text-emerald-400 stroke-[1.5]" />
+		<div className="absolute -bottom-1 -right-1 bg-white dark:bg-slate-900 rounded-full p-[1px]">
+			<TbStop className="w-3.5 h-3.5 text-red-500 fill-red-500/10" />
+		</div>
+	</div>
 );
 
 export const IconResources: React.FC<IconProps> = ({ className = "w-6 h-6" }) => (
