@@ -13,7 +13,7 @@ import {
 	IconResources,
 	IconDocs
 } from '../ui/CricketIcons';
-import { Home } from 'lucide-react';
+import { Home, AlertTriangle } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
 	const { matchFormat, setMatchFormat } = useApp();
@@ -138,6 +138,31 @@ const Sidebar: React.FC = () => {
 							</>
 						)}
 					</NavLink>
+
+					<NavLink
+						to="/disclaimer"
+						className={({ isActive }) =>
+							`flex items-center space-x-3 px-4 py-2.5 rounded-xl transition-colors duration-200 mt-1 group ${isActive
+								? 'bg-emerald-600 text-white shadow-md'
+								: 'text-slate-600 dark:text-slate-400 hover:bg-emerald-50 dark:hover:bg-slate-800 hover:text-emerald-700 dark:hover:text-emerald-300'
+							}`
+						}
+					>
+						{({ isActive }) => (
+							<>
+								<AlertTriangle className={`w-5 h-5 transition-transform duration-200 ${isActive ? 'scale-110' : ''}`} />
+								<span className="font-medium text-sm flex-1">Disclaimer</span>
+								{isActive && (
+									<motion.div
+										layoutId="sidebarActive"
+										className="w-1 h-1 rounded-full bg-white dark:bg-emerald-400"
+										initial={{ opacity: 0, scale: 0 }}
+										animate={{ opacity: 1, scale: 1 }}
+									/>
+								)}
+							</>
+						)}
+					</NavLink>
 				</div>
 			</nav>
 
@@ -150,7 +175,7 @@ const Sidebar: React.FC = () => {
 					</p>
 				</div>
 			</div>
-		</aside>
+		</aside >
 	);
 };
 
