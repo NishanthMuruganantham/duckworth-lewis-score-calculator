@@ -14,6 +14,7 @@ import CurtailedSecondInnings from './pages/CurtailedSecondInnings';
 import InterruptedFirstInnings from './pages/InterruptedFirstInnings';
 import ResourceTable from './pages/ResourceTable';
 import Documentation from './pages/Documentation';
+import Dashboard from './pages/Dashboard';
 
 const AppContent: React.FC = () => {
 	const { apiStatus, setApiStatus } = useApp();
@@ -50,7 +51,7 @@ const AppContent: React.FC = () => {
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<Layout />}>
-					<Route index element={<Navigate to="/interrupted-second-innings" replace />} />
+					<Route index element={<Dashboard />} />
 
 					{/* SEO Friendly Named Routes */}
 					<Route path="delayed-second-innings" element={<DelayedSecondInnings />} />

@@ -9,6 +9,7 @@ import {
 	X,
 	ChevronDown,
 	ChevronUp,
+	LayoutGrid,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { BrandLogo } from '../ui/BrandLogo';
@@ -40,11 +41,12 @@ const Layout: React.FC = () => {
 	};
 
 	const navItems = [
-		{ to: '/interrupted-inn1', label: '1st Inn Resume', icon: IconInn1Interrupted },
-		{ to: '/curtailed-inn1', label: '1st Inn Cut', icon: IconInn1Curtailed },
-		{ to: '/delayed-inn2', label: '2nd Inn Delayed', icon: IconInn2Delayed },
-		{ to: '/interrupted-inn2', label: '2nd Inn Resume', icon: IconInn2Interrupted },
-		{ to: '/curtailed-inn2', label: '2nd Inn Cut', icon: IconInn2Curtailed },
+		{ to: '/', label: 'Home', icon: LayoutGrid },
+		{ to: '/interrupted-first-innings', label: '1st Inn Resume', icon: IconInn1Interrupted },
+		{ to: '/curtailed-first-innings', label: '1st Inn Cut', icon: IconInn1Curtailed },
+		{ to: '/delayed-second-innings', label: '2nd Inn Delayed', icon: IconInn2Delayed },
+		{ to: '/interrupted-second-innings', label: '2nd Inn Resume', icon: IconInn2Interrupted },
+		{ to: '/curtailed-second-innings', label: '2nd Inn Cut', icon: IconInn2Curtailed },
 	];
 
 	return (
