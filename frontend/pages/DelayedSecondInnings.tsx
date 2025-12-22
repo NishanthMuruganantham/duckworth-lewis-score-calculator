@@ -188,7 +188,7 @@ const DelayedSecondInnings: React.FC = () => {
 	const hasErrors = Object.keys(errors).length > 0;
 	const isFormComplete = formData.overs_available_to_team_1_at_start !== '' && formData.runs_scored_by_team_1 !== '' && formData.overs_available_to_team_2_at_start !== '';
 
-	const inputBaseClass = "w-full px-4 py-2 rounded-lg border bg-slate-50 dark:bg-slate-800 outline-none transition-all focus:ring-1 focus:ring-emerald-500/20";
+	const inputBaseClass = "w-full px-4 py-2 rounded-lg border bg-slate-50 dark:bg-slate-800 outline-none transition-all focus:ring-1 focus:ring-emerald-500/20 focus:scale-[1.01]";
 
 	const getInputBorderClass = (field: string) => {
 		if (errors[field]) return "border-red-500 focus:border-red-500 dark:border-red-900 focus:ring-red-500/10";
