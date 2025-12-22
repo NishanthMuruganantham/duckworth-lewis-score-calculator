@@ -16,8 +16,8 @@ const ResourceTable: React.FC = () => {
 
 	// SEO Content for this page
 	const pageSEO = {
-		title: 'DLS Resource Table | Official Cricket Calculation Reference',
-		description: 'View official DLS resource conversion percentages for ODI, T20, and T10. The standard reference for rain-affected cricket math.',
+		title: 'DLS Resource Table | Professional Cricket Calculation Reference',
+		description: 'View standard DLS resource conversion percentages for ODI, T20, and T10. The primary reference for rain-affected cricket math.',
 		canonical: 'https://dls.nishanthm.com/resource-table',
 		schema: JSON.stringify([
 			{
@@ -56,7 +56,7 @@ const ResourceTable: React.FC = () => {
 			const result = await fetchResourceTable(matchFormat);
 			setData(result);
 		} catch (err) {
-			setError("Failed to load official resource data.");
+			setError("Failed to load resource data.");
 		} finally {
 			setLoading(false);
 		}

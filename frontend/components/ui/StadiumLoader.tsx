@@ -156,15 +156,25 @@ const StadiumLoader: React.FC<StadiumLoaderProps> = ({
 				<PitchCoverLoader />
 			) : (
 				<motion.div
-					initial={{ opacity: 0, scale: 0.95 }}
-					animate={{ opacity: 1, scale: 1 }}
+					initial={{ opacity: 0, y: 10, scale: 0.95 }}
+					animate={{ opacity: 1, y: 0, scale: 1 }}
+					transition={{
+						type: "spring",
+						stiffness: 300,
+						damping: 25,
+						mass: 1
+					}}
 					className="w-full space-y-8 py-4 relative"
 				>
 					{/* Cricket Ball Reveal Animation */}
 					<motion.div
 						initial={{ x: -100, rotate: -360, opacity: 0 }}
 						animate={{ x: 0, rotate: 0, opacity: 1 }}
-						transition={{ duration: 0.8, type: "spring" }}
+						transition={{
+							type: "spring",
+							stiffness: 260,
+							damping: 20
+						}}
 						className="flex flex-col items-center text-center space-y-3"
 					>
 						<div className="relative">
@@ -183,7 +193,7 @@ const StadiumLoader: React.FC<StadiumLoaderProps> = ({
 
 						<div className="space-y-1">
 							<h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 dark:text-slate-500">
-								Official DLS Outcome
+								Standard DLS Outcome
 							</h3>
 							<p className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase">
 								{results?.targetScore ? 'Chase Revised' : 'Match Par Result'}

@@ -9,6 +9,7 @@ import {
 	X,
 	ChevronDown,
 	ChevronUp,
+	Home,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { BrandLogo } from '../ui/BrandLogo';
@@ -40,11 +41,12 @@ const Layout: React.FC = () => {
 	};
 
 	const navItems = [
-		{ to: '/interrupted-inn1', label: '1st Inn Resume', icon: IconInn1Interrupted },
-		{ to: '/curtailed-inn1', label: '1st Inn Cut', icon: IconInn1Curtailed },
-		{ to: '/delayed-inn2', label: '2nd Inn Delayed', icon: IconInn2Delayed },
-		{ to: '/interrupted-inn2', label: '2nd Inn Resume', icon: IconInn2Interrupted },
-		{ to: '/curtailed-inn2', label: '2nd Inn Cut', icon: IconInn2Curtailed },
+		{ to: '/', label: 'Home', icon: Home },
+		{ to: '/interrupted-first-innings', label: '1st Inn Resume', icon: IconInn1Interrupted },
+		{ to: '/curtailed-first-innings', label: '1st Inn Cut', icon: IconInn1Curtailed },
+		{ to: '/delayed-second-innings', label: '2nd Inn Delayed', icon: IconInn2Delayed },
+		{ to: '/interrupted-second-innings', label: '2nd Inn Resume', icon: IconInn2Interrupted },
+		{ to: '/curtailed-second-innings', label: '2nd Inn Cut', icon: IconInn2Curtailed },
 	];
 
 	return (
@@ -195,9 +197,12 @@ const Layout: React.FC = () => {
 							</div>
 
 							<div className="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
-								<p className="text-xs text-center text-slate-400">
-									Duckworth-Lewis-Stern v2.4.0
-								</p>
+								<div className="bg-emerald-50 dark:bg-slate-800 p-3 rounded-lg border border-emerald-100 dark:border-slate-700 text-center mb-2">
+									<p className="text-[10px] text-emerald-600 dark:text-emerald-400">
+										Designed & Developed by
+										<span className="block font-medium mt-0.5">Nishanth</span>
+									</p>
+								</div>
 							</div>
 						</motion.div>
 					</>

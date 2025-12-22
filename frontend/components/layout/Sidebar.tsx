@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
 import { MatchFormat } from '../../types';
 import { BrandLogo } from '../ui/BrandLogo';
@@ -12,11 +13,13 @@ import {
 	IconResources,
 	IconDocs
 } from '../ui/CricketIcons';
+import { Home } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
 	const { matchFormat, setMatchFormat } = useApp();
 
 	const navItems = [
+		{ to: '/', label: 'Dashboard', icon: Home },
 		{ to: '/interrupted-first-innings', label: '1st Inn Resume', icon: IconInn1Interrupted },
 		{ to: '/curtailed-first-innings', label: '1st Inn Cut', icon: IconInn1Curtailed },
 		{ to: '/delayed-second-innings', label: '2nd Inn Delayed', icon: IconInn2Delayed },
@@ -67,8 +70,20 @@ const Sidebar: React.FC = () => {
 							}`
 						}
 					>
-						<item.icon className="w-5 h-5" />
-						<span className="font-medium text-sm">{item.label}</span>
+						{({ isActive }) => (
+							<>
+								<item.icon className={`w-5 h-5 transition-transform duration-200 ${isActive ? 'scale-110' : ''}`} />
+								<span className="font-medium text-sm flex-1">{item.label}</span>
+								{isActive && (
+									<motion.div
+										layoutId="sidebarActive"
+										className="w-1 h-1 rounded-full bg-white dark:bg-emerald-400"
+										initial={{ opacity: 0, scale: 0 }}
+										animate={{ opacity: 1, scale: 1 }}
+									/>
+								)}
+							</>
+						)}
 					</NavLink>
 				))}
 
@@ -83,8 +98,20 @@ const Sidebar: React.FC = () => {
 							}`
 						}
 					>
-						<IconResources className="w-5 h-5" />
-						<span className="font-medium text-sm">Resource Table</span>
+						{({ isActive }) => (
+							<>
+								<IconResources className={`w-5 h-5 transition-transform duration-200 ${isActive ? 'scale-110' : ''}`} />
+								<span className="font-medium text-sm flex-1">Resource Table</span>
+								{isActive && (
+									<motion.div
+										layoutId="sidebarActive"
+										className="w-1 h-1 rounded-full bg-white dark:bg-emerald-400"
+										initial={{ opacity: 0, scale: 0 }}
+										animate={{ opacity: 1, scale: 1 }}
+									/>
+								)}
+							</>
+						)}
 					</NavLink>
 
 					<NavLink
@@ -96,8 +123,20 @@ const Sidebar: React.FC = () => {
 							}`
 						}
 					>
-						<IconDocs className="w-5 h-5" />
-						<span className="font-medium text-sm">Documentation</span>
+						{({ isActive }) => (
+							<>
+								<IconDocs className={`w-5 h-5 transition-transform duration-200 ${isActive ? 'scale-110' : ''}`} />
+								<span className="font-medium text-sm flex-1">Documentation</span>
+								{isActive && (
+									<motion.div
+										layoutId="sidebarActive"
+										className="w-1 h-1 rounded-full bg-white dark:bg-emerald-400"
+										initial={{ opacity: 0, scale: 0 }}
+										animate={{ opacity: 1, scale: 1 }}
+									/>
+								)}
+							</>
+						)}
 					</NavLink>
 				</div>
 			</nav>

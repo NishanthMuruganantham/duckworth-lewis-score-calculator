@@ -23,7 +23,6 @@ const DelayedSecondInnings: React.FC = () => {
 	const [result, setResult] = useState<any>(null);
 	const [apiError, setApiError] = useState<string | null>(null);
 	const [isConnError, setIsConnError] = useState(false);
-	const [showRules, setShowRules] = useState(false);
 	const [errors, setErrors] = useState<Record<string, string>>({});
 
 	// SEO Content for this page
@@ -73,6 +72,13 @@ const DelayedSecondInnings: React.FC = () => {
 		setIsConnError(false);
 		validateForm(formData);
 	}, [matchFormat]);
+
+	const scrollToHelp = () => {
+		const element = document.getElementById('how-it-works');
+		if (element) {
+			element.scrollIntoView({ behavior: 'smooth' });
+		}
+	};
 
 	const getMaxOvers = () => {
 		switch (matchFormat) {
@@ -188,7 +194,7 @@ const DelayedSecondInnings: React.FC = () => {
 	const hasErrors = Object.keys(errors).length > 0;
 	const isFormComplete = formData.overs_available_to_team_1_at_start !== '' && formData.runs_scored_by_team_1 !== '' && formData.overs_available_to_team_2_at_start !== '';
 
-	const inputBaseClass = "w-full px-4 py-2 rounded-lg border bg-slate-50 dark:bg-slate-800 outline-none transition-all focus:ring-1 focus:ring-emerald-500/20";
+	const inputBaseClass = "w-full px-4 py-2 rounded-lg border bg-slate-50 dark:bg-slate-800 outline-none transition-all focus:ring-1 focus:ring-emerald-500/20 focus:scale-[1.01]";
 
 	const getInputBorderClass = (field: string) => {
 		if (errors[field]) return "border-red-500 focus:border-red-500 dark:border-red-900 focus:ring-red-500/10";
@@ -207,7 +213,11 @@ const DelayedSecondInnings: React.FC = () => {
 						<div>
 							<div className="flex items-center space-x-2">
 								<h1 className="text-xl font-bold text-slate-800 dark:text-white">Delayed Start 2nd Innings</h1>
-								<button onClick={() => setShowRules(!showRules)} className="p-1 rounded-full text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors">
+								<button
+									onClick={scrollToHelp}
+									className="p-1 rounded-full text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors"
+									title="How this works"
+								>
 									<HelpCircle className="w-4 h-4" />
 								</button>
 							</div>
@@ -218,17 +228,6 @@ const DelayedSecondInnings: React.FC = () => {
 						</div>
 					</div>
 				</div>
-				<AnimatePresence>
-					{showRules && (
-						<motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden bg-blue-50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-800 mt-4">
-							<div className="p-4 relative text-sm text-blue-700 dark:text-blue-300">
-								<button onClick={() => setShowRules(false)} className="absolute top-2 right-2 text-blue-400 hover:text-blue-600"><X className="w-4 h-4" /></button>
-								<h4 className="font-bold mb-1">Scenario Logic</h4>
-								Team 2 overs are reduced before the chase begins. Target increases to account for their ability to play more aggressively with full wickets.
-							</div>
-						</motion.div>
-					)}
-				</AnimatePresence>
 			</div>
 
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -236,27 +235,33 @@ const DelayedSecondInnings: React.FC = () => {
 					<form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
 						<div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
 							<div className="space-y-4 md:col-span-2">
-								<h3 className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Team 1 (Completed Innings)</h3>
+								<div className="flex items-center space-x-2 mb-3">
+									<div className="w-[2px] h-4 bg-emerald-500 rounded-full" />
+									<h3 className="text-xs font-bold uppercase tracking-[0.15em] text-emerald-600 dark:text-emerald-400">Team 1 (Completed Innings)</h3>
+								</div>
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Total Runs Scored</label>
-										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} aria-label="Team 1 Runs Scored" className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 250" required />
+										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} aria-label="Team 1 Runs Scored" className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 250" inputMode="decimal" required />
 										{errors.runs_scored_by_team_1 && <p className="text-xs text-red-500 mt-1">{errors.runs_scored_by_team_1}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Overs Played/Allocated</label>
-										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Total Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Total Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} inputMode="decimal" required />
 										{errors.overs_available_to_team_1_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_1_at_start}</p>}
 									</div>
 								</div>
 							</div>
 							<div className="h-px bg-slate-100 dark:bg-slate-800 md:col-span-2 my-2" />
 							<div className="space-y-4 md:col-span-2">
-								<h3 className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Team 2 (Revised Conditions)</h3>
+								<div className="flex items-center space-x-2 mb-3">
+									<div className="w-[2px] h-4 bg-emerald-500 rounded-full" />
+									<h3 className="text-xs font-bold uppercase tracking-[0.15em] text-emerald-600 dark:text-emerald-400">Team 2 (Revised Conditions)</h3>
+								</div>
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Revised Overs Allocated</label>
-										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Revised Overs Allocated" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Revised Overs Allocated" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} inputMode="decimal" required />
 										{errors.overs_available_to_team_2_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_2_at_start}</p>}
 									</div>
 								</div>
@@ -297,7 +302,7 @@ const DelayedSecondInnings: React.FC = () => {
 				</div>
 			</div>
 
-			<SEOContent {...seoText} />
+			<SEOContent id="how-it-works" {...seoText} />
 		</main>
 	);
 };

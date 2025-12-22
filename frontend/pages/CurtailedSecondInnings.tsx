@@ -25,7 +25,6 @@ const CurtailedSecondInnings: React.FC = () => {
 	const [result, setResult] = useState<any>(null);
 	const [apiError, setApiError] = useState<string | null>(null);
 	const [isConnError, setIsConnError] = useState(false);
-	const [showRules, setShowRules] = useState(false);
 	const [errors, setErrors] = useState<Record<string, string>>({});
 
 	// SEO Content for this page
@@ -77,6 +76,13 @@ const CurtailedSecondInnings: React.FC = () => {
 		setIsConnError(false);
 		validateForm(formData);
 	}, [matchFormat]);
+
+	const scrollToHelp = () => {
+		const element = document.getElementById('how-it-works');
+		if (element) {
+			element.scrollIntoView({ behavior: 'smooth' });
+		}
+	};
 
 	const getMaxOvers = () => {
 		switch (matchFormat) {
@@ -193,7 +199,7 @@ const CurtailedSecondInnings: React.FC = () => {
 
 	const hasErrors = Object.keys(errors).length > 0;
 	const isFormComplete = Object.values(formData).every(val => val !== '');
-	const inputBaseClass = "w-full px-4 py-2 rounded-lg border bg-slate-50 dark:bg-slate-800 outline-none transition-all focus:ring-1 focus:ring-emerald-500/10";
+	const inputBaseClass = "w-full px-4 py-2 rounded-lg border bg-slate-50 dark:bg-slate-800 outline-none transition-all focus:ring-1 focus:ring-emerald-500/20 focus:scale-[1.01]";
 
 	const getInputBorderClass = (field: string) => {
 		if (errors[field]) return "border-red-500 focus:border-red-500 dark:border-red-900 focus:ring-red-500/10";
@@ -210,23 +216,18 @@ const CurtailedSecondInnings: React.FC = () => {
 						<div>
 							<div className="flex items-center space-x-2">
 								<h1 className="text-xl font-bold text-slate-800 dark:text-white">Curtailed 2nd Innings</h1>
-								<button onClick={() => setShowRules(!showRules)} className="p-1 rounded-full text-slate-400 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-slate-800 transition-colors"><HelpCircle className="w-4 h-4" /></button>
+								<button
+									onClick={scrollToHelp}
+									className="p-1 rounded-full text-slate-400 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-slate-800 transition-colors"
+									title="How this works"
+								>
+									<HelpCircle className="w-4 h-4" />
+								</button>
 							</div>
 							<p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Abandonment logic. Format: <span className="font-bold text-emerald-600">{matchFormat} ({getMaxOvers()} overs max)</span></p>
 						</div>
 					</div>
 				</div>
-				<AnimatePresence>
-					{showRules && (
-						<motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden bg-amber-50 dark:bg-amber-900/10 rounded-xl border border-amber-100 dark:border-amber-800 mt-4">
-							<div className="p-4 text-sm text-amber-700 dark:text-amber-300 relative">
-								<button onClick={() => setShowRules(false)} className="absolute top-2 right-2 text-amber-400 hover:text-amber-600"><X className="w-4 h-4" /></button>
-								<h4 className="font-bold mb-1">Par Score Logic</h4>
-								Match abandoned permanently. UI calculates "Par Score" at the exact point of interruption based on overs Faced and wickets lost.
-							</div>
-						</motion.div>
-					)}
-				</AnimatePresence>
 			</div>
 
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -234,37 +235,43 @@ const CurtailedSecondInnings: React.FC = () => {
 					<form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
 						<div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
 							<div className="space-y-4 md:col-span-2">
-								<h3 className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Team 1 (First Innings)</h3>
+								<div className="flex items-center space-x-2 mb-3">
+									<div className="w-[2px] h-4 bg-emerald-500 rounded-full" />
+									<h3 className="text-xs font-bold uppercase tracking-[0.15em] text-emerald-600 dark:text-emerald-400">Team 1 (First Innings)</h3>
+								</div>
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Total Runs Scored</label>
-										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} aria-label="Team 1 Runs Scored" className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 280" required />
+										<input type="number" name="runs_scored_by_team_1" value={formData.runs_scored_by_team_1} onChange={handleInputChange} aria-label="Team 1 Runs Scored" className={`${inputBaseClass} ${getInputBorderClass('runs_scored_by_team_1')}`} placeholder="e.g., 280" inputMode="decimal" required />
 										{errors.runs_scored_by_team_1 && <p className="text-xs text-red-500 mt-1">{errors.runs_scored_by_team_1}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Total Overs Available</label>
-										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} inputMode="decimal" required />
 										{errors.overs_available_to_team_1_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_1_at_start}</p>}
 									</div>
 								</div>
 							</div>
 							<div className="h-px bg-slate-100 dark:bg-slate-800 md:col-span-2 my-2" />
 							<div className="space-y-4 md:col-span-2">
-								<h3 className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Team 2 (At Abandonment)</h3>
+								<div className="flex items-center space-x-2 mb-3">
+									<div className="w-[2px] h-4 bg-emerald-500 rounded-full" />
+									<h3 className="text-xs font-bold uppercase tracking-[0.15em] text-emerald-600 dark:text-emerald-400">Team 2 (At Abandonment)</h3>
+								</div>
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Initial Overs Available</label>
-										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Team 2 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Team 2 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} inputMode="decimal" required />
 										{errors.overs_available_to_team_2_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_2_at_start}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Overs Batted</label>
-										<input type="number" step="0.1" name="overs_used_by_team_2_during_curtailed" value={formData.overs_used_by_team_2_during_curtailed} onChange={handleInputChange} aria-label="Overs Played Before Abandonment" className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_2_during_curtailed')}`} placeholder={`Up to ${getMaxOvers()} Overs`} required />
+										<input type="number" step="0.1" name="overs_used_by_team_2_during_curtailed" value={formData.overs_used_by_team_2_during_curtailed} onChange={handleInputChange} aria-label="Overs Played Before Abandonment" className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_2_during_curtailed')}`} placeholder={`Up to ${getMaxOvers()} Overs`} inputMode="decimal" required />
 										{errors.overs_used_by_team_2_during_curtailed && <p className="text-xs text-red-500 mt-1">{errors.overs_used_by_team_2_during_curtailed}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Wickets Lost</label>
-										<input type="number" name="wickets_lost_by_team_2_during_curtailed" value={formData.wickets_lost_by_team_2_during_curtailed} onChange={handleInputChange} aria-label="Team 2 Wickets Lost" className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_2_during_curtailed')}`} placeholder="0 - 9" required />
+										<input type="number" name="wickets_lost_by_team_2_during_curtailed" value={formData.wickets_lost_by_team_2_during_curtailed} onChange={handleInputChange} aria-label="Team 2 Wickets Lost" className={`${inputBaseClass} ${getInputBorderClass('wickets_lost_by_team_2_during_curtailed')}`} placeholder="0 - 9" inputMode="decimal" required />
 										{errors.wickets_lost_by_team_2_during_curtailed && <p className="text-xs text-red-500 mt-1">{errors.wickets_lost_by_team_2_during_curtailed}</p>}
 									</div>
 								</div>
@@ -301,7 +308,7 @@ const CurtailedSecondInnings: React.FC = () => {
 				</div>
 			</div>
 
-			<SEOContent {...seoText} />
+			<SEOContent id="how-it-works" {...seoText} />
 		</main>
 	);
 };
