@@ -16,91 +16,45 @@ export const AppIcon: React.FC<AppIconProps> = ({ className = "w-32 h-32", size 
 			className={className}
 		>
 			<defs>
-				<linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-					<stop offset="0%" stopColor="#045b5c" />
-					<stop offset="100%" stopColor="#013133" />
+				<linearGradient id="iconBgGradient" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+					<stop offset="0" stopColor="#00CC99" />
+					<stop offset="1" stopColor="#008060" />
 				</linearGradient>
-
-				<clipPath id="appIconClip">
-					<rect x="0" y="0" width="512" height="512" rx="80" />
-				</clipPath>
+				<linearGradient id="stadiumBowlGradient" x1="256" y1="350" x2="256" y2="512" gradientUnits="userSpaceOnUse">
+					<stop offset="0" stopColor="#005C45" />
+					<stop offset="1" stopColor="#004D39" />
+				</linearGradient>
 			</defs>
 
-			<rect
-				x="0"
-				y="0"
-				width="512"
-				height="512"
-				rx="80"
-				fill="url(#iconGradient)"
-			/>
-			<rect
-				x="0"
-				y="0"
-				width="512"
-				height="512"
-				rx="80"
-				fill="url(#iconGradient)"
-			/>
+			{/* Background (Sharp Corners) */}
+			<rect width="512" height="512" fill="url(#iconBgGradient)" />
 
-			<g clipPath="url(#appIconClip)">
-				<g transform="translate(60, 60)">
-					<circle cx="60" cy="60" r="50" fill="#2eb0ae" fillOpacity="0.6" />
-					<path
-						d="M30 60 C30 30 90 30 90 60 C90 90 30 90 30 60"
-						stroke="white"
-						strokeWidth="2"
-						strokeOpacity="0.4"
-						fill="none"
-					/>
-					<path
-						d="M20 50 C20 20 100 20 100 50"
-						stroke="white"
-						strokeWidth="3"
-						strokeLinecap="round"
-						strokeOpacity="0.8"
-						fill="none"
-					/>
-					<path
-						d="M20 70 C20 100 100 100 100 70"
-						stroke="white"
-						strokeWidth="3"
-						strokeLinecap="round"
-						strokeOpacity="0.8"
-						fill="none"
-					/>
-				</g>
+			{/* Stylized Stadium Bowl (Curvy) */}
+			<path d="M0 380C100 350 412 350 512 380V512H0V380Z" fill="url(#stadiumBowlGradient)" opacity="0.4" />
+			<path d="M0 420C120 400 392 400 512 420V512H0V420Z" fill="url(#stadiumBowlGradient)" opacity="0.6" />
 
-				{/* Rain Droplets */}
-				<g fill="white" fillOpacity="0.5">
-					<path d="M250 120 c0 5 -4 9 -9 9 s-9 -4 -9 -9 c0 -5 9 -20 9 -20 s9 15 9 20 z" />
-					<path d="M320 160 c0 4 -3 7 -7 7 s-7 -3 -7 -7 c0 -4 7 -15 7 -15 s7 11 7 15 z" />
-					<path d="M210 180 c0 4 -3 7 -7 7 s-7 -3 -7 -7 c0 -4 7 -15 7 -15 s7 11 7 15 z" />
-					<path d="M280 200 c0 3 -2 5 -5 5 s-5 -2 -5 -5 c0 -3 5 -12 5 -12 s5 9 5 12 z" />
-					<path d="M350 240 c0 5 -4 9 -9 9 s-9 -4 -9 -9 c0 -5 9 -20 9 -20 s9 15 9 20 z" />
-					<path d="M190 260 c0 3 -2 5 -5 5 s-5 -2 -5 -5 c0 -3 5 -12 5 -12 s5 9 5 12 z" />
-				</g>
+			{/* Cricket Wickets (Minimalist and Stylized) */}
+			<g id="wickets" transform="translate(216, 280)">
+				{/* Stumps */}
+				<rect x="0" y="0" width="10" height="160" rx="5" fill="#F8F9FA" />
+				<rect x="34" y="0" width="10" height="160" rx="5" fill="#F8F9FA" />
+				<rect x="68" y="0" width="10" height="160" rx="5" fill="#F8F9FA" />
+				{/* Bails (Curved) */}
+				<path d="M-2 -5Q18 -10 38 -5V0Q18 -5 -2 0Z" fill="#F8F9FA" />
+				<path d="M42 -5Q62 -10 82 -5V0Q62 -5 42 0Z" fill="#F8F9FA" />
+			</g>
 
-				{/* Bottom Flowing Waves */}
-				<path
-					d="M0 450 Q128 400 256 450 T512 450 V512 H0 Z"
-					fill="#2eb0ae"
-					fillOpacity="0.6"
-				/>
-				<path
-					d="M0 480 Q128 440 256 480 T512 480 V512 H0 Z"
-					fill="#4edcd9"
-					fillOpacity="0.8"
-				/>
-
-				{/* Analytics Zig-Zag Graph */}
-				<path
-					d="M100 350 L200 280 L300 330 L400 220 L512 200"
-					stroke="white"
-					strokeWidth="16"
-					strokeLinecap="round"
-					strokeLinejoin="round"
-				/>
+			{/* Rain Streaks (Curved/Organic) */}
+			<g id="rain" opacity="0.5">
+				<path d="M100 50Q90 80 80 110" stroke="#A5F3FC" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+				<path d="M200 30Q190 60 180 90" stroke="#A5F3FC" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+				<path d="M300 60Q290 90 280 120" stroke="#A5F3FC" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+				<path d="M400 40Q390 70 380 100" stroke="#A5F3FC" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+				<path d="M150 150Q140 180 130 210" stroke="#A5F3FC" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+				<path d="M350 130Q340 160 330 190" stroke="#A5F3FC" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+				<path d="M250 220Q240 250 230 280" stroke="#A5F3FC" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+				<path d="M50 250Q40 280 30 310" stroke="#A5F3FC" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+				<path d="M450 200Q440 230 430 260" stroke="#A5F3FC" strokeWidth="1.5" strokeLinecap="round" fill="none" />
 			</g>
 		</svg>
 	);

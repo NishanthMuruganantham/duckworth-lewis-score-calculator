@@ -14,30 +14,32 @@ export const BrandLogo: React.FC<{ className?: string }> = ({ className = "w-8 h
 			className={className}
 			aria-hidden="true"
 		>
-			<rect width="24" height="24" rx="4.5" fill="#045b5c" />
+			<defs>
+				<linearGradient id="brandBgGradient" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+					<stop offset="0" stopColor="#00CC99" />
+					<stop offset="1" stopColor="#008060" />
+				</linearGradient>
+			</defs>
 
-			<g clipPath="inset(0 0 0 0 round 4.5px)">
-				{/* Simplified Wave Bottom */}
-				<path
-					d="M0 18 Q6 16 12 18 T24 18 V24 H0 Z"
-					fill="#2eb0ae"
-					fillOpacity="0.8"
-				/>
+			{/* Background (Sharp Corners) */}
+			<rect width="24" height="24" fill="url(#brandBgGradient)" />
 
-				{/* Simplified Ball */}
-				<circle cx="5" cy="5" r="3" fill="#4edcd9" fillOpacity="0.6" />
+			{/* Simplified Stadium Bowl (Curvy) */}
+			<path d="M0 16C4 14 20 14 24 16V24H0V16Z" fill="#005C45" opacity="0.6" />
 
-				{/* Graph Line */}
-				<path
-					d="M6 15 L10 12 L14 14 L19 9"
-					stroke="white"
-					strokeWidth="1.8"
-					strokeLinecap="round"
-					strokeLinejoin="round"
-				/>
+			{/* Wickets (Simplified) */}
+			<g transform="translate(10, 12)">
+				<rect x="0" y="0" width="1" height="8" fill="#F8F9FA" />
+				<rect x="2" y="0" width="1" height="8" fill="#F8F9FA" />
+				<rect x="4" y="0" width="1" height="8" fill="#F8F9FA" />
+				<path d="M-0.5 -1Q2.5 -2.5 5.5 -1" stroke="#F8F9FA" strokeWidth="0.5" fill="none" />
+			</g>
 
-				{/* Minimal Drop */}
-				<circle cx="12" cy="7" r="1" fill="white" fillOpacity="0.5" />
+			{/* Rain (Minimalist) */}
+			<g opacity="0.5">
+				<path d="M4 4Q3.5 6 3 8" stroke="#A5F3FC" strokeWidth="0.5" fill="none" />
+				<path d="M18 3Q17.5 5 17 7" stroke="#A5F3FC" strokeWidth="0.5" fill="none" />
+				<path d="M20 12Q19.5 14 19 16" stroke="#A5F3FC" stroke-width="0.5" fill="none" />
 			</g>
 		</svg>
 	</motion.div>
