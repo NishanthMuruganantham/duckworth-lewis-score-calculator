@@ -10,6 +10,7 @@ import {
 	ChevronDown,
 	ChevronUp,
 	Home,
+	AlertTriangle,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { BrandLogo } from '../ui/BrandLogo';
@@ -192,6 +193,20 @@ const Layout: React.FC = () => {
 									>
 										<IconDocs className="w-5 h-5 text-emerald-600 dark:text-emerald-500" />
 										<span className="font-medium">Documentation</span>
+									</NavLink>
+
+									<NavLink
+										to="/disclaimer"
+										onClick={() => setIsDrawerOpen(false)}
+										className={({ isActive }) =>
+											`flex items-center space-x-3 p-4 rounded-xl border border-slate-200 dark:border-slate-800 transition-all duration-200 mt-2 ${isActive
+												? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
+												: 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200'
+											}`
+										}
+									>
+										<AlertTriangle className="w-5 h-5 text-amber-500" />
+										<span className="font-medium">Disclaimer</span>
 									</NavLink>
 								</div>
 							</div>

@@ -1,6 +1,9 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { BookOpen, Info, Timer, Scissors, CloudRain, PlayCircle, Star } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+	BookOpen, Info, Timer, Scissors, CloudRain, PlayCircle, Star,
+	ChevronDown, ChevronUp, Terminal, Settings, Database, ShieldCheck
+} from 'lucide-react';
 import { AppIcon } from '../components/ui/AppIcon';
 import SEO from '../components/seo/SEO';
 
@@ -79,6 +82,31 @@ const Documentation: React.FC = () => {
 		}
 	];
 
+	const devNotes = [
+		{
+			title: "Methodology & G50",
+			icon: Settings,
+			content: "Our calculation engine adheres to the DLS v5.0 protocols. A critical factor is the 'G50'—the average score expected from a 50-over innings. While we use standard professional benchmarks, truth dictates that G50 fluctuates based on pitch conditions, ground size, and historical scoring eras. This is the primary reason our estimates may differ slightly from live match referee outputs."
+		},
+		{
+			title: "Calculation Precision",
+			icon: Terminal,
+			content: "All resource percentages are calculated to multiple decimal places to ensure mathematical integrity. However, final par scores are always rounded down (floored) to the nearest whole integer, as per ICC match regulations. Target scores are then set as Par Score + 1."
+		},
+		{
+			title: "Edge Cases & Limitations",
+			icon: Database,
+			content: "The calculator handles extreme scenarios, such as very early innings terminations or multi-stage interruptions. Note that the DLS method is mathematically designed for a minimum of 20 overs per side in ODIs and 5 overs per side in T20s. Calculations for shorter durations are provided as mathematical extrapolations."
+		},
+		{
+			title: "Data Integrity",
+			icon: ShieldCheck,
+			content: "This tool uses the standard DLS resource tables. It does not store user input or match data on our servers. All calculations are performed in real-time via our secure API layer to ensure consistency across web and mobile platforms."
+		}
+	];
+
+	const [openNote, setOpenNote] = useState<number | null>(null);
+
 	return (
 		<main className="space-y-8 pb-12">
 			<SEO {...pageSEO} />
@@ -147,6 +175,62 @@ const Documentation: React.FC = () => {
 					</motion.div>
 				))}
 			</div>
+
+			{/* Developer Notes Section */}
+			<section id="developer-notes" className="pt-8">
+				<div className="flex items-center space-x-4 mb-6">
+					<div className="h-px flex-1 bg-slate-200 dark:bg-slate-800"></div>
+					<h2 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400 flex items-center">
+						<Terminal className="w-4 h-4 mr-2" />
+						Developer Notes
+					</h2>
+					<div className="h-px flex-1 bg-slate-200 dark:bg-slate-800"></div>
+				</div>
+
+				<div className="space-y-3">
+					{devNotes.map((note, idx) => (
+						<motion.div
+							key={idx}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							transition={{ delay: 0.5 + (idx * 0.05) }}
+							className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm"
+						>
+							<button
+								onClick={() => setOpenNote(openNote === idx ? null : idx)}
+								className="w-full flex items-center justify-between p-5 text-left hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+							>
+								<div className="flex items-center space-x-3">
+									<note.icon className="w-5 h-5 text-emerald-500" />
+									<span className="font-bold text-slate-700 dark:text-slate-200">{note.title}</span>
+								</div>
+								{openNote === idx ? (
+									<ChevronUp className="w-5 h-5 text-slate-400" />
+								) : (
+									<ChevronDown className="w-5 h-5 text-slate-400" />
+								)}
+							</button>
+
+							<AnimatePresence>
+								{openNote === idx && (
+									<motion.div
+										initial={{ height: 0, opacity: 0 }}
+										animate={{ height: "auto", opacity: 1 }}
+										exit={{ height: 0, opacity: 0 }}
+										transition={{ duration: 0.3, ease: "easeInOut" }}
+									>
+										<div className="px-5 pb-5 pt-0">
+											<p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-50 dark:border-slate-800 pt-4">
+												{note.content}
+											</p>
+										</div>
+									</motion.div>
+								)}
+							</AnimatePresence>
+						</motion.div>
+					))}
+				</div>
+			</section>
 
 			<div className="bg-emerald-600 rounded-2xl p-8 text-white text-center shadow-lg shadow-emerald-600/20 relative overflow-hidden">
 				<div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
