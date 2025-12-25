@@ -13,6 +13,19 @@ const TbCloud = TbCloudRain as React.ComponentType<any>;
 const TbClockIcon = TbClock as React.ComponentType<any>;
 const TbStop = TbHandStop as React.ComponentType<any>;
 
+export const IconHome: React.FC<IconProps> = ({ className = "w-6 h-6" }) => (
+	<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+		<path
+			d="M3 10L12 3L21 10V20C21 20.5523 20.5523 21 20 21H15V14H9V21H4C3.44772 21 3 20.5523 3 20V10Z"
+			className="fill-emerald-600/10 stroke-emerald-600 dark:stroke-emerald-400"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<circle cx="12" cy="12" r="2" className="fill-emerald-600 dark:fill-emerald-400" />
+	</svg>
+);
+
 // 1. First Innings Interrupted (Bat + Cloud)
 export const IconInn1Interrupted: React.FC<IconProps> = ({ className = "w-6 h-6" }) => (
 	<div className={`relative ${className} flex items-center justify-center`}>

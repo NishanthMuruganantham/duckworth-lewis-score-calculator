@@ -5,18 +5,18 @@ import {
 	IconInn1Curtailed,
 	IconInn2Delayed,
 	IconInn2Interrupted,
-	IconInn2Curtailed
+	IconInn2Curtailed,
+	IconHome
 } from '../ui/CricketIcons';
-import { Home } from 'lucide-react';
 
 const BottomNav: React.FC = () => {
 	const navItems = [
-		{ to: '/', label: 'Home', icon: Home },
-		{ to: '/interrupted-second-innings', label: 'Ings 2 Interup', icon: IconInn2Interrupted },
-		{ to: '/delayed-second-innings', label: 'Ings 2 Delay', icon: IconInn2Delayed },
-		{ to: '/interrupted-first-innings', label: 'Ings 1 Interup', icon: IconInn1Interrupted },
-		{ to: '/curtailed-first-innings', label: 'Ings 1 Cutoff', icon: IconInn1Curtailed },
-		{ to: '/curtailed-second-innings', label: 'Ings 2 Cutoff', icon: IconInn2Curtailed },
+		{ to: '/', label: 'Home', icon: IconHome },
+		{ to: '/interrupted-first-innings', label: '1st Inn Resume', icon: IconInn1Interrupted },
+		{ to: '/curtailed-first-innings', label: '1st Inn Cut', icon: IconInn1Curtailed },
+		{ to: '/delayed-second-innings', label: '2nd Inn Delayed', icon: IconInn2Delayed },
+		{ to: '/interrupted-second-innings', label: '2nd Inn Resume', icon: IconInn2Interrupted },
+		{ to: '/curtailed-second-innings', label: '2nd Inn Cut', icon: IconInn2Curtailed },
 	];
 
 	return (

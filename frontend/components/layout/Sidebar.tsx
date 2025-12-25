@@ -11,15 +11,16 @@ import {
 	IconInn2Interrupted,
 	IconInn2Curtailed,
 	IconResources,
-	IconDocs
+	IconDocs,
+	IconHome
 } from '../ui/CricketIcons';
-import { Home, AlertTriangle } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
 	const { matchFormat, setMatchFormat } = useApp();
 
 	const navItems = [
-		{ to: '/', label: 'Dashboard', icon: Home },
+		{ to: '/', label: 'Dashboard', icon: IconHome },
 		{ to: '/interrupted-first-innings', label: '1st Inn Resume', icon: IconInn1Interrupted },
 		{ to: '/curtailed-first-innings', label: '1st Inn Cut', icon: IconInn1Curtailed },
 		{ to: '/delayed-second-innings', label: '2nd Inn Delayed', icon: IconInn2Delayed },
