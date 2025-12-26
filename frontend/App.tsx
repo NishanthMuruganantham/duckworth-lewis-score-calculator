@@ -4,7 +4,8 @@ import { AppProvider, useApp } from './context/AppContext';
 import Layout from './components/layout/Layout';
 import { checkApiHealth } from './services/dlsApi';
 import { ConnectionError } from './components/ui/ConnectionError.tsx';
-import StadiumLoader from './components/ui/StadiumLoader';
+import { SplashScreen as SplashScreenComponent } from './components/ui/SplashScreen';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 // Standard imports for native feel and instant page transitions
 import InterruptedSecondInnings from './pages/InterruptedSecondInnings';
@@ -24,6 +25,13 @@ const AppContent: React.FC = () => {
 		setApiStatus('checking');
 		const isHealthy = await checkApiHealth();
 		setApiStatus(isHealthy ? 'online' : 'offline');
+
+		// Hide native splash screen once the web app is ready
+		try {
+			await SplashScreen.hide();
+		} catch (e) {
+			console.warn('Capacitor SplashScreen plugin not available', e);
+		}
 	};
 
 	useEffect(() => {
@@ -31,11 +39,7 @@ const AppContent: React.FC = () => {
 	}, []);
 
 	if (apiStatus === 'checking') {
-		return (
-			<div className="flex h-screen w-screen items-center justify-center bg-slate-50 dark:bg-slate-950">
-				<StadiumLoader loading={true} message="Booting Systems" />
-			</div>
-		);
+		return <SplashScreenComponent />;
 	}
 
 	if (apiStatus === 'offline') {

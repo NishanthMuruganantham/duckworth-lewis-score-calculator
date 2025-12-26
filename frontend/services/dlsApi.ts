@@ -1,6 +1,6 @@
 import { CalculationPayload, CalculationResponse, ResourceTableResponse, MatchFormat, ScenarioType } from '../types';
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.dls.nishanthm.com';
 
 const NETWORK_CONFIG = {
 	HEALTH_CHECK_TIMEOUT: 5000,
