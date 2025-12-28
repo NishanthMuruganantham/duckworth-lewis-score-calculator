@@ -69,7 +69,7 @@ export const SplashScreen: React.FC = () => {
 						variants={childVariants}
 						className="text-4xl font-black text-white tracking-tighter drop-shadow-lg"
 					>
-						DLS<span className="opacity-80">PRO</span>
+						DLS <span className="opacity-80">Calculator</span>
 					</motion.h1>
 
 					<motion.div
@@ -109,14 +109,19 @@ export const SplashScreen: React.FC = () => {
 				</p>
 			</motion.div>
 
-			{/* Version Tag */}
+			{/* Version Tag & Credits */}
 			<motion.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 0.4 }}
 				transition={{ delay: 1.5 }}
-				className="absolute bottom-8 text-[9px] font-bold text-white uppercase tracking-[0.25em]"
+				className="absolute bottom-8 text-center space-y-1"
 			>
-				Precision Metrics v2.4.0
+				<p className="text-[9px] font-bold text-white uppercase tracking-[0.25em]">
+					Precision Metrics v4.0
+				</p>
+				<p className="text-[8px] font-medium text-white/60 tracking-[0.2em]">
+					Crafted by Nishanth
+				</p>
 			</motion.div>
 		</motion.div>
 	);
