@@ -56,13 +56,7 @@ const AppContent: React.FC = () => {
 					animate={{ opacity: 1 }}
 					transition={{ duration: 1, ease: "easeOut" }}
 				>
-					{apiStatus === 'offline' ? (
-						<div className="flex h-screen w-screen items-center justify-center bg-slate-50 dark:bg-slate-950 p-6">
-							<div className="w-full max-w-md">
-								<ConnectionError onRetry={performBootCheck} />
-							</div>
-						</div>
-					) : (
+					{apiStatus === 'online' ? (
 						<BrowserRouter>
 							<Routes>
 								<Route path="/" element={<Layout />}>
@@ -90,6 +84,24 @@ const AppContent: React.FC = () => {
 								</Route>
 							</Routes>
 						</BrowserRouter>
+					) : (
+						<div style={{
+							display: 'flex',
+							height: '100vh',
+							width: '100vw',
+							alignItems: 'center',
+							justifyContent: 'center',
+							background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+							padding: '1.5rem',
+							boxSizing: 'border-box',
+						}}>
+							<div style={{
+								width: '100%',
+								maxWidth: '28rem',
+							}}>
+								<ConnectionError onRetry={performBootCheck} />
+							</div>
+						</div>
 					)}
 				</motion.div>
 			)}
