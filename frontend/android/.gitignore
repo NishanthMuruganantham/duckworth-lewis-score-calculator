@@ -22,6 +22,8 @@ out/
 # Gradle files
 .gradle/
 build/
+keystore.properties
+*.keystore
 
 # Local configuration file (sdk path, etc)
 local.properties
