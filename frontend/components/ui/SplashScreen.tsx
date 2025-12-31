@@ -24,14 +24,28 @@ export const SplashScreen: React.FC = () => {
 		<motion.div
 			variants={containerVariants}
 			exit="exit"
-			className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#5ba350] dark:bg-[#43813b] overflow-hidden"
+			style={{
+				position: 'fixed',
+				inset: 0,
+				zIndex: 100,
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center',
+				justifyContent: 'center',
+				background: '#5ba350',
+				overflow: 'hidden',
+			}}
 		>
 			{/* Dynamic Background Decorative Element */}
 			<motion.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 0.1 }}
 				transition={{ duration: 2 }}
-				className="absolute inset-0 pointer-events-none"
+				style={{
+					position: 'absolute',
+					inset: 0,
+					pointerEvents: 'none',
+				}}
 			>
 				<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
 					<pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
@@ -41,7 +55,7 @@ export const SplashScreen: React.FC = () => {
 				</svg>
 			</motion.div>
 
-			<div className="relative flex flex-col items-center">
+			<div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 				{/* Logo Entrance */}
 				<motion.div
 					initial={{ scale: 0.5, opacity: 0, rotate: -10 }}
@@ -52,10 +66,28 @@ export const SplashScreen: React.FC = () => {
 						damping: 20,
 						duration: 1
 					}}
-					className="relative"
+					style={{ position: 'relative' }}
 				>
-					<div className="absolute inset-0 blur-3xl bg-white/30 rounded-full scale-150 animate-pulse" />
-					<AppIcon className="w-32 h-32 md:w-40 md:h-40 shadow-2xl rounded-[32px] relative z-10" size={512} />
+					<div style={{
+						position: 'absolute',
+						inset: 0,
+						filter: 'blur(48px)',
+						background: 'rgba(255, 255, 255, 0.3)',
+						borderRadius: '50%',
+						transform: 'scale(1.5)',
+						animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+					}} />
+					<AppIcon
+						size={512}
+						style={{
+							width: window.innerWidth < 768 ? '8rem' : '10rem',
+							height: window.innerWidth < 768 ? '8rem' : '10rem',
+							boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+							borderRadius: '32px',
+							position: 'relative',
+							zIndex: 10,
+						}}
+					/>
 				</motion.div>
 
 				{/* Text Animation with Stagger */}
@@ -63,24 +95,44 @@ export const SplashScreen: React.FC = () => {
 					initial="initial"
 					animate="animate"
 					transition={{ delayChildren: 0.5, staggerChildren: 0.15 }}
-					className="mt-8 text-center"
+					style={{ marginTop: '2rem', textAlign: 'center' }}
 				>
 					<motion.h1
 						variants={childVariants}
-						className="text-4xl font-black text-white tracking-tighter drop-shadow-lg"
+						style={{
+							fontSize: '2.25rem',
+							fontWeight: 900,
+							color: '#ffffff',
+							letterSpacing: '-0.05em',
+							filter: 'drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1))',
+							margin: 0,
+						}}
 					>
-						DLS <span className="opacity-80">Calculator</span>
+						DLS <span style={{ opacity: 0.8 }}>Calculator</span>
 					</motion.h1>
 
 					<motion.div
 						variants={childVariants}
-						className="mt-2 flex items-center justify-center space-x-3"
+						style={{
+							marginTop: '0.5rem',
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							gap: '0.75rem',
+						}}
 					>
-						<span className="h-[1px] w-6 bg-white/40" />
-						<p className="text-[10px] font-black uppercase tracking-[0.5em] text-white/80">
+						<span style={{ height: '1px', width: '1.5rem', background: 'rgba(255, 255, 255, 0.4)' }} />
+						<p style={{
+							fontSize: '10px',
+							fontWeight: 900,
+							textTransform: 'uppercase',
+							letterSpacing: '0.5em',
+							color: 'rgba(255, 255, 255, 0.8)',
+							margin: 0,
+						}}>
 							Analytical Engine
 						</p>
-						<span className="h-[1px] w-6 bg-white/40" />
+						<span style={{ height: '1px', width: '1.5rem', background: 'rgba(255, 255, 255, 0.4)' }} />
 					</motion.div>
 				</motion.div>
 			</div>
@@ -90,9 +142,25 @@ export const SplashScreen: React.FC = () => {
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ delay: 1, duration: 1 }}
-				className="absolute bottom-16 left-1/2 -translate-x-1/2 w-48 space-y-4"
+				style={{
+					position: 'absolute',
+					bottom: '4rem',
+					left: '50%',
+					transform: 'translateX(-50%)',
+					width: '12rem',
+					display: 'flex',
+					flexDirection: 'column',
+					gap: '1rem',
+				}}
 			>
-				<div className="h-1.5 w-full bg-white/20 rounded-full overflow-hidden backdrop-blur-sm">
+				<div style={{
+					height: '0.375rem',
+					width: '100%',
+					background: 'rgba(255, 255, 255, 0.2)',
+					borderRadius: '9999px',
+					overflow: 'hidden',
+					backdropFilter: 'blur(4px)',
+				}}>
 					<motion.div
 						initial={{ x: '-100%' }}
 						animate={{ x: '100%' }}
@@ -101,10 +169,23 @@ export const SplashScreen: React.FC = () => {
 							duration: 2,
 							ease: "easeInOut"
 						}}
-						className="h-full w-full bg-gradient-to-r from-transparent via-white to-transparent"
+						style={{
+							height: '100%',
+							width: '100%',
+							background: 'linear-gradient(to right, transparent, white, transparent)',
+						}}
 					/>
 				</div>
-				<p className="text-[10px] font-bold text-white/60 text-center uppercase tracking-[0.3em] animate-pulse">
+				<p style={{
+					fontSize: '10px',
+					fontWeight: 700,
+					color: 'rgba(255, 255, 255, 0.6)',
+					textAlign: 'center',
+					textTransform: 'uppercase',
+					letterSpacing: '0.3em',
+					animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+					margin: 0,
+				}}>
 					Syncing Data...
 				</p>
 			</motion.div>
@@ -114,15 +195,47 @@ export const SplashScreen: React.FC = () => {
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 0.4 }}
 				transition={{ delay: 1.5 }}
-				className="absolute bottom-8 text-center space-y-1"
+				style={{
+					position: 'absolute',
+					bottom: '2rem',
+					textAlign: 'center',
+					display: 'flex',
+					flexDirection: 'column',
+					gap: '0.25rem',
+				}}
 			>
-				<p className="text-[9px] font-bold text-white uppercase tracking-[0.25em]">
+				<p style={{
+					fontSize: '9px',
+					fontWeight: 700,
+					color: '#ffffff',
+					textTransform: 'uppercase',
+					letterSpacing: '0.25em',
+					margin: 0,
+				}}>
 					Precision Metrics v4.0
 				</p>
-				<p className="text-[8px] font-medium text-white/60 tracking-[0.2em]">
+				<p style={{
+					fontSize: '8px',
+					fontWeight: 500,
+					color: 'rgba(255, 255, 255, 0.6)',
+					letterSpacing: '0.2em',
+					margin: 0,
+				}}>
 					Crafted by Nishanth
 				</p>
 			</motion.div>
+
+			{/* CSS keyframes for pulse animation */}
+			<style>{`
+				@keyframes pulse {
+					0%, 100% {
+						opacity: 1;
+					}
+					50% {
+						opacity: 0.5;
+					}
+				}
+			`}</style>
 		</motion.div>
 	);
 };
