@@ -1,4 +1,27 @@
-import { CalculationPayload, CalculationResponse, ResourceTableResponse, MatchFormat, ScenarioType } from '../types';
+import { CalculationPayload, CalculationResponse, ResourceTableResponse, MatchFormat, ScenarioType, PrivacyPolicyResponse } from '../types';
+
+
+export const fetchPrivacyPolicy = async (): Promise<PrivacyPolicyResponse | null> => {
+	try {
+		const response = await fetchWithTimeout(
+			`${BASE_URL}/privacy-policy/`,
+			{
+				method: 'GET',
+				headers: { 'Content-Type': 'application/json' },
+			},
+			NETWORK_CONFIG.API_CALL_TIMEOUT
+		);
+
+		if (!response.ok) {
+			throw new Error('Failed to fetch privacy policy');
+		}
+
+		return await response.json();
+	} catch (error) {
+		console.error('Privacy Policy Error:', error);
+		return null;
+	}
+};
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.dls.nishanthm.com';
 
