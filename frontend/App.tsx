@@ -17,6 +17,7 @@ import InterruptedFirstInnings from './pages/InterruptedFirstInnings';
 import ResourceTable from './pages/ResourceTable';
 import Documentation from './pages/Documentation';
 import Disclaimer from './pages/Disclaimer';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import Dashboard from './pages/Dashboard';
 
 const AppContent: React.FC = () => {
@@ -72,6 +73,7 @@ const AppContent: React.FC = () => {
 									<Route path="resource-table" element={<ResourceTable />} />
 									<Route path="how-it-works" element={<Documentation />} />
 									<Route path="disclaimer" element={<Disclaimer />} />
+									<Route path="privacy-policy" element={<PrivacyPolicy />} />
 
 									{/* Redirect legacy short routes to new SEO-friendly routes */}
 									<Route path="delayed-inn2" element={<Navigate to="/delayed-second-innings" replace />} />
