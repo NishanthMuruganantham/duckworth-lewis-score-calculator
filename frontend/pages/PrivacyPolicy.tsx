@@ -233,7 +233,7 @@ const PrivacyPolicy: React.FC = () => {
 						marginTop: '1rem',
 					}}>
 						<p style={{ marginBottom: '0.5rem' }}>
-							<strong style={{ color: '#10b981' }}>Email:</strong> <a href="mailto:support@dlscalculator.app" style={{ color: '#059669', textDecoration: 'none' }}>support@dlscalculator.app</a>
+							<strong style={{ color: '#10b981' }}>Email:</strong> <a href="mailto:nishanthmurugananth10@gmail.com" style={{ color: '#059669', textDecoration: 'none' }}>nishanthmurugananth10@gmail.com</a>
 						</p>
 						<p style={{ marginBottom: '0.5rem' }}>
 							<strong style={{ color: '#10b981' }}>App Name:</strong> DLS Calculator
@@ -273,7 +273,7 @@ const PrivacyPolicy: React.FC = () => {
 					}}>
 						Summary
 					</h3>
-					<p style={{ color: '#cbd5e1' }}>
+					<p style={{ color: '#64748b' }}>
 						The DLS Calculator is a privacy-focused application that does not collect, store, or share any personal information. Your privacy is fully protected as we only process the cricket match data you input for calculation purposes, without retaining any information.
 					</p>
 				</div>
