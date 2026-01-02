@@ -124,10 +124,10 @@ const Documentation: React.FC = () => {
 						<AppIcon className="w-20 h-20 shadow-xl rounded-2xl" size={128} />
 					</motion.div>
 
-					<h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight uppercase">DLS Professional Guide</h1>
+					<h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight uppercase">Understanding DLS Method</h1>
 					<p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mt-4 font-medium leading-relaxed">
 						The Duckworth-Lewis-Stern method is the global standard for ensuring fair outcomes in weather-interrupted cricket.
-						Our calculator implements the latest v5.0 protocols.
+						Our calculator implements standard Duckworth–Lewis–Stern calculations.
 					</p>
 				</div>
 			</div>

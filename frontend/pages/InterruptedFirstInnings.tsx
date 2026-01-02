@@ -227,7 +227,7 @@ const InterruptedFirstInnings: React.FC = () => {
 						<div className="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl"><div className="w-6 h-6 flex items-center justify-center"><IconInn1Interrupted className="w-6 h-6" /></div></div>
 						<div>
 							<div className="flex items-center space-x-2">
-								<h1 className="text-xl font-bold text-slate-800 dark:text-white">Interrupted 1st Innings</h1>
+								<h1 className="text-xl font-bold text-slate-800 dark:text-white">1st Innings – Interrupted</h1>
 								<button
 									onClick={scrollToHelp}
 									className="p-1 rounded-full text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-slate-800 transition-colors"

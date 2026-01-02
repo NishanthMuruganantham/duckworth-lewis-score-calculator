@@ -215,7 +215,7 @@ const CurtailedSecondInnings: React.FC = () => {
 						<div className="p-3 bg-amber-100 dark:bg-amber-900/30 rounded-xl"><IconInn2Curtailed className="w-6 h-6" /></div>
 						<div>
 							<div className="flex items-center space-x-2">
-								<h1 className="text-xl font-bold text-slate-800 dark:text-white">Curtailed 2nd Innings</h1>
+								<h1 className="text-xl font-bold text-slate-800 dark:text-white">2nd Innings – Curtailed</h1>
 								<button
 									onClick={scrollToHelp}
 									className="p-1 rounded-full text-slate-400 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-slate-800 transition-colors"
