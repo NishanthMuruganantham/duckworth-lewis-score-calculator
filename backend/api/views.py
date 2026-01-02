@@ -7,6 +7,7 @@ from rest_framework import status
 from calculators.dls_calculator import DLSCalculator
 from .serializers import DLSRequestSerializer
 from .services import DLSService
+from .constants import PRIVACY_POLICY_DATA
 
 
 class DLSScoreView(APIView):
@@ -59,6 +60,18 @@ class ResourceTableView(APIView):
         return Response(data, status=status.HTTP_200_OK)
 
 
+class PrivacyPolicyView(APIView):
+    """
+    API View for retrieving the Privacy Policy.
+    """
+
+    def get(self, request):
+        """
+        Returns the privacy policy data.
+        """
+        return Response(PRIVACY_POLICY_DATA, status=status.HTTP_200_OK)
+
+
 class HealthCheckView(APIView):
     """
     API View for health checks.
@@ -80,6 +93,7 @@ class APIRootView(APIView):
                 "calculate-dls-score": "/calculate-dls-score/",
                 "resource-table": "/resource-table/",
                 "health-check": "/health-check/",
+                "privacy-policy": "/privacy-policy/",
                 "openapi-schema": "/openapi-schema.yaml",
             },
             "version": "v1.0.0",
