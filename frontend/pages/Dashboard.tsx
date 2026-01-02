@@ -15,22 +15,6 @@ const Dashboard: React.FC = () => {
 
     const scenarios = [
         {
-            id: 'inn2-interrupted',
-            title: '2nd Innings Interruption (DLS Par)',
-            description: 'Play stops during the chase. Calculate Par Score or the Revised Target for resumption.',
-            icon: IconInn2Interrupted,
-            path: '/interrupted-second-innings',
-            color: 'bg-emerald-500'
-        },
-        {
-            id: 'inn2-delayed',
-            title: 'Delayed 2nd Innings',
-            description: 'Second innings start is delayed before a ball is bowled. Calculate revised target.',
-            icon: IconInn2Delayed,
-            path: '/delayed-second-innings',
-            color: 'bg-blue-500'
-        },
-        {
             id: 'inn1-interrupted',
             title: '1st Innings Interruption',
             description: 'Play stops during 1st innings but resumes later. Match overs are reduced.',
@@ -40,15 +24,31 @@ const Dashboard: React.FC = () => {
         },
         {
             id: 'inn1-curtailed',
-            title: '1st Innings Abandoned',
+            title: '1st Innings Curtailed',
             description: 'Play ends permanently in 1st innings. Calculate target for 2nd innings.',
             icon: IconInn1Curtailed,
             path: '/curtailed-first-innings',
             color: 'bg-rose-500'
         },
         {
+            id: 'inn2-interrupted',
+            title: '2nd Innings Interruption (DLS Par)',
+            description: 'Play stops during the chase. Calculate Par Score or the Revised Target for resumption.',
+            icon: IconInn2Interrupted,
+            path: '/interrupted-second-innings',
+            color: 'bg-emerald-500'
+        },
+        {
+            id: 'inn2-delayed',
+            title: '2nd Innings Delayed',
+            description: 'Second innings start is delayed before a ball is bowled. Calculate revised target.',
+            icon: IconInn2Delayed,
+            path: '/delayed-second-innings',
+            color: 'bg-blue-500'
+        },
+        {
             id: 'inn2-curtailed',
-            title: '2nd Innings Abandoned',
+            title: '2nd Innings Curtailed',
             description: 'Chase ends permanently. Determine the winner via exact Par Score.',
             icon: IconInn2Curtailed,
             path: '/curtailed-second-innings',
@@ -66,10 +66,10 @@ const Dashboard: React.FC = () => {
 
             <div className="text-center space-y-3 pt-4">
                 <h1 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-                    Match <span className="text-emerald-600 dark:text-emerald-400">Scenarios</span>
+                    Every <span className="text-emerald-600 dark:text-emerald-400">Rain-Affected</span> Scenarios
                 </h1>
                 <p className="text-slate-500 dark:text-slate-400 max-w-lg mx-auto text-sm md:text-base font-medium">
-                    Select the situation that best describes your cricket match to get an accurate DLS calculation.
+                    Select your match situation for an accurate DLS calculation.
                 </p>
             </div>
 

@@ -21,11 +21,11 @@ const Sidebar: React.FC = () => {
 
 	const navItems = [
 		{ to: '/', label: 'Dashboard', icon: IconHome },
-		{ to: '/interrupted-first-innings', label: '1st Inn Resume', icon: IconInn1Interrupted },
-		{ to: '/curtailed-first-innings', label: '1st Inn Cut', icon: IconInn1Curtailed },
-		{ to: '/delayed-second-innings', label: '2nd Inn Delayed', icon: IconInn2Delayed },
-		{ to: '/interrupted-second-innings', label: '2nd Inn Resume', icon: IconInn2Interrupted },
-		{ to: '/curtailed-second-innings', label: '2nd Inn Cut', icon: IconInn2Curtailed },
+		{ to: '/interrupted-first-innings', label: '1st Innings Interrupted', icon: IconInn1Interrupted },
+		{ to: '/curtailed-first-innings', label: '1st Innings Curtailed', icon: IconInn1Curtailed },
+		{ to: '/delayed-second-innings', label: '2nd Innings Delayed', icon: IconInn2Delayed },
+		{ to: '/interrupted-second-innings', label: '2nd Innings Interrupted', icon: IconInn2Interrupted },
+		{ to: '/curtailed-second-innings', label: '2nd Innings Curtailed', icon: IconInn2Curtailed },
 	];
 
 	return (
