@@ -212,7 +212,7 @@ const DelayedSecondInnings: React.FC = () => {
 						</div>
 						<div>
 							<div className="flex items-center space-x-2">
-								<h1 className="text-xl font-bold text-slate-800 dark:text-white">Delayed Start 2nd Innings</h1>
+								<h1 className="text-xl font-bold text-slate-800 dark:text-white">2nd Innings – Delayed Start</h1>
 								<button
 									onClick={scrollToHelp}
 									className="p-1 rounded-full text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors"
