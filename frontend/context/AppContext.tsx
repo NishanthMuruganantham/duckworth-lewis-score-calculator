@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { MatchFormat, Theme } from '../types';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 export type ApiStatus = 'online' | 'offline' | 'checking' | 'error';
 
@@ -38,6 +39,22 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 		} else {
 			root.classList.remove('dark');
 		}
+
+		// Update Status Bar to match theme
+		const updateStatusBar = async () => {
+			try {
+				if (theme === Theme.DARK) {
+					await StatusBar.setBackgroundColor({ color: '#0f172a' }); // slate-950
+					await StatusBar.setStyle({ style: Style.Dark });
+				} else {
+					await StatusBar.setBackgroundColor({ color: '#f5f5f0' }); // beige/gray
+					await StatusBar.setStyle({ style: Style.Light });
+				}
+			} catch (e) {
+				console.warn('StatusBar plugin not available', e);
+			}
+		};
+		updateStatusBar();
 	}, [theme]);
 
 	useEffect(() => {

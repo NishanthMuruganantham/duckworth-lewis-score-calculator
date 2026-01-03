@@ -90,7 +90,7 @@ const Layout: React.FC = () => {
 							className="fixed top-0 bottom-0 left-0 w-[85%] max-w-sm bg-white dark:bg-slate-900 shadow-2xl z-50 flex flex-col overflow-y-auto"
 						>
 							{/* Drawer Header */}
-							<div className="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900">
+							<div className="p-4 pt-safe border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900">
 								<div className="flex items-center space-x-2">
 									<BrandLogo className="w-8 h-8" />
 									<span className="font-bold text-lg text-slate-800 dark:text-white">DLS Calculator</span>
