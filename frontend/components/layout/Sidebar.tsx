@@ -29,7 +29,7 @@ const Sidebar: React.FC = () => {
 	];
 
 	return (
-		<aside className="hidden md:flex flex-col w-64 h-screen bg-slate-50 dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 sticky top-0">
+		<aside className="hidden md:flex flex-col w-64 h-screen bg-slate-50 dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 sticky top-0 pt-safe">
 			<div className="p-6 border-b border-slate-200 dark:border-slate-800">
 				<div className="flex items-center space-x-3 mb-1">
 					<BrandLogo className="w-8 h-8 shadow-sm rounded-full" />

@@ -6,6 +6,8 @@ import { checkApiHealth } from './services/dlsApi';
 import { ConnectionError } from './components/ui/ConnectionError.tsx';
 import { SplashScreen as SplashScreenComponent } from './components/ui/SplashScreen';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { StatusBar, Style } from '@capacitor/status-bar';
+import { NavigationBar } from '@capgo/capacitor-navigation-bar';
 import { AnimatePresence, motion } from 'framer-motion';
 
 // Standard imports for native feel and instant page transitions
@@ -37,8 +39,14 @@ const AppContent: React.FC = () => {
 		// Hide native splash screen once the web app is ready
 		try {
 			await SplashScreen.hide();
+
+			// Configure Status Bar for Android
+			await StatusBar.setOverlaysWebView({ overlay: false });
+			await StatusBar.setBackgroundColor({ color: '#f5f5f0' }); // Match splash background
+			await StatusBar.setStyle({ style: Style.Light }); // Dark text on light background
+			await NavigationBar.setNavigationBarColor({ color: '#f5f5f0', darkButtons: true });
 		} catch (e) {
-			console.warn('Capacitor SplashScreen plugin not available', e);
+			console.warn('Capacitor plugins not available', e);
 		}
 	};
 

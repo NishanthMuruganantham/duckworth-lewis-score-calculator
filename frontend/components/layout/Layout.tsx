@@ -58,7 +58,7 @@ const Layout: React.FC = () => {
 				<Header onMenuClick={() => setIsDrawerOpen(true)} />
 
 				{/* Main Content Area */}
-				<main className="flex-1 overflow-y-auto p-4 md:p-8 pb-24 md:pb-8 scroll-smooth">
+				<main className="flex-1 overflow-y-auto p-4 md:p-8 pb-16 md:pb-8 scroll-smooth">
 					<div className="max-w-4xl mx-auto">
 						<Outlet />
 					</div>
@@ -87,20 +87,20 @@ const Layout: React.FC = () => {
 							animate={{ x: 0 }}
 							exit={{ x: '-100%' }}
 							transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-							className="fixed top-0 bottom-0 left-0 w-[85%] max-w-sm bg-white dark:bg-slate-900 shadow-2xl z-50 flex flex-col overflow-y-auto"
+							className="fixed top-0 bottom-0 left-0 w-[85%] max-w-sm bg-white dark:bg-slate-900 shadow-2xl z-50 flex flex-col pt-safe"
 						>
 							{/* Drawer Header */}
-							<div className="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900">
+							<div className="px-4 pb-4 pt-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900 min-h-[5rem]">
 								<div className="flex items-center space-x-2">
 									<BrandLogo className="w-8 h-8" />
-									<span className="font-bold text-lg text-slate-800 dark:text-white">DLS Calculator</span>
+									<span className="font-bold text-lg text-slate-800 dark:text-white uppercase tracking-tight">DLS Calculator</span>
 								</div>
 								<button onClick={() => setIsDrawerOpen(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
 									<X className="w-6 h-6 text-slate-500" />
 								</button>
 							</div>
 
-							<div className="p-4 space-y-6 flex-1">
+							<div className="flex-1 overflow-y-auto p-4 space-y-6">
 								{/* 1. Scenario Links */}
 								<div className="space-y-1">
 									<h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-2">Scenarios</h3>
@@ -227,12 +227,12 @@ const Layout: React.FC = () => {
 								</div>
 							</div>
 
-							<div className="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
-								<div className="px-2 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-center">
+							<div className="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 pb-6 flex items-center">
+								<div className="px-2 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-center w-full">
 									<p className="text-[11px] font-medium text-slate-600 dark:text-slate-400">
 										Developed with <span className="text-red-500">❤️</span> by <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Nishanth Muruganantham</span>
 									</p>
-									<p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
+									<p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
 										Version 4.0 • Built for the Cricket Community
 									</p>
 								</div>

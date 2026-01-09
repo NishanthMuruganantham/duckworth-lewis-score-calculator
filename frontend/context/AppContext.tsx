@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { MatchFormat, Theme } from '../types';
+import { StatusBar, Style } from '@capacitor/status-bar';
+import { NavigationBar } from '@capgo/capacitor-navigation-bar';
 
 export type ApiStatus = 'online' | 'offline' | 'checking' | 'error';
 
@@ -38,6 +40,24 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 		} else {
 			root.classList.remove('dark');
 		}
+
+		// Update Status Bar and Navigation Bar to match theme
+		const updateSystemBars = async () => {
+			try {
+				if (theme === Theme.DARK) {
+					await StatusBar.setBackgroundColor({ color: '#0f172a' }); // slate-950
+					await StatusBar.setStyle({ style: Style.Dark });
+					await NavigationBar.setNavigationBarColor({ color: '#0b1220', darkButtons: false });
+				} else {
+					await StatusBar.setBackgroundColor({ color: '#f5f5f0' }); // beige/gray
+					await StatusBar.setStyle({ style: Style.Light });
+					await NavigationBar.setNavigationBarColor({ color: '#f5f5f0', darkButtons: true });
+				}
+			} catch (e) {
+				console.warn('System bar plugins not available', e);
+			}
+		};
+		updateSystemBars();
 	}, [theme]);
 
 	useEffect(() => {

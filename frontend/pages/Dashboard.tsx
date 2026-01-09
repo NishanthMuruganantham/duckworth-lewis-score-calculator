@@ -64,7 +64,7 @@ const Dashboard: React.FC = () => {
                 canonical="https://dls.nishanthm.com/"
             />
 
-            <div className="text-center space-y-3 pt-4">
+            <div className="text-center space-y-3 pt-2">
                 <h1 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
                     Every <span className="text-emerald-600 dark:text-emerald-400">Rain-Affected</span> Scenarios
                 </h1>
