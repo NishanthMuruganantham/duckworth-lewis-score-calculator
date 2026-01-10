@@ -194,12 +194,13 @@ const Sidebar: React.FC = () => {
 				</div>
 			</nav>
 
-			<div className="p-4 border-t border-slate-200 dark:border-slate-800">
-				<div className="bg-emerald-50 dark:bg-slate-800 p-3 rounded-lg border border-emerald-100 dark:border-slate-700 text-center">
-
-					<p className="text-[10px] text-emerald-600 dark:text-emerald-400">
-						Designed & Developed by
-						<span className="block font-medium mt-0.5">Nishanth</span>
+			<div className="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
+				<div className="px-2 py-3 rounded-xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 text-center w-full shadow-sm">
+					<p className="text-[11px] font-medium text-slate-600 dark:text-slate-400">
+						Developed with <span className="text-red-500">❤️</span> by <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Nishanth Muruganantham</span>
+					</p>
+					<p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
+						Version 4.0 • Built for the Cricket Community
 					</p>
 				</div>
 			</div>
