@@ -5,7 +5,7 @@ import { ScenarioType, MatchFormat } from '../types';
 import StadiumLoader from '../components/ui/StadiumLoader';
 import { WicketError } from '../components/ui/WicketError';
 import { ConnectionError } from '../components/ui/ConnectionError';
-import { HelpCircle, X, ArrowRight, Save, Bug } from 'lucide-react';
+import { HelpCircle, X, ArrowRight, Save, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconInn2Curtailed } from '../components/ui/CricketIcons';
 
@@ -199,6 +199,7 @@ const CurtailedSecondInnings: React.FC = () => {
 
 	const hasErrors = Object.keys(errors).length > 0;
 	const isFormComplete = Object.values(formData).every(val => val !== '');
+	const isFormEmpty = Object.values(formData).every(val => val === '');
 	const inputBaseClass = "w-full px-4 py-2 rounded-lg border bg-slate-50 dark:bg-slate-800 outline-none transition-all focus:ring-1 focus:ring-emerald-500/20 focus:scale-[1.01]";
 
 	const getInputBorderClass = (field: string) => {
@@ -277,7 +278,16 @@ const CurtailedSecondInnings: React.FC = () => {
 								</div>
 							</div>
 						</div>
-						<div className="p-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+						<div className="p-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex justify-end items-center space-x-3">
+							<button
+								type="button"
+								onClick={handleClearForm}
+								disabled={isFormEmpty && !result && !apiError && !isConnError}
+								className="flex items-center space-x-2 px-3 py-2 text-slate-500 hover:text-rose-600 dark:text-slate-400 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+							>
+								<RotateCcw className="w-4 h-4" />
+								<span className="text-sm font-medium">Clear</span>
+							</button>
 							<button type="submit" disabled={loading || hasErrors || !isFormComplete} className="flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-emerald-600/20 active:scale-95 transition-transform disabled:opacity-50">
 								<Save className="w-5 h-5" /><span>Calculate Par Score</span>
 							</button>
