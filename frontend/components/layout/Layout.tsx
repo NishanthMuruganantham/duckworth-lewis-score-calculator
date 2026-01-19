@@ -58,7 +58,7 @@ const Layout: React.FC = () => {
 				<Header onMenuClick={() => setIsDrawerOpen(true)} />
 
 				{/* Main Content Area */}
-				<main className="flex-1 overflow-y-auto p-4 md:p-8 pb-16 md:pb-8 scroll-smooth">
+				<main className="flex-1 overflow-y-auto p-4 md:p-8 pb-[calc(5rem+var(--safe-area-inset-bottom,0px))] md:pb-8 scroll-smooth">
 					<div className="max-w-4xl mx-auto">
 						<Outlet />
 					</div>

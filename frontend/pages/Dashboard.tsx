@@ -64,33 +64,33 @@ const Dashboard: React.FC = () => {
                 canonical="https://dls.nishanthm.com/"
             />
 
-            <div className="text-center space-y-3 pt-2">
-                <h1 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-                    Every <span className="text-emerald-600 dark:text-emerald-400">Rain-Affected</span> Scenarios
+            <div className="text-center space-y-3 pt-4 sm:pt-6">
+                <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                    Every <span className="text-emerald-600 dark:text-emerald-400">Rain-Affected</span> Scenario
                 </h1>
-                <p className="text-slate-500 dark:text-slate-400 max-w-lg mx-auto text-sm md:text-base font-medium">
+                <p className="text-slate-500 dark:text-slate-400 max-w-lg mx-auto text-xs xs:text-sm sm:text-base font-medium px-4">
                     Select your match situation for an accurate DLS calculation.
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 px-1">
                 {scenarios.map((scenario, index) => (
                     <motion.div
                         key={scenario.id}
                         whileHover={{ y: -5, scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => navigate(scenario.path)}
-                        className="cursor-pointer group relative overflow-hidden bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 hover:border-emerald-500/30 dark:hover:border-emerald-500/30 transition-all duration-300"
+                        className="cursor-pointer group relative overflow-hidden bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-100 dark:border-slate-800 hover:border-emerald-500/30 dark:hover:border-emerald-500/30 transition-all duration-300"
                     >
-                        <div className="flex items-start space-x-5 relative z-10">
-                            <div className={`p-4 rounded-xl ${scenario.color} bg-opacity-10 dark:bg-opacity-20 group-hover:bg-opacity-20 transition-all`}>
-                                <scenario.icon className="w-8 h-8 md:w-10 md:h-10 text-slate-800 dark:text-white" />
+                        <div className="flex items-start space-x-4 sm:space-x-5 relative z-10">
+                            <div className={`p-3 sm:p-4 rounded-xl ${scenario.color} bg-opacity-10 dark:bg-opacity-20 group-hover:bg-opacity-20 transition-all flex-shrink-0`}>
+                                <scenario.icon className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-slate-800 dark:text-white" />
                             </div>
-                            <div className="flex-1 space-y-1">
-                                <h3 className="text-lg font-bold text-slate-800 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                            <div className="flex-1 space-y-1 min-w-0">
+                                <h3 className="text-base sm:text-lg font-bold text-slate-800 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors truncate">
                                     {scenario.title}
                                 </h3>
-                                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-normal">
+                                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-normal">
                                     {scenario.description}
                                 </p>
                             </div>
@@ -105,12 +105,12 @@ const Dashboard: React.FC = () => {
                 ))}
 
                 {/* About Card */}
-                <div className="md:col-span-2 lg:col-span-1 flex items-center bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 text-slate-500 dark:text-slate-400 select-none">
-                    <div className="flex flex-col md:flex-row items-center md:items-start gap-4 text-center md:text-left">
-                        <div className="w-12 h-12 flex-shrink-0 bg-slate-200 dark:bg-slate-700 rounded-full flex items-center justify-center font-bold text-slate-600 dark:text-slate-400">?</div>
-                        <div>
-                            <p className="text-sm font-bold text-slate-700 dark:text-slate-300">Need Help?</p>
-                            <p className="text-xs">The DLS method uses resource percentages to equalize matches. Check our <span className="text-emerald-600 cursor-pointer hover:underline" onClick={(e) => { e.stopPropagation(); navigate('/how-it-works'); }}>Documentation</span> to learn more.</p>
+                <div className="sm:col-span-2 flex items-center bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-6 text-slate-500 dark:text-slate-400 select-none">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left w-full">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 bg-slate-200 dark:bg-slate-700/50 rounded-full flex items-center justify-center font-bold text-slate-600 dark:text-slate-400 text-sm sm:text-base">?</div>
+                        <div className="flex-1">
+                            <p className="text-sm sm:text-base font-bold text-slate-700 dark:text-slate-200">Need Help?</p>
+                            <p className="text-xs sm:text-sm mt-0.5">The DLS method uses resource percentages to equalize matches. Check our <span className="text-emerald-600 font-semibold cursor-pointer hover:underline" onClick={(e) => { e.stopPropagation(); navigate('/how-it-works'); }}>Documentation</span> to learn more.</p>
                         </div>
                     </div>
                 </div>
