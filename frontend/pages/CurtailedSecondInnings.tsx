@@ -5,7 +5,7 @@ import { ScenarioType, MatchFormat } from '../types';
 import StadiumLoader from '../components/ui/StadiumLoader';
 import { WicketError } from '../components/ui/WicketError';
 import { ConnectionError } from '../components/ui/ConnectionError';
-import { HelpCircle, X, ArrowRight, Save, Bug } from 'lucide-react';
+import { HelpCircle, X, ArrowRight, Save, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconInn2Curtailed } from '../components/ui/CricketIcons';
 
@@ -90,6 +90,15 @@ const CurtailedSecondInnings: React.FC = () => {
 			case MatchFormat.T20: return 20;
 			case MatchFormat.ODI: return 50;
 			default: return 50;
+		}
+	};
+
+	const getExampleOvers = () => {
+		switch (matchFormat) {
+			case MatchFormat.T10: return "5.3";
+			case MatchFormat.T20: return "10.2";
+			case MatchFormat.ODI: return "25.4";
+			default: return "25.4";
 		}
 	};
 
@@ -199,6 +208,7 @@ const CurtailedSecondInnings: React.FC = () => {
 
 	const hasErrors = Object.keys(errors).length > 0;
 	const isFormComplete = Object.values(formData).every(val => val !== '');
+	const isFormEmpty = Object.values(formData).every(val => val === '');
 	const inputBaseClass = "w-full px-4 py-2 rounded-lg border bg-slate-50 dark:bg-slate-800 outline-none transition-all focus:ring-1 focus:ring-emerald-500/20 focus:scale-[1.01]";
 
 	const getInputBorderClass = (field: string) => {
@@ -247,7 +257,7 @@ const CurtailedSecondInnings: React.FC = () => {
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Total Overs Available</label>
-										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} inputMode="decimal" required />
+										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`e.g., ${getMaxOvers()}`} inputMode="decimal" required />
 										{errors.overs_available_to_team_1_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_1_at_start}</p>}
 									</div>
 								</div>
@@ -261,12 +271,12 @@ const CurtailedSecondInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Initial Overs Available</label>
-										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Team 2 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} inputMode="decimal" required />
+										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Team 2 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`e.g., ${getMaxOvers()}`} inputMode="decimal" required />
 										{errors.overs_available_to_team_2_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_2_at_start}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Overs Batted</label>
-										<input type="number" step="0.1" name="overs_used_by_team_2_during_curtailed" value={formData.overs_used_by_team_2_during_curtailed} onChange={handleInputChange} aria-label="Overs Played Before Abandonment" className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_2_during_curtailed')}`} placeholder={`Up to ${getMaxOvers()} Overs`} inputMode="decimal" required />
+										<input type="number" step="0.1" name="overs_used_by_team_2_during_curtailed" value={formData.overs_used_by_team_2_during_curtailed} onChange={handleInputChange} aria-label="Overs Played Before Abandonment" className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_2_during_curtailed')}`} placeholder={`e.g., ${getExampleOvers()}`} inputMode="decimal" required />
 										{errors.overs_used_by_team_2_during_curtailed && <p className="text-xs text-red-500 mt-1">{errors.overs_used_by_team_2_during_curtailed}</p>}
 									</div>
 									<div className="space-y-1">
@@ -277,7 +287,16 @@ const CurtailedSecondInnings: React.FC = () => {
 								</div>
 							</div>
 						</div>
-						<div className="p-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+						<div className="p-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex justify-end items-center space-x-3">
+							<button
+								type="button"
+								onClick={handleClearForm}
+								disabled={isFormEmpty && !result && !apiError && !isConnError}
+								className="flex items-center space-x-2 px-3 py-2 text-slate-500 hover:text-rose-600 dark:text-slate-400 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+							>
+								<RotateCcw className="w-4 h-4" />
+								<span className="text-sm font-medium">Clear</span>
+							</button>
 							<button type="submit" disabled={loading || hasErrors || !isFormComplete} className="flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-emerald-600/20 active:scale-95 transition-transform disabled:opacity-50">
 								<Save className="w-5 h-5" /><span>Calculate Par Score</span>
 							</button>

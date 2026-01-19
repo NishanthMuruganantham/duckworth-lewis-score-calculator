@@ -5,7 +5,7 @@ import { ScenarioType, MatchFormat } from '../types';
 import StadiumLoader from '../components/ui/StadiumLoader';
 import { WicketError } from '../components/ui/WicketError';
 import { ConnectionError } from '../components/ui/ConnectionError';
-import { HelpCircle, X, ArrowRight, Save } from 'lucide-react';
+import { HelpCircle, X, ArrowRight, Save, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconInn2Interrupted } from '../components/ui/CricketIcons';
 
@@ -106,6 +106,15 @@ const InterruptedSecondInnings: React.FC = () => {
 			case MatchFormat.T20: return 20;
 			case MatchFormat.ODI: return 50;
 			default: return 50;
+		}
+	};
+
+	const getExampleOvers = () => {
+		switch (matchFormat) {
+			case MatchFormat.T10: return "5.3";
+			case MatchFormat.T20: return "10.2";
+			case MatchFormat.ODI: return "25.4";
+			default: return "25.4";
 		}
 	};
 
@@ -225,6 +234,7 @@ const InterruptedSecondInnings: React.FC = () => {
 
 	const isFormComplete = Object.values(formData).every(val => val !== '');
 	const hasErrors = Object.keys(errors).length > 0;
+	const isFormEmpty = Object.values(formData).every(val => val === '');
 	const inputBaseClass = "w-full px-4 py-2 rounded-lg border bg-slate-50 dark:bg-slate-800 outline-none transition-all focus:ring-1 focus:ring-emerald-500/10 focus:scale-[1.01]";
 
 	const getInputBorderClass = (field: string) => {
@@ -273,7 +283,7 @@ const InterruptedSecondInnings: React.FC = () => {
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Total Overs Allocated</label>
-										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} inputMode="decimal" required />
+										<input type="number" step="0.1" name="overs_available_to_team_1_at_start" value={formData.overs_available_to_team_1_at_start} onChange={handleInputChange} aria-label="Team 1 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_1_at_start')}`} placeholder={`e.g., ${getMaxOvers()}`} inputMode="decimal" required />
 										{errors.overs_available_to_team_1_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_1_at_start}</p>}
 									</div>
 								</div>
@@ -287,12 +297,12 @@ const InterruptedSecondInnings: React.FC = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Team 2 Entitled Overs (Start)</label>
-										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Team 2 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`Max ${getMaxOvers()} Overs`} inputMode="decimal" required />
+										<input type="number" step="0.1" name="overs_available_to_team_2_at_start" value={formData.overs_available_to_team_2_at_start} onChange={handleInputChange} aria-label="Team 2 Starting Overs" className={`${inputBaseClass} ${getInputBorderClass('overs_available_to_team_2_at_start')}`} placeholder={`e.g., ${getMaxOvers()}`} inputMode="decimal" required />
 										{errors.overs_available_to_team_2_at_start && <p className="text-xs text-red-500 mt-1">{errors.overs_available_to_team_2_at_start}</p>}
 									</div>
 									<div className="space-y-1">
 										<label className="text-sm font-medium text-slate-700 dark:text-slate-300">Overs Bowled (At Rain)</label>
-										<input type="number" step="0.1" name="overs_used_by_team_2_during_interruption" value={formData.overs_used_by_team_2_during_interruption} onChange={handleInputChange} aria-label="Overs Played at Delay" className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_2_during_interruption')}`} placeholder="e.g., 15.2" inputMode="decimal" required />
+										<input type="number" step="0.1" name="overs_used_by_team_2_during_interruption" value={formData.overs_used_by_team_2_during_interruption} onChange={handleInputChange} aria-label="Overs Played at Delay" className={`${inputBaseClass} ${getInputBorderClass('overs_used_by_team_2_during_interruption')}`} placeholder={`e.g., ${getExampleOvers()}`} inputMode="decimal" required />
 										{errors.overs_used_by_team_2_during_interruption && <p className="text-xs text-red-500 mt-1">{errors.overs_used_by_team_2_during_interruption}</p>}
 									</div>
 									<div className="space-y-1">
@@ -308,7 +318,16 @@ const InterruptedSecondInnings: React.FC = () => {
 								</div>
 							</div>
 						</div>
-						<div className="p-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+						<div className="p-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex justify-end items-center space-x-3">
+							<button
+								type="button"
+								onClick={handleClearForm}
+								disabled={isFormEmpty && !result && !apiError && !isConnError}
+								className="flex items-center space-x-2 px-3 py-2 text-slate-500 hover:text-rose-600 dark:text-slate-400 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+							>
+								<RotateCcw className="w-4 h-4" />
+								<span className="text-sm font-medium">Clear</span>
+							</button>
 							<button type="submit" disabled={loading || !isFormComplete || hasErrors} className="flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg active:scale-95 transition-transform disabled:opacity-50">
 								<Save className="w-5 h-5" /><span>Calculate Target</span>
 							</button>
