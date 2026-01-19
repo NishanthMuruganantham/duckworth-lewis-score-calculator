@@ -144,7 +144,7 @@ export const SplashScreen: React.FC = () => {
 				transition={{ delay: 1, duration: 1 }}
 				style={{
 					position: 'absolute',
-					bottom: '4rem',
+					bottom: 'calc(4rem + var(--safe-area-inset-bottom, 0px))',
 					left: '50%',
 					transform: 'translateX(-50%)',
 					width: '12rem',
@@ -197,7 +197,9 @@ export const SplashScreen: React.FC = () => {
 				transition={{ delay: 1.5 }}
 				style={{
 					position: 'absolute',
-					bottom: '2rem',
+					bottom: 'calc(1.5rem + var(--safe-area-inset-bottom, 0px))',
+					left: '50%',
+					transform: 'translateX(-50%)',
 					textAlign: 'center',
 					display: 'flex',
 					flexDirection: 'column',
