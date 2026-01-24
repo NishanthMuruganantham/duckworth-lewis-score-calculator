@@ -24,8 +24,10 @@ The existing DLS calculators available online were consistently disappointing: m
 
 ## Screenshots / Demo
 
-> [!NOTE]
-> _Visual demonstrations and application screenshots are being prepared for the upcoming public release._
+<p align="center">
+  <img src="assets/images/dashboard_screenshot.png" alt="DLS Calculator Dashboard" width="100%">
+</p>
+<p align="center"><i>The main dashboard providing intuitive navigation for complex rain-interruption scenarios.</i></p>
 
 ## Architecture & Tech Stack
 
