@@ -36,14 +36,15 @@ The application is built with a focus on scalability, maintainability, and a cle
 - **Backend**: Python and Django REST Framework (DRF) were selected for the calculation engine. Python’s robust numerical libraries (NumPy, Pandas) handle the resource table interpolations with the required precision, while DRF provides a clean, documented API layer.
 - **Frontend**: React and Vite provide a high-performance, reactive interface. TypeScript is used throughout to ensure type safety, particularly when handling complex match state data.
 - **Mobile Layer**: Capacitor enables the web-first codebase to be deployed as a native Android application, ensuring consistent behavior across web and mobile environments.
-- [Deployment](file:///home/opc/projects/inprogress/duckworth-lewis-score-calculator/vercel.json): The architecture is designed for serverless environments (e.g., Vercel), leveraging edge-ready configurations for low latency and high availability.
+- [Deployment](file:///vercel.json): The architecture is designed for serverless environments (e.g., Vercel), leveraging edge-ready configurations for low latency and high availability.
 
 ## System Design Overview
 
-The system follows an API-first design philosophy, where the core logic is entirely decoupled from the presentation layer. Each calculation request is handled statelessly, meaning the backend does not retain any match state between calls. This idempotency is critical for horizontal scaling and seamless integration with serverless platforms like Vercel.
+<p align="center">
+  <img src="assets/images/architecture_diagram.png" alt="DLS Calculator Architecture Diagram" width="100%">
+</p>
 
-**Request Flow**:
-`React UI (State Management) → TypeScript Service Layer → Django REST API → DLS Calculation Engine (NumPy) → JSON Response`
+The system follows an API-first design philosophy, where the core logic is entirely decoupled from the presentation layer. Each calculation request is handled statelessly, meaning the backend does not retain any match state between calls. This idempotency is critical for horizontal scaling and seamless integration with serverless platforms like Vercel.
 
 ## DLS Calculation Engine
 
@@ -71,8 +72,8 @@ The API is built with a focus on determinism and robustness.
 
 ### Prerequisites
 
-- Python 3.10+
-- Node.js 18+
+- Python 3.11+
+- Node.js 20+
 - npm or yarn
 
 ### Backend Setup (Django)
@@ -90,11 +91,7 @@ The API is built with a focus on determinism and robustness.
    ```bash
    pip install -r requirements.txt
    ```
-4. Run migrations:
-   ```bash
-   python manage.py migrate
-   ```
-5. Start the development server:
+4. Start the development server:
    ```bash
    python manage.py runserver
    ```
@@ -144,6 +141,12 @@ The frontend architecture emphasizes a clean separation between UI components an
 - **Vite Bundling**: Chosen for its superior development speed and efficient production builds compared to traditional bundlers.
 - **Edge State Handling**: The UI is designed to handle API downtime and malformed inputs gracefully, providing clear feedback to the user.
 
+## Performance & Reliability
+
+- **Cold-Start Optimization**: The backend is lightweight, ensuring minimal latency even in serverless "cold start" scenarios.
+- **Deterministic Execution**: DLS calculations are compute-light but require high precision; the engine is optimized to deliver results in sub-millisecond timeframes.
+- **Payload Efficiency**: API responses are minimized to reduce data consumption for mobile users on unstable networks.
+
 ## Platform Support
 
 - **Web**: Fully responsive web application optimized for desktop and mobile browsers.
@@ -155,24 +158,6 @@ The frontend architecture emphasizes a clean separation between UI components an
 - **Cricket Fans**: Those seeking clarity on revised targets during high-stakes intervals.
 - **Local Leagues**: Match officials and organizers requiring an accessible, reliable DLS tool.
 - **Analysts**: Professional and amateur analysts looking for a stateless calculation service.
-
-## Design Philosophy
-
-- **Accuracy over Abstraction**: The underlying DLS mathematics are never compromised for simplicity.
-- **UX-First Mentality**: Complex inputs are broken down into logical flows, reducing user error during hurried match phases.
-- **Credibility and Trust**: A mature, professional design language that reflects the precision of the calculations.
-
-## Future Enhancements
-
-- **Extended Match Formats**: Support for diverse regional and local tournament variations.
-- **Offline Mode**: Full offline calculation support via service workers and local caching.
-- **Historical Analysis**: Ability to simulate historical DLS scenarios for comparative analysis.
-
-## Performance & Reliability
-
-- **Cold-Start Optimization**: The backend is lightweight, ensuring minimal latency even in serverless "cold start" scenarios.
-- **Deterministic Execution**: DLS calculations are compute-light but require high precision; the engine is optimized to deliver results in sub-millisecond timeframes.
-- **Payload Efficiency**: API responses are minimized to reduce data consumption for mobile users on unstable networks.
 
 ## Security & Data Handling
 
