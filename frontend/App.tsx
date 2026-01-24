@@ -40,11 +40,19 @@ const AppContent: React.FC = () => {
 		try {
 			await SplashScreen.hide();
 
-			// Configure Status Bar for Android
+			// Configure System UI based on theme
+			const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+			// Configure Status Bar
 			await StatusBar.setOverlaysWebView({ overlay: false });
-			await StatusBar.setBackgroundColor({ color: '#f5f5f0' }); // Match splash background
-			await StatusBar.setStyle({ style: Style.Light }); // Dark text on light background
-			await NavigationBar.setNavigationBarColor({ color: '#f5f5f0', darkButtons: true });
+			await StatusBar.setBackgroundColor({ color: isDarkMode ? '#020617' : '#f8fafc' }); // slate-950 or slate-50
+			await StatusBar.setStyle({ style: isDarkMode ? Style.Dark : Style.Light });
+
+			// Configure Navigation Bar for Android
+			await NavigationBar.setNavigationBarColor({
+				color: isDarkMode ? '#0f172a' : '#ffffff', // slate-900 or white
+				darkButtons: !isDarkMode
+			});
 		} catch (e) {
 			console.warn('Capacitor plugins not available', e);
 		}

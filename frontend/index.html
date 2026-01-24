@@ -61,12 +61,21 @@
 	</script>
 	<style>
 		/* Mobile safe area spacing */
+		:root {
+			--safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+		}
+
 		.pt-safe {
 			padding-top: env(safe-area-inset-top, 0px);
 		}
 
 		.pb-safe {
-			padding-bottom: env(safe-area-inset-bottom);
+			padding-bottom: var(--safe-area-inset-bottom);
+		}
+
+		/* Utility to absorb safe area while keeping background full */
+		.pb-safe-nav {
+			padding-bottom: calc(0.5rem + var(--safe-area-inset-bottom));
 		}
 
 		.pl-safe {
@@ -82,7 +91,7 @@
 		}
 
 		.mb-safe {
-			margin-bottom: env(safe-area-inset-bottom, 0px);
+			margin-bottom: var(--safe-area-inset-bottom);
 		}
 
 		/* Custom scrollbar for desktop sidebar */

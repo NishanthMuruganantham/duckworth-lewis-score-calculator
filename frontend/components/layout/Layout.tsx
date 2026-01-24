@@ -58,7 +58,7 @@ const Layout: React.FC = () => {
 				<Header onMenuClick={() => setIsDrawerOpen(true)} />
 
 				{/* Main Content Area */}
-				<main className="flex-1 overflow-y-auto p-4 md:p-8 pb-16 md:pb-8 scroll-smooth">
+				<main className="flex-1 overflow-y-auto p-4 md:p-8 pb-[calc(5rem+var(--safe-area-inset-bottom,0px))] md:pb-8 scroll-smooth">
 					<div className="max-w-4xl mx-auto">
 						<Outlet />
 					</div>
@@ -227,7 +227,7 @@ const Layout: React.FC = () => {
 								</div>
 							</div>
 
-							<div className="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 pb-6 flex items-center">
+							<div className="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 pb-[calc(1.5rem+var(--safe-area-inset-bottom,0px))] flex items-center">
 								<div className="px-2 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-center w-full">
 									<p className="text-[11px] font-medium text-slate-600 dark:text-slate-400">
 										Developed with <span className="text-red-500">❤️</span> by <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Nishanth Muruganantham</span>
