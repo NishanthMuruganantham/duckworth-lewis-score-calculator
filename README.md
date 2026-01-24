@@ -1,5 +1,9 @@
 # Duckworth–Lewis–Stern (DLS) Calculator
 
+<p align="center">
+  <img src="assets/images/hero_banner.png" alt="DLS Calculator Hero Banner" width="100%">
+</p>
+
 A precision-engineered cricket analytics tool for real-time revised target calculations during weather-interrupted matches.
 
 ## Motivation & Problem Statement
