@@ -110,6 +110,11 @@ The system follows an API-first design philosophy, where the core logic is entir
 
 ### DLS Calculation Engine
 
+<p align="center">
+  <img src="assets/images/resource_curves.png" alt="DLS Resource Percentage Curves" width="100%">
+</p>
+<p align="center"><i>Visual representation of the mathematical model: Resource decay curves for T20 match formats at various wicket states.</i></p>
+
 The engine is modeled around standard DLS resource tables, stored internally for high-speed retrieval. Since DLS resources vary ball-by-ball, the engine uses linear interpolation to determine the exact resource percentage for any given state (overs used, wickets lost).
 
 - **Precision Handling**: Calculations are performed using NumPy to avoid the inaccuracies inherent in standard floating-point arithmetic.
