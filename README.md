@@ -1,32 +1,50 @@
-# Duckworth–Lewis–Stern (DLS) Calculator
+# 🏏 Duckworth–Lewis–Stern (DLS) Calculator
 
 A precision-engineered cricket analytics tool for real-time revised target calculations during weather-interrupted matches.
 
-## Motivation & Problem Statement
+## 💡 Motivation & Problem Statement
 
 <p align="center">
   <img src="assets/images/CSKvsGT.jpg" alt="CSK vs GT" width="100%">
 </p>
 
-The motivation for this project was born during the 2023 IPL Final between CSK and GT. As the match extended into a reserve day due to persistent rain, I found myself traveling and wanting to understand the potential revised targets mid-innings.
+### 🌧️ The Rain That Changed the Course of an IPL Final
 
-The existing DLS calculators available online were consistently disappointing: many were difficult to locate, featured convoluted user interfaces, or lacked clarity in how inputs directly influenced the par score. This frustration identified a clear gap for a tool that combined mathematical accuracy with a premium, intuitive user experience. What began as a personal utility for a single match has evolved into a robust solution for cricket fans and analysts globally.
+The 2023 IPL Final between **Chennai Super Kings** and **Gujarat Titans** was shaping up to be a high-scoring classic. Gujarat Titans posted a massive 214 runs, putting CSK under huge pressure in the biggest match of the season.
+
+But just as CSK were about to begin their chase, heavy rain hit the stadium. Play was completely washed out for the night. For the first time in IPL final history, the championship had to be pushed to the reserve day, with weather still threatening to interfere again.
+
+When the match finally resumed, cricket faced a familiar challenge: **How do you fairly revise a target when overs are lost?**
+
+That’s when the **Duckworth–Lewis–Stern (DLS)** method came into action. Instead of chasing 214 in 20 overs, CSK were given a revised target of 171 in 15 overs — a completely different game requiring explosive batting, smart risk-taking, and precise calculations. What followed was one of the most dramatic chases in cricket history, decided on the very last ball.
+
+### 🚀 Why This Moment Inspired This App
+
+The 2023 IPL Final showed millions of fans that:
+
+- **Rain can rewrite a match in seconds**
+- **Targets aren’t guesses — they’re driven by data**
+- **DLS can decide championships**
+
+Yet most viewers struggled to instantly understand: _"What’s the new target? Why this number?"_
+
+This frustration identified a clear gap for a tool that combined mathematical accuracy with a premium, intuitive user experience. This app exists to make those moments clear — instantly, accurately, and simply.
 
 ---
 
-## The Approach: Building for Trust & Clarity
+## 🎯 The Approach: Building for Trust & Clarity
 
 > **Engineering at a Glance:** A decoupled **Django (DRF)** backend powering a high-performance **React** frontend, unified across platforms via **Capacitor**.
 
 To solve the accessibility and transparency issues of existing tools, this project was developed with three core pillars in mind:
 
 - **Mathematical Integrity**: Moving away from "approximate" calculations. By using high-precision numerical libraries (NumPy) and standard DLS resource tables, we ensure every run and ball is accounted for with professional-grade accuracy.
-- **Intuitive Feedback Loops**: DLS can often feel like a "black box." Our interface is designed to provide immediate visual feedback, showing users exactly how inputs like "Wickets Lost" or "Overs Curtailed" shift the resource percentage in real-time.
+- **Intuitive Feedback Loops**: DLS can often feel like a "black box." Our interface is designed to provide immediate visual feedback, showing users exactly how inputs like "Wickets Lost" or "Overs Curtailed" shift the resource percentage in real-time, backed by specific resource tables for each match format.
 - **Mobile-First Resilience**: Recognizing that cricket fans are often on the move or at the stadium, the architecture prioritizes a lightweight, stateless API and a responsive mobile-first UI for reliable performance even on unstable networks.
 
 ---
 
-## The Solution in Action
+## 📸 The Solution in Action
 
 <p align="center">
   <img src="assets/images/dashboard_screenshot.png" alt="DLS Calculator Dashboard" width="100%">
@@ -35,13 +53,29 @@ To solve the accessibility and transparency issues of existing tools, this proje
 
 ---
 
-## Engineered Capabilities
+## Project Resources & Reference Links
 
-- **Standard DLS Scenarios**: Comprehensive support for all standard rain-interruption models, including delayed starts, mid-innings breaks, and curtailed play.
-- **Precision Calculation Engine**: High-fidelity resource table lookups using numpy-based interpolation for ball-by-ball accuracy.
-- **Stateless REST Architecture**: A decoupled backend provides a reliable calculation service, ensuring consistency across all client platforms.
-- **Cross-Platform Readiness**: A single codebase powering a responsive web application and a Capacitor-enabled Android app.
-- **Minimalist UX**: Designed to deliver complex mathematical results with zero friction, optimized for high-pressure match situations.
+### 🔗 Accessible Links
+
+- **Live Web Application**: [dls.nishanthm.com](https://dls.nishanthm.com/)
+- **Production API**: [API Root & Documentation](https://api.dls.nishanthm.com/)
+- **Mobile Application**: _(Placeholder)_
+
+### 📚 Research & References
+
+- **Wikipedia**: [Duckworth–Lewis–Stern Method](https://en.wikipedia.org/wiki/Duckworth%E2%80%93Lewis%E2%80%93Stern_method)
+- **ESPNCricinfo**: [Understanding the DLS Method - How it works](https://www.espncricinfo.com/column/understanding-the-dls-method-1110594)
+- **ICC Official**: [Cricket Playing Conditions & Regulations](https://www.icc-cricket.com/about/rules-and-regulations/playing-conditions)
+
+---
+
+## ⚡ Engineered Capabilities
+
+- **📏 Standard DLS Scenarios**: Comprehensive support for all standard rain-interruption models, including delayed starts, mid-innings breaks, and curtailed play.
+- **⚙️ Precision Calculation Engine**: High-fidelity resource table lookups using numpy-based interpolation for ball-by-ball accuracy.
+- **☁️ Stateless REST Architecture**: A decoupled backend provides a reliable calculation service, ensuring consistency across all client platforms.
+- **📱 Cross-Platform Readiness**: A single codebase powering a responsive web application and a Capacitor-enabled Android app.
+- **🎨 Minimalist UX**: Designed to deliver complex mathematical results with zero friction, optimized for high-pressure match situations.
 
 ### Supported Match Formats
 
@@ -53,16 +87,16 @@ The calculator supports all standard limited-overs cricket formats, leveraging s
 
 ---
 
-## Architecture & Tech Stack
+## 🛠️ Architecture & Tech Stack
 
 The application is built with a focus on scalability, maintainability, and a clear separation of concerns.
 
-- **Backend**: Python and Django REST Framework (DRF) were selected for the calculation engine. Python’s robust numerical libraries (NumPy, Pandas) handle the resource table interpolations with the required precision, while DRF provides a clean, documented API layer.
-- **Frontend**: React and Vite provide a high-performance, reactive interface. TypeScript is used throughout to ensure type safety, particularly when handling complex match state data.
-- **Mobile Layer**: Capacitor enables the web-first codebase to be deployed as a native Android application, ensuring consistent behavior across web and mobile environments.
-- [Deployment](file:///vercel.json): The architecture is designed for serverless environments (e.g., Vercel), leveraging edge-ready configurations for low latency and high availability.
+- **🐍 Backend**: Python and Django REST Framework (DRF) were selected for the calculation engine. Python’s robust numerical libraries (NumPy, Pandas) handle the resource table interpolations with the required precision, while DRF provides a clean, documented API layer.
+- **⚛️ Frontend**: React and Vite provide a high-performance, reactive interface. TypeScript is used throughout to ensure type safety, particularly when handling complex match state data.
+- **🚢 Mobile Layer**: Capacitor enables the web-first codebase to be deployed as a native Android application, ensuring consistent behavior across web and mobile environments.
+- **🚀 Deployment**: The architecture is designed for [serverless](vercel.json) environments (e.g., Vercel), leveraging edge-ready configurations for low latency and high availability.
 
-## System Design Overview
+## 🏗️ System Design Overview
 
 <p align="center">
   <img src="assets/images/architecture_diagram.png" alt="DLS Calculator Architecture Diagram" width="100%">
@@ -72,7 +106,7 @@ The system follows an API-first design philosophy, where the core logic is entir
 
 ---
 
-## Technical Deep Dives
+## 🔍 Technical Deep Dives
 
 ### DLS Calculation Engine
 
@@ -125,7 +159,7 @@ The frontend architecture emphasizes a clean separation between UI components an
 
 ---
 
-## Reliability & Performance
+## 🛡️ Reliability & Performance
 
 - **Cold-Start Optimization**: The backend is lightweight, ensuring minimal latency even in serverless "cold start" scenarios.
 - **Deterministic Execution**: DLS calculations are compute-light but require high precision; the engine is optimized to deliver results in sub-millisecond timeframes.
@@ -142,7 +176,7 @@ The frontend architecture emphasizes a clean separation between UI components an
 
 ---
 
-## Developer Guide
+## 💻 Developer Guide
 
 ### Project Structure
 
@@ -160,23 +194,31 @@ The frontend architecture emphasizes a clean separation between UI components an
 
 #### Quick Start
 
-1. **Backend**: `cd backend && pip install -r requirements.txt && python manage.py runserver`
-2. **Frontend**: `cd frontend && npm install && npm run dev`
+1. **Backend**:
+   ```bash
+   cd backend && pip install -r requirements.txt && python manage.py runserver
+   ```
+2. **Frontend**:
+   ```bash
+   cd frontend && npm install && npm run dev
+   ```
 
 ### Usage Guide
 
 1. **Select Match Scenario**: Choose from the available DLS scenarios (e.g., Curtailed First Innings, Interrupted Second Innings).
 2. **Input Match Data**: Enter the required parameters such as overs played, runs scored, and wickets lost at the point of interruption.
 3. **Calculate Revised Target**: The system will communicate with the Django REST API to process the inputs and return the precise DLS target or par score.
-4. **Mobile Deployment**: For Android, use Capacitor commands (`npx cap sync android`) to build and sync the project for mobile testing.
+4. **Mobile Deployment**: For Android, use Capacitor commands to build and sync the project for mobile testing:
+   ```bash
+   npx cap sync android
+   ```
 
-## Community & Vision
+## 🌐 Community & Vision
 
 ### Target Users
 
 - **Cricket Fans**: Those seeking clarity on revised targets during high-stakes intervals.
-- **Local Leagues**: Match officials and organizers requiring an accessible, reliable DLS tool.
-- **Analysts**: Professional and amateur analysts looking for a stateless calculation service.
+- **Mobile Developers**: Engineers looking for a production-grade reference on bridging complex React/TypeScript logic to a high-performance **Android** environment via **Capacitor**.
 
 ### Developer Experience
 
@@ -192,10 +234,10 @@ The frontend architecture emphasizes a clean separation between UI components an
 
 ---
 
-## Author & Intent
+## 🤝 Author & Intent
 
 This project is a culmination of a passion for cricket and a commitment to real-world problem solving. It reflects an architectural approach to product engineering: identifying a technical shortcoming in a beloved sport and building a production-grade solution that prioritizes both precision and the user.
 
-## License
+## 📄 License
 
 This project is licensed under the **MIT License**. See the `LICENSE` file for details.
